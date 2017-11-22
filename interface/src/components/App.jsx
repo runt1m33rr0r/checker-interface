@@ -118,7 +118,14 @@ class App extends Component {
                 keepMounted: true,
               }}
             >
-              {drawer}
+              <div
+                tabIndex={0}
+                role="button"
+                onClick={this.handleDrawerToggle}
+                onKeyDown={this.handleDrawerToggle}
+              >
+                {drawer}
+              </div>
             </Drawer>
           </Hidden>
           <Hidden mdDown implementation="css">

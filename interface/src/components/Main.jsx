@@ -10,6 +10,7 @@ import Hidden from 'material-ui/Hidden';
 import MenuIcon from 'material-ui-icons/Menu';
 
 import ControlsList from './ControlsList';
+import Routes from '../config/Routes';
 
 const drawerWidth = 240;
 
@@ -106,7 +107,7 @@ class Main extends React.Component {
               }}
               onRequestClose={this.handleDrawerToggle}
               ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
+                keepMounted: true,
               }}
             >
               {drawer}
@@ -124,10 +125,7 @@ class Main extends React.Component {
             </Drawer>
           </Hidden>
           <main className={classes.content}>
-            <Typography type="title" noWrap>
-              Home
-            </Typography>
-            {/* <Routes /> */}
+            <Routes />
           </main>
         </div>
       </div>

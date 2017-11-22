@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -17,18 +18,22 @@ function SimpleList(props) {
   return (
     <div className={classes.root}>
       <List>
-        <ListItem button>
-          <ListItemText primary="Вход" />
-        </ListItem>
+        <Link to="/login">
+          <ListItem button>
+            <ListItemText primary="Вход" />
+          </ListItem>
+        </Link>
         <ListItem button>
           <ListItemText primary="Регистрация" />
         </ListItem>
       </List>
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemText primary="Wizard" />
-        </ListItem>
+        <Link to="/wizard">
+          <ListItem button>
+            <ListItemText primary="Wizard" />
+          </ListItem>
+        </Link>
       </List>
     </div>
   );

@@ -9,7 +9,7 @@ import green from 'material-ui/colors/green';
 import 'typeface-roboto';
 
 import './index.css';
-import App from './components/App';
+import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 import reducer from './reducers';
 

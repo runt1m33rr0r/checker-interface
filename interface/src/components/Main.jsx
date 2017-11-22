@@ -8,11 +8,8 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import MenuIcon from 'material-ui-icons/Menu';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import ControlsList from './ControlsList';
-import Routes from '../config/Routes';
 
 const drawerWidth = 240;
 
@@ -62,7 +59,7 @@ const styles = theme => ({
   },
 });
 
-class App extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
 
@@ -78,7 +75,9 @@ class App extends Component {
   }
 
   render() {
-    const { classes, theme } = this.props;
+    const {
+      classes, theme, children, title,
+    } = this.props;
 
     const drawer = (
       <div>
@@ -101,7 +100,7 @@ class App extends Component {
                 <MenuIcon />
               </IconButton>
               <Typography type="title" color="inherit" noWrap>
-                {this.props.title}
+                {title}
               </Typography>
             </Toolbar>
           </AppBar>
@@ -139,23 +138,18 @@ class App extends Component {
               {drawer}
             </Drawer>
           </Hidden>
-          <main className={classes.content}>
-            <Routes />
-          </main>
+          <main className={classes.content}>{children}</main>
         </div>
       </div>
     );
   }
 }
 
-App.propTypes = {
+Main.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
-const mapStateToProps = ({ userInterface }) => ({
-  title: userInterface.title,
-});
-
-export default withStyles(styles, { withTheme: true })(withRouter(connect(mapStateToProps)(App)));
+export default withStyles(styles, { withTheme: true })(Main);

@@ -26,9 +26,11 @@ function SimpleList(props) {
             <ListItemText primary="Вход" />
           </ListItem>
         </Link>
-        <ListItem button>
-          <ListItemText primary="Регистрация" />
-        </ListItem>
+        <Link className={classes.link} to="/register">
+          <ListItem button>
+            <ListItemText primary="Регистрация" />
+          </ListItem>
+        </Link>
       </List>
       <Divider />
       <List>

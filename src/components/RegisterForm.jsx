@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import PrimaryButton from './common/PrimaryButton';
 import styles from '../styles/forms';
 
-const LoginForm = props => (
+const RegisterForm = props => (
   <form className={props.classes.container} noValidate autoComplete="off">
     <TextField
       id="name"
@@ -21,12 +21,12 @@ const LoginForm = props => (
       type="password"
       margin="normal"
     />
-    <PrimaryButton content="Вход" />
+    <PrimaryButton content="Регистрирай" />
   </form>
 );
 
-LoginForm.propTypes = {
+RegisterForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginForm);
+export default withStyles(styles)(RegisterForm);

@@ -1,32 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Typography from 'material-ui/Typography';
 
-import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+const Home = () => (
+  <Typography type="title" noWrap>
+    Home
+  </Typography>
+);
 
-import * as InterfaceActions from '../actions';
-
-class Home extends Component {
-  componentDidMount() {
-    this.props.actions.setPageTitle('Начало');
-  }
-
-  render() {
-    return (
-      <Typography type="title" noWrap>
-        Home
-      </Typography>
-    );
-  }
-}
-
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(InterfaceActions, dispatch),
-});
-
-Home.propTypes = {
-  actions: PropTypes.object.isRequired,
-};
-
-export default connect(null, mapDispatchToProps)(Home);
+export default Home;

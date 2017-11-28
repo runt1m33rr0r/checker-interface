@@ -1,2 +1,5 @@
-export const SET_PAGE_TITLE = 'set_page_title';
-export const GET_USER = 'get_user';
+export const SET_PAGE_TITLE = 'SET_PAGE_TITLE';
+export const GET_USER = 'GET_USER';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';

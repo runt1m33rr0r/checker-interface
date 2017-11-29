@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Login from '../containers/Login';
 import Home from '../containers/Home';
@@ -14,7 +14,6 @@ const Routes = () => (
     <Route path="/register" component={Register} />
     <Route path="/wizard" component={Wizard} />
     <Route path="/book" component={Classbook} />
-    <Redirect component={Home} />
   </Switch>
 );
 

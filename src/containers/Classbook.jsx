@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
-import * as InterfaceActions from '../actions';
+import * as InterfaceActions from '../actions/interface-actions';
 import ClassbookComponent from '../components/Classbook';
 
 class Classbook extends Component {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
 import RegisterForm from '../components/RegisterForm';
-import * as InterfaceActions from '../actions';
+import * as InterfaceActions from '../actions/interface-actions';
 
 class Register extends Component {
   componentDidMount() {

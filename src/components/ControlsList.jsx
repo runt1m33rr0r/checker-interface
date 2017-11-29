@@ -17,21 +17,30 @@ const styles = theme => ({
 });
 
 function SimpleList(props) {
-  const { classes } = props;
+  const { classes, isAuthenticated, handleLogout } = props;
+
   return (
     <div className={classes.root}>
-      <List>
-        <Link className={classes.link} to="/login">
-          <ListItem button>
-            <ListItemText primary="Вход" />
+      {isAuthenticated ? (
+        <List>
+          <ListItem button onClick={() => handleLogout}>
+            <ListItemText primary="Изход" />
           </ListItem>
-        </Link>
-        <Link className={classes.link} to="/register">
-          <ListItem button>
-            <ListItemText primary="Регистрация" />
-          </ListItem>
-        </Link>
-      </List>
+        </List>
+      ) : (
+        <List>
+          <Link className={classes.link} to="/login">
+            <ListItem button>
+              <ListItemText primary="Вход" />
+            </ListItem>
+          </Link>
+          <Link className={classes.link} to="/register">
+            <ListItem button>
+              <ListItemText primary="Регистрация" />
+            </ListItem>
+          </Link>
+        </List>
+      )}
       <Divider />
       <List>
         <Link className={classes.link} to="/wizard">
@@ -46,6 +55,8 @@ function SimpleList(props) {
 
 SimpleList.propTypes = {
   classes: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SimpleList);

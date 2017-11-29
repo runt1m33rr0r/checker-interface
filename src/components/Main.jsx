@@ -9,7 +9,7 @@ import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import MenuIcon from 'material-ui-icons/Menu';
 
-import ControlsList from './ControlsList';
+import ControlsList from '../containers/ControlsList';
 
 const drawerWidth = 240;
 

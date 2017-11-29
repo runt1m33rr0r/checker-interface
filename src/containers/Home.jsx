@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import HomeComponent from '../components/Home';
-import * as InterfaceActions from '../actions';
+import * as InterfaceActions from '../actions/interface-actions';
 
 class Home extends Component {
   componentDidMount() {

@@ -1,4 +1,4 @@
-import { SET_PAGE_TITLE } from '../constants/ActionTypes';
+import { SET_PAGE_TITLE } from '../constants/action-types';
 
 const initialState = {
   title: 'Home',
@@ -8,7 +8,7 @@ const userInterface = (state = initialState, action) => {
   switch (action.type) {
     case SET_PAGE_TITLE:
       return Object.assign({}, state, {
-        title: action.payload,
+        title: action.title,
       });
     default:
       return {

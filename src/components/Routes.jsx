@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Login from '../containers/Login';
 import Home from '../containers/Home';
-import Wizard from '../containers/Wizard';
+import Wizard from '../containers/wizardry/Wizard';
 import Classbook from '../containers/Classbook';
 import Register from '../containers/Register';
 import PrivateRoute from '../containers/PrivateRoute';

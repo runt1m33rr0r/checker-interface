@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
-import * as InterfaceActions from '../actions/interface-actions';
-import WizardComponent from '../components/Wizard';
+import * as InterfaceActions from '../../actions/interface-actions';
+import WizardComponent from '../../components/wizardry/Wizard';
 
 class Wizard extends Component {
   componentDidMount() {

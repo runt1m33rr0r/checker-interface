@@ -6,13 +6,14 @@ import Home from '../containers/Home';
 import Wizard from '../containers/Wizard';
 import Classbook from '../containers/Classbook';
 import Register from '../containers/Register';
+import PrivateRoute from '../containers/PrivateRoute';
 
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
-    <Route path="/wizard" component={Wizard} />
+    <PrivateRoute path="/wizard" component={Wizard} />
     <Route path="/book" component={Classbook} />
   </Switch>
 );

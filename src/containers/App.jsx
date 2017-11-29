@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Main from '../components/Main';
-import Routes from '../config/Routes';
+import Routes from '../components/Routes';
 
 const App = ({ title, isAuthenticated, username }) => (
   <Main isAuthenticated={isAuthenticated} username={username} title={title}>

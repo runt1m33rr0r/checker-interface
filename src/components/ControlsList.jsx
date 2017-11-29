@@ -24,11 +24,21 @@ function SimpleList(props) {
   return (
     <div className={classes.root}>
       {isAuthenticated ? (
-        <List>
-          <ListItem button onClick={() => handleLogout()}>
-            <ListItemText primary="Изход" />
-          </ListItem>
-        </List>
+        <div>
+          <List>
+            <ListItem button onClick={() => handleLogout()}>
+              <ListItemText primary="Изход" />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <Link className={classes.link} to="/wizard">
+              <ListItem button>
+                <ListItemText primary="Wizard" />
+              </ListItem>
+            </Link>
+          </List>
+        </div>
       ) : (
         <List>
           <Link className={classes.link} to="/login">
@@ -45,14 +55,6 @@ function SimpleList(props) {
           ) : null}
         </List>
       )}
-      <Divider />
-      <List>
-        <Link className={classes.link} to="/wizard">
-          <ListItem button>
-            <ListItemText primary="Wizard" />
-          </ListItem>
-        </Link>
-      </List>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import WizardComponent from '../../components/wizardry/Wizard';
 
 class Wizard extends Component {
   componentDidMount() {
-    this.props.actions.setPageTitle('Wizard');
+    this.props.actions.setPageTitle('Начална настройка');
   }
 
   render() {

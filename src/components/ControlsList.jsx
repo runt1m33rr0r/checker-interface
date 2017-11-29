@@ -17,13 +17,15 @@ const styles = theme => ({
 });
 
 function SimpleList(props) {
-  const { classes, isAuthenticated, handleLogout } = props;
+  const {
+    classes, isAuthenticated, handleLogout, isRegistered,
+  } = props;
 
   return (
     <div className={classes.root}>
       {isAuthenticated ? (
         <List>
-          <ListItem button onClick={() => handleLogout}>
+          <ListItem button onClick={() => handleLogout()}>
             <ListItemText primary="Изход" />
           </ListItem>
         </List>
@@ -34,11 +36,13 @@ function SimpleList(props) {
               <ListItemText primary="Вход" />
             </ListItem>
           </Link>
-          <Link className={classes.link} to="/register">
-            <ListItem button>
-              <ListItemText primary="Регистрация" />
-            </ListItem>
-          </Link>
+          {!isRegistered ? (
+            <Link className={classes.link} to="/register">
+              <ListItem button>
+                <ListItemText primary="Регистрация" />
+              </ListItem>
+            </Link>
+          ) : null}
         </List>
       )}
       <Divider />
@@ -56,6 +60,7 @@ function SimpleList(props) {
 SimpleList.propTypes = {
   classes: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  isRegistered: PropTypes.bool.isRequired,
   handleLogout: PropTypes.func.isRequired,
 };
 

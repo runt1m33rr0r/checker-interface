@@ -21,39 +21,71 @@ const loginError = message => ({
   message,
 });
 
-export function loginUser(creds) {
-  return (dispatch) => {
-    dispatch(requestLogin());
-    return axios
-      .post('http://localhost:8080/users/login', {
-        username: creds.username,
-        password: creds.password,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          localStorage.setItem('token', response.data.token);
-          dispatch(receiveLogin(response.data));
-        } else {
-          dispatch(loginError(response.message));
-        }
+export const loginUser = creds => (dispatch) => {
+  dispatch(requestLogin());
+  return axios
+    .post('http://localhost:8080/users/login', {
+      username: creds.username,
+      password: creds.password,
+    })
+    .then((response) => {
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.token);
+        dispatch(receiveLogin(response.data));
+      } else {
+        dispatch(loginError(response.message));
+      }
+    })
+    .catch(err => console.log('Error: ', err));
+};
 
-        console.log(response.data);
-      })
-      .catch(err => console.log('Error: ', err));
-  };
-}
+const requestRegister = () => ({
+  type: types.REGISTER_REQUEST,
+  isFetching: true,
+  isRegistered: false,
+});
 
-function logout() {
-  return {
-    type: types.LOGOUT_SUCCESS,
-    isFetching: false,
-    isAuthenticated: false,
-  };
-}
+const receiveRegister = () => ({
+  type: types.REGISTER_SUCCESS,
+  isFetching: false,
+  isRegistered: true,
+});
 
-export function logoutUser() {
-  return (dispatch) => {
-    localStorage.removeItem('token');
-    dispatch(logout());
-  };
-}
+const registerError = () => ({
+  type: types.REGISTER_FAILURE,
+  isFetching: false,
+  isRegistered: false,
+});
+
+export const registerUser = creds => (dispatch) => {
+  dispatch(requestRegister());
+  return axios
+    .post('http://localhost:8080/users/register', {
+      username: creds.username,
+      password: creds.password,
+      firstName: 'FirstName',
+      lastName: 'LastName',
+      group: '9G',
+      userType: 'Student',
+    })
+    .then((response) => {
+      if (response.data.success) {
+        localStorage.setItem('registered', true);
+        dispatch(receiveRegister(response.data));
+      } else {
+        dispatch(registerError(response.message));
+      }
+    })
+    .catch(err => console.log('Error: ', err));
+};
+
+const logout = () => ({
+  type: types.LOGOUT_SUCCESS,
+  isFetching: false,
+  isAuthenticated: false,
+});
+
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem('token');
+  dispatch(logout());
+};

@@ -16,6 +16,8 @@ function auth(
     isFetching: false,
     isAuthenticated: !!localStorage.getItem('token'),
     isRegistered: !!localStorage.getItem('registered'),
+    username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
+    roles: localStorage.getItem('roles') ? localStorage.getItem('roles') : '',
   },
   action,
 ) {
@@ -29,6 +31,8 @@ function auth(
       return Object.assign({}, state, {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
+        username: action.username,
+        roles: action.roles,
         errorMessage: '',
       });
     case LOGIN_FAILURE:
@@ -41,6 +45,8 @@ function auth(
       return Object.assign({}, state, {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
+        username: action.username,
+        roles: action.roles,
         errorMessage: '',
       });
     case REGISTER_REQUEST:

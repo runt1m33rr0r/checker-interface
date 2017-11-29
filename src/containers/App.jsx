@@ -6,18 +6,22 @@ import PropTypes from 'prop-types';
 import Main from '../components/Main';
 import Routes from '../config/Routes';
 
-const App = ({ title }) => (
-  <Main title={title}>
+const App = ({ title, isAuthenticated, username }) => (
+  <Main isAuthenticated={isAuthenticated} username={username} title={title}>
     <Routes />
   </Main>
 );
 
-const mapStateToProps = ({ userInterface }) => ({
+const mapStateToProps = ({ userInterface, auth }) => ({
   title: userInterface.title,
+  isAuthenticated: auth.isAuthenticated,
+  username: auth.username,
 });
 
 App.propTypes = {
   title: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps)(App));

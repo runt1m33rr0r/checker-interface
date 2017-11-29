@@ -12,6 +12,8 @@ const receiveLogin = user => ({
   isFetching: false,
   isAuthenticated: true,
   token: user.token,
+  username: user.username,
+  roles: user.roles,
 });
 
 const loginError = message => ({
@@ -31,9 +33,11 @@ export const loginUser = creds => (dispatch) => {
     .then((response) => {
       if (response.data.success) {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('roles', response.data.roles);
         dispatch(receiveLogin(response.data));
       } else {
-        dispatch(loginError(response.message));
+        dispatch(loginError(response.data.message));
       }
     })
     .catch(err => console.log('Error: ', err));
@@ -83,9 +87,13 @@ const logout = () => ({
   type: types.LOGOUT_SUCCESS,
   isFetching: false,
   isAuthenticated: false,
+  username: '',
+  roles: [],
 });
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('token');
+  localStorage.removeItem('username');
+  localStorage.removeItem('roles');
   dispatch(logout());
 };

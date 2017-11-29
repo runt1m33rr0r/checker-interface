@@ -38,7 +38,12 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  drawerHeader: theme.mixins.toolbar,
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...theme.mixins.toolbar,
+  },
   drawerPaper: {
     width: 250,
     [theme.breakpoints.up('md')]: {
@@ -76,12 +81,18 @@ class Main extends Component {
 
   render() {
     const {
-      classes, theme, children, title,
+      classes, theme, children, title, isAuthenticated, username,
     } = this.props;
 
     const drawer = (
       <div>
-        <div className={classes.drawerHeader} />
+        <div className={classes.drawerHeader}>
+          {isAuthenticated ? (
+            <Typography type="title" gutterBottom>
+              {username}
+            </Typography>
+          ) : null}
+        </div>
         <ControlsList />
       </div>
     );
@@ -150,6 +161,8 @@ Main.propTypes = {
   theme: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(Main);

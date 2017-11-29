@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Stepper, { Step, StepLabel } from 'material-ui/Stepper';
+import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
@@ -12,9 +13,13 @@ const styles = theme => ({
   button: {
     marginRight: theme.spacing.unit,
   },
-  instructions: {
+  actionsContainer: {
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
+  },
+  resetContainer: {
+    marginTop: 0,
+    padding: theme.spacing.unit * 3, // TODO: See TODO note on Stepper
   },
 });
 
@@ -25,64 +30,35 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Select campaign settings...';
+      return `For each ad campaign that you create, you can control how much
+              you're willing to spend on clicks and conversions, which networks
+              and geographical locations you want your ads to show on, and more.`;
     case 1:
-      return 'What is an ad group anyways?';
+      return 'An ad group contains one or more ads which target a shared set of keywords.';
     case 2:
-      return 'This is the bit I really care about!';
+      return `Try out different ad text to see what brings in the most customers,
+              and learn how to enhance your ads using features like ad extensions.
+              If you run into any problems with your ads, find out how to tell if
+              they're running and how to resolve approval issues.`;
     default:
       return 'Unknown step';
   }
 }
 
-class HorizontalLinearStepper extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object,
-  };
-
+class VerticalLinearStepper extends React.Component {
   state = {
     activeStep: 0,
-    skipped: new Set(),
   };
 
-  isStepOptional = step => step === 1;
-
-  isStepSkipped(step) {
-    return this.state.skipped.has(step);
-  }
-
   handleNext = () => {
-    const { activeStep } = this.state;
-    let { skipped } = this.state;
-    if (this.isStepSkipped(activeStep)) {
-      skipped = new Set(skipped.values());
-      skipped.delete(activeStep);
-    }
     this.setState({
-      activeStep: activeStep + 1,
-      skipped,
+      activeStep: this.state.activeStep + 1,
     });
   };
 
   handleBack = () => {
-    const { activeStep } = this.state;
     this.setState({
-      activeStep: activeStep - 1,
-    });
-  };
-
-  handleSkip = () => {
-    const { activeStep } = this.state;
-    if (!this.isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-    const skipped = new Set(this.state.skipped.values());
-    skipped.add(activeStep);
-    this.setState({
-      activeStep: this.state.activeStep + 1,
-      skipped,
+      activeStep: this.state.activeStep - 1,
     });
   };
 
@@ -99,63 +75,52 @@ class HorizontalLinearStepper extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Stepper activeStep={activeStep}>
+        <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => {
-            const props = {};
-            if (this.isStepOptional(index)) {
-              props.optional = true;
-            }
-            if (this.isStepSkipped(index)) {
-              props.completed = false;
-            }
             return (
-              <Step key={label} {...props}>
+              <Step key={label}>
                 <StepLabel>{label}</StepLabel>
+                <StepContent>
+                  <Typography>{getStepContent(index)}</Typography>
+                  <div className={classes.actionsContainer}>
+                    <div>
+                      <Button
+                        disabled={activeStep === 0}
+                        onClick={this.handleBack}
+                        className={classes.button}
+                      >
+                        Back
+                      </Button>
+                      <Button
+                        raised
+                        color="primary"
+                        onClick={this.handleNext}
+                        className={classes.button}
+                      >
+                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                      </Button>
+                    </div>
+                  </div>
+                </StepContent>
               </Step>
             );
           })}
         </Stepper>
-        <div>
-          {activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&quot;re finished
-              </Typography>
-              <Button onClick={this.handleReset} className={classes.button}>
-                Reset
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.button}
-                >
-                  Back
-                </Button>
-                {this.isStepOptional(activeStep) && (
-                  <Button
-                    raised
-                    color="primary"
-                    onClick={this.handleSkip}
-                    className={classes.button}
-                  >
-                    Skip
-                  </Button>
-                )}
-                <Button raised color="primary" onClick={this.handleNext} className={classes.button}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} className={classes.resetContainer}>
+            <Typography>All steps completed - you&quot;re finished</Typography>
+            <Button onClick={this.handleReset} className={classes.button}>
+              Reset
+            </Button>
+          </Paper>
+        )}
       </div>
     );
   }
 }
 
-export default withStyles(styles)(HorizontalLinearStepper);
+VerticalLinearStepper.propTypes = {
+  classes: PropTypes.object,
+};
+
+export default withStyles(styles)(VerticalLinearStepper);

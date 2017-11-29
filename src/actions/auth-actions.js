@@ -26,7 +26,7 @@ const loginError = message => ({
 export const loginUser = creds => (dispatch) => {
   dispatch(requestLogin());
   return axios
-    .post('http://localhost:8080/users/login', {
+    .post('http://192.168.1.101:8080/users/login', {
       username: creds.username,
       password: creds.password,
     })

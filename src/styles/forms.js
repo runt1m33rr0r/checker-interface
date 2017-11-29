@@ -5,7 +5,6 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    flexWrap: 'wrap',
     width: '100%',
     height: '100%',
     textAlign: 'center',

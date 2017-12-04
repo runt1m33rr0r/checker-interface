@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography';
 
 import SchoolTypeChooser from '../../containers/wizardry/SchoolTypeChooser';
 import SubjectsCreator from '../../containers/wizardry/SubjectsCreator';
+import TimeslotCreator from '../../containers/wizardry/TimeslotCreator';
 
 const styles = theme => ({
   root: {
@@ -64,7 +65,7 @@ class VerticalLinearStepper extends Component {
       case 1:
         return <SubjectsCreator />;
       case 2:
-        return <h1>stuff</h1>;
+        return <TimeslotCreator />;
       case 3:
         return <h1>stuff</h1>;
       default:

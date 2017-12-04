@@ -1,9 +1,16 @@
-import { SET_SCHOOL_TYPE, ADD_SUBJECT, REMOVE_SUBJECT } from '../constants/action-types';
+import {
+  SET_SCHOOL_TYPE,
+  ADD_SUBJECT,
+  REMOVE_SUBJECT,
+  ADD_TIMESLOT,
+  REMOVE_TIMESLOT,
+} from '../constants/action-types';
 
 const wizard = (
   state = {
     schoolType: 'gymnasium',
     subjects: [],
+    timeslots: [],
   },
   action,
 ) => {
@@ -25,6 +32,20 @@ const wizard = (
       return {
         ...state,
         subjects: state.subjects.filter(subject => subject !== action.subjectName),
+      };
+    case ADD_TIMESLOT:
+      if (state.timeslots.includes(action.timeslot)) {
+        return state;
+      }
+
+      return {
+        ...state,
+        timeslots: [...state.timeslots, action.timeslot],
+      };
+    case REMOVE_TIMESLOT:
+      return {
+        ...state,
+        timeslots: state.timeslots.filter(timeslot => timeslot !== action.timeslot),
       };
     default:
       return state;

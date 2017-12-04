@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
-import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 
 import PrimaryButton from '../common/PrimaryButton';
@@ -64,7 +63,7 @@ class TimeslotCreator extends Component {
               id="time"
               label="От"
               type="time"
-              defaultValue="01:00"
+              defaultValue={this.state.from}
               className={classes.textField}
               onChange={this.handleChangeFrom}
             />
@@ -72,7 +71,7 @@ class TimeslotCreator extends Component {
               id="time"
               label="До"
               type="time"
-              defaultValue="01:00"
+              defaultValue={this.state.to}
               className={classes.textField}
               onChange={this.handleChangeTo}
             />

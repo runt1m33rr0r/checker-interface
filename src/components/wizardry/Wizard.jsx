@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 import SchoolTypeChooser from '../../containers/wizardry/SchoolTypeChooser';
-import SubjectsCreator from './SubjectsCreator';
+import SubjectsCreator from '../../containers/wizardry/SubjectsCreator';
 
 const styles = theme => ({
   root: {
@@ -62,7 +62,7 @@ class VerticalLinearStepper extends Component {
       case 0:
         return <SchoolTypeChooser />;
       case 1:
-        return <SubjectsCreator handleAdd={a => console.log(a)} subjects={['1', '2']} />;
+        return <SubjectsCreator />;
       case 2:
         return <h1>stuff</h1>;
       case 3:

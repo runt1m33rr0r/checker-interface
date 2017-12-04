@@ -26,7 +26,7 @@ const loginError = message => ({
 export const loginUser = creds => (dispatch) => {
   dispatch(requestLogin());
   return axios
-    .post('http://192.168.1.101:8080/users/login', {
+    .post('http://localhost:8080/users/login', {
       username: creds.username,
       password: creds.password,
     })
@@ -73,6 +73,7 @@ export const registerUser = creds => (dispatch) => {
       userType: 'Student',
     })
     .then((response) => {
+      console.log(response.data);
       if (response.data.success) {
         localStorage.setItem('registered', true);
         dispatch(receiveRegister(response.data));

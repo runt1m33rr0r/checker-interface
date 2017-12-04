@@ -60,7 +60,12 @@ class SubjectsCreator extends Component {
             <ListItem key={value} dense className={this.props.classes.listItem}>
               <ListItemText primary={value} />
               <ListItemSecondaryAction>
-                <IconButton>
+                <IconButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.props.handleRemove(value);
+                  }}
+                >
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -74,6 +79,7 @@ class SubjectsCreator extends Component {
 
 SubjectsCreator.propTypes = {
   handleAdd: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
   subjects: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
 };

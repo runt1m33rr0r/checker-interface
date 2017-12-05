@@ -4,11 +4,17 @@ import {
   REMOVE_SUBJECT,
   ADD_TIMESLOT,
   REMOVE_TIMESLOT,
+  SET_GROUPS_COUNT,
 } from '../constants/action-types';
 
 export const setSchoolType = type => ({
   type: SET_SCHOOL_TYPE,
   schoolType: type,
+});
+
+export const setGroupsCount = count => ({
+  type: SET_GROUPS_COUNT,
+  count,
 });
 
 export const addSubject = subjectName => ({

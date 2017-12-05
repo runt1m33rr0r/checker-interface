@@ -4,11 +4,13 @@ import {
   REMOVE_SUBJECT,
   ADD_TIMESLOT,
   REMOVE_TIMESLOT,
+  SET_GROUPS_COUNT,
 } from '../constants/action-types';
 
 const wizard = (
   state = {
     schoolType: 'gymnasium',
+    groupsCount: 6,
     subjects: [],
     timeslots: [],
   },
@@ -16,9 +18,9 @@ const wizard = (
 ) => {
   switch (action.type) {
     case SET_SCHOOL_TYPE:
-      return Object.assign({}, state, {
-        schoolType: action.schoolType,
-      });
+      return { ...state, schoolType: action.schoolType };
+    case SET_GROUPS_COUNT:
+      return { ...state, groupsCount: action.count };
     case ADD_SUBJECT:
       if (state.subjects.includes(action.subjectName)) {
         return state;

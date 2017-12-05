@@ -2,27 +2,46 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Radio, { RadioGroup } from 'material-ui/Radio';
 import { FormControlLabel } from 'material-ui/Form';
+import TextField from 'material-ui/TextField';
+import { withStyles } from 'material-ui/styles';
 
 const SchoolTypeChooser = props => (
-  <RadioGroup value={props.schoolType}>
-    <FormControlLabel
-      onClick={() => props.handleChange('gymnasium')}
-      value="gymnasium"
-      control={<Radio />}
-      label="Гимназия"
+  <div>
+    <RadioGroup value={props.schoolType}>
+      <FormControlLabel
+        onClick={() => props.handleSchoolTypeChange('gymnasium')}
+        value="gymnasium"
+        control={<Radio />}
+        label="Гимназия"
+      />
+      <FormControlLabel
+        onClick={() => props.handleSchoolTypeChange('elementary')}
+        value="elementary"
+        control={<Radio />}
+        label="Основно училище"
+      />
+    </RadioGroup>
+    <TextField
+      id="number"
+      label="Брой паралелки на клас"
+      value={props.groupsCount}
+      onChange={e => props.handleGroupsCountChange(parseInt(e.target.value, 10))}
+      type="number"
+      className={props.classes.textField}
+      InputLabelProps={{
+        shrink: true,
+      }}
+      margin="normal"
     />
-    <FormControlLabel
-      onClick={() => props.handleChange('elementary')}
-      value="elementary"
-      control={<Radio />}
-      label="Основно училище"
-    />
-  </RadioGroup>
+  </div>
 );
 
 SchoolTypeChooser.propTypes = {
+  classes: PropTypes.object.isRequired,
   schoolType: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  groupsCount: PropTypes.number.isRequired,
+  handleSchoolTypeChange: PropTypes.func.isRequired,
+  handleGroupsCountChange: PropTypes.func.isRequired,
 };
 
-export default SchoolTypeChooser;
+export default withStyles()(SchoolTypeChooser);

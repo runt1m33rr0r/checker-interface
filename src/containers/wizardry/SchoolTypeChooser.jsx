@@ -6,8 +6,13 @@ import { bindActionCreators } from 'redux';
 import Chooser from '../../components/wizardry/SchoolTypeChooser';
 import * as WizardActions from '../../actions/wizard-actions';
 
-const SchoolTypeChooser = ({ actions, schoolType }) => (
-  <Chooser schoolType={schoolType} handleChange={actions.setSchoolType} />
+const SchoolTypeChooser = ({ actions, schoolType, groupsCount }) => (
+  <Chooser
+    schoolType={schoolType}
+    groupsCount={groupsCount}
+    handleSchoolTypeChange={actions.setSchoolType}
+    handleGroupsCountChange={actions.setGroupsCount}
+  />
 );
 
 const mapDispatchToProps = dispatch => ({
@@ -16,11 +21,13 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = ({ wizard }) => ({
   schoolType: wizard.schoolType,
+  groupsCount: wizard.groupsCount,
 });
 
 SchoolTypeChooser.propTypes = {
   actions: PropTypes.object.isRequired,
   schoolType: PropTypes.string.isRequired,
+  groupsCount: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SchoolTypeChooser);

@@ -7,13 +7,9 @@ const initialState = {
 const userInterface = (state = initialState, action) => {
   switch (action.type) {
     case SET_PAGE_TITLE:
-      return Object.assign({}, state, {
-        title: action.title,
-      });
+      return { ...state, title: action.title };
     default:
-      return {
-        ...state,
-      };
+      return { ...state };
   }
 };
 

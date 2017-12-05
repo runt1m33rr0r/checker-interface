@@ -6,12 +6,9 @@ import Checkbox from 'material-ui/Checkbox';
 import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  ExpansionPanelActions,
 } from 'material-ui/ExpansionPanel';
 import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider';
 
 const styles = theme => ({
   root: {
@@ -92,12 +89,6 @@ const GroupComponent = ({
           </FormGroup>
         </div>
       </ExpansionPanelDetails>
-      <Divider />
-      <ExpansionPanelActions>
-        <Button raised color="primary">
-          Запази
-        </Button>
-      </ExpansionPanelActions>
     </ExpansionPanel>
   </div>
 );

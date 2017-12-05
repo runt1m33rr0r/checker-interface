@@ -11,6 +11,9 @@ import {
 } from '../constants/action-types';
 
 const generateGroups = (state) => {
+  if (state.groups.length > 0) {
+    return state.groups;
+  }
   const groups = [];
   const letters = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И'];
   const startGrade = state.schoolType === 'gymnasium' ? 8 : 1;

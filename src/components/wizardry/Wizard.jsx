@@ -9,6 +9,7 @@ import Typography from 'material-ui/Typography';
 import SchoolTypeChooser from '../../containers/wizardry/SchoolTypeChooser';
 import SubjectsCreator from '../../containers/wizardry/SubjectsCreator';
 import TimeslotCreator from '../../containers/wizardry/TimeslotCreator';
+import Group from '../../containers/wizardry/Group';
 
 const styles = theme => ({
   root: {
@@ -67,7 +68,7 @@ class VerticalLinearStepper extends Component {
       case 2:
         return <TimeslotCreator />;
       case 3:
-        return <h1>stuff</h1>;
+        return <Group groupName="9G" />;
       default:
         return 'Непозната стъпка';
     }

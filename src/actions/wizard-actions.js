@@ -5,6 +5,9 @@ import {
   ADD_TIMESLOT,
   REMOVE_TIMESLOT,
   SET_GROUPS_COUNT,
+  GENERATE_GROUPS,
+  ADD_SUBJECT_TO_GROUP,
+  REMOVE_SUBJECT_FROM_GROUP,
 } from '../constants/action-types';
 
 export const setSchoolType = type => ({
@@ -35,4 +38,18 @@ export const addTimeslot = timeslot => ({
 export const removeTimeslot = timeslot => ({
   type: REMOVE_TIMESLOT,
   timeslot,
+});
+
+export const generateGroups = () => ({ type: GENERATE_GROUPS });
+
+export const addSubjectToGroup = (groupName, subjectName) => ({
+  type: ADD_SUBJECT_TO_GROUP,
+  groupName,
+  subjectName,
+});
+
+export const removeSubjectFromGroup = (groupName, subjectName) => ({
+  type: REMOVE_SUBJECT_FROM_GROUP,
+  groupName,
+  subjectName,
 });

@@ -1,15 +1,13 @@
 language: node_js
 node_js:
   - "8"
-cache:
-  directories:
-  - node_modules
 script:
   - yarn build
 deploy:
-  provider: pages
+  provider: firebase
   skip_cleanup: true
-  github_token: $TOKEN
-  local_dir: build
+  token:
+    secure: $TOKEN
+  project: $PROJECT_NAME
   on:
     branch: master

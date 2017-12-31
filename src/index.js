@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import purple from 'material-ui/colors/purple';
 import green from 'material-ui/colors/green';
+import Reboot from 'material-ui/Reboot';
 import 'typeface-roboto';
 
 import './index.css';
@@ -29,6 +30,7 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
+      <Reboot />
       <BrowserRouter>
         <App />
       </BrowserRouter>

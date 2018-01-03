@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
-import Group from './Group';
-import * as WizardActions from '../../actions/wizard-actions';
+import Group from '../Group';
+import * as WizardActions from '../../../actions/wizard-actions';
 
 class GroupList extends Component {
   componentDidMount() {

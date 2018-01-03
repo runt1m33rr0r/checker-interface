@@ -1,3 +1,3 @@
-import Header from './HeaderController';
+import Header from './HeaderContainer';
 
 export default Header;

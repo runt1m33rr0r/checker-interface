@@ -6,29 +6,11 @@ import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
-import SchoolTypeChooser from '../../containers/wizardry/SchoolTypeChooser';
-import SubjectsCreator from '../../containers/wizardry/SubjectsCreator';
-import TimeslotCreator from '../../containers/wizardry/TimeslotCreator';
-import GroupList from '../../containers/wizardry/GroupList';
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    maxHeight: '100%',
-    overflow: 'auto',
-  },
-  button: {
-    marginRight: theme.spacing.unit,
-  },
-  actionsContainer: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  resetContainer: {
-    marginTop: 0,
-    padding: theme.spacing.unit * 3, // TODO: See TODO note on Stepper
-  },
-});
+import SchoolTypeChooser from '../SchoolType';
+import SubjectsCreator from '../SubjectsCreator';
+import TimeslotCreator from '../TimeslotCreator';
+import GroupList from '../GroupList';
+import styles from './styles';
 
 class VerticalLinearStepper extends Component {
   constructor(props) {

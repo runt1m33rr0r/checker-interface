@@ -4,7 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import Header from './Header';
 import Login from './Auth/Login';
 import Home from './Home';
-import Wizard from './wizardry/Wizard';
+import Wizard from './Wizard';
 import Classbook from './Classbook';
 import Register from './Auth/Register';
 import PrivateRoute from './common/PrivateRoute';

@@ -1,3 +1,3 @@
-import Home from './HomeController';
+import Home from './HomeContainer';
 
 export default Home;

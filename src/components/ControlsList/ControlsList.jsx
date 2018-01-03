@@ -5,18 +5,9 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import { Link } from 'react-router-dom';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    background: theme.palette.background.paper,
-  },
-  link: {
-    textDecoration: 'none',
-  },
-});
+import styles from './styles';
 
-function SimpleList(props) {
+function Controls(props) {
   const {
     classes, isAuthenticated, handleLogout, isRegistered,
   } = props;
@@ -59,11 +50,11 @@ function SimpleList(props) {
   );
 }
 
-SimpleList.propTypes = {
+Controls.propTypes = {
   classes: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   isRegistered: PropTypes.bool.isRequired,
   handleLogout: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(SimpleList);
+export default withStyles(styles)(Controls);

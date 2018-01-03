@@ -11,7 +11,7 @@ import Reboot from 'material-ui/Reboot';
 import 'typeface-roboto';
 
 import './index.css';
-import App from './containers/App';
+import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import reducer from './reducers';
 

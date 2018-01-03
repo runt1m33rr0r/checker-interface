@@ -4,10 +4,10 @@ import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 
-import PrimaryButton from './common/PrimaryButton';
-import styles from '../styles/forms';
+import PrimaryButton from '../../common/PrimaryButton';
+import styles from '../styles';
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
   constructor(props) {
     super(props);
 
@@ -24,10 +24,10 @@ class LoginForm extends Component {
   };
 
   render() {
-    if (this.props.isAuthenticated) {
+    if (this.props.isRegistered) {
       return (
         <Typography className={this.props.classes.container} type="display3" gutterBottom>
-          Вече сте влезли в профила си!
+          Вече сте се регистрирали!
         </Typography>
       );
     }
@@ -59,17 +59,17 @@ class LoginForm extends Component {
               password: this.state.password,
             });
           }}
-          content="Вход"
+          content="Регистрирай"
         />
       </form>
     );
   }
 }
 
-LoginForm.propTypes = {
+RegisterForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isRegistered: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles)(LoginForm);
+export default withStyles(styles)(RegisterForm);

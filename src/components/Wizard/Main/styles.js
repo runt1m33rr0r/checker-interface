@@ -1,19 +1,18 @@
 const styles = theme => ({
-  root: {
+  wizard: {
     width: '100%',
-    maxHeight: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
     overflow: 'auto',
   },
-  button: {
-    marginRight: theme.spacing.unit,
-  },
-  actionsContainer: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  resetContainer: {
-    marginTop: 0,
-    padding: theme.spacing.unit * 3, // TODO: See TODO note on Stepper
+  root: {
+    [theme.breakpoints.up('lg')]: {
+      paddingLeft: '250px',
+    },
   },
 });
 

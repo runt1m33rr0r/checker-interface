@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
+import MobileStepper from 'material-ui/MobileStepper';
 import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
 import SchoolTypeChooser from '../SchoolType';
 import SubjectsCreator from '../SubjectsCreator';
@@ -12,12 +12,13 @@ import TimeslotCreator from '../TimeslotCreator';
 import GroupList from '../GroupList';
 import styles from './styles';
 
-class VerticalLinearStepper extends Component {
+class Wizard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       activeStep: 0,
+      stepsCount: 4,
     };
   }
 
@@ -32,16 +33,6 @@ class VerticalLinearStepper extends Component {
       activeStep: this.state.activeStep - 1,
     });
   };
-
-  handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
-  };
-
-  getSteps() {
-    return ['Вид училище', 'Предмети', 'Часови диапазони', 'Паралелки'];
-  }
 
   getStepContent(step) {
     switch (step) {
@@ -59,56 +50,42 @@ class VerticalLinearStepper extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const steps = this.getSteps();
-    const { activeStep } = this.state;
+    const { classes, theme } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Stepper activeStep={activeStep} orientation="vertical">
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-              <StepContent>
-                {this.getStepContent(index)}
-                <div className={classes.actionsContainer}>
-                  <div>
-                    <Button
-                      disabled={activeStep === 0}
-                      onClick={this.handleBack}
-                      className={classes.button}
-                    >
-                      Назад
-                    </Button>
-                    <Button
-                      raised
-                      color="primary"
-                      onClick={this.handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? 'Приключи' : 'Напред'}
-                    </Button>
-                  </div>
-                </div>
-              </StepContent>
-            </Step>
-          ))}
-        </Stepper>
-        {activeStep === steps.length && (
-          <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>Всичко е настроено!</Typography>
-            <Button onClick={this.handleReset} className={classes.button}>
-              Изчисти
+      <div className={classes.wizard}>
+        {this.getStepContent(this.state.activeStep)}
+        <MobileStepper
+          className={classes.root}
+          type="progress"
+          steps={this.state.stepsCount}
+          position="bottom"
+          activeStep={this.state.activeStep}
+          nextButton={
+            <Button
+              dense
+              onClick={this.handleNext}
+              disabled={this.state.activeStep === this.state.stepsCount - 1}
+            >
+              Напред
+              {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </Button>
-          </Paper>
-        )}
+          }
+          backButton={
+            <Button dense onClick={this.handleBack} disabled={this.state.activeStep === 0}>
+              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+              Назад
+            </Button>
+          }
+        />
       </div>
     );
   }
 }
 
-VerticalLinearStepper.propTypes = {
-  classes: PropTypes.object,
+Wizard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(VerticalLinearStepper);
+export default withStyles(styles, { withTheme: true })(Wizard);

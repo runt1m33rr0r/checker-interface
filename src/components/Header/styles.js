@@ -17,12 +17,12 @@ const styles = theme => ({
   appBar: {
     position: 'absolute',
     marginLeft: drawerWidth,
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
   navIconHide: {
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'none',
     },
   },
@@ -34,7 +34,7 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: 250,
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       width: drawerWidth,
       position: 'absolute',
       height: '100%',
@@ -45,7 +45,7 @@ const styles = theme => ({
     width: '100%',
     padding: theme.spacing.unit * 3,
     marginTop: '56px',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       paddingLeft: theme.spacing.unit * 33,
       marginTop: '64px',
     },

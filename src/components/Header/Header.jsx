@@ -52,7 +52,6 @@ class Main extends Component {
             <Toolbar>
               <IconButton
                 color="contrast"
-                aria-label="open drawer"
                 onClick={this.handleDrawerToggle}
                 className={classes.navIconHide}
               >
@@ -63,7 +62,7 @@ class Main extends Component {
               </Typography>
             </Toolbar>
           </AppBar>
-          <Hidden mdUp>
+          <Hidden lgUp>
             <Drawer
               type="temporary"
               anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -71,7 +70,7 @@ class Main extends Component {
               classes={{
                 paper: classes.drawerPaper,
               }}
-              onRequestClose={this.handleDrawerToggle}
+              onClose={this.handleDrawerToggle}
               ModalProps={{
                 keepMounted: true,
               }}

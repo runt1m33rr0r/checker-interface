@@ -10,7 +10,8 @@ import styles from './styles';
 
 class GroupList extends Component {
   componentDidMount() {
-    this.props.generateGroups();
+    const { generateGroups, schoolType, groupsCount } = this.props;
+    generateGroups(schoolType, groupsCount);
   }
 
   render() {
@@ -61,6 +62,8 @@ GroupList.propTypes = {
   classes: PropTypes.any.isRequired,
   groups: PropTypes.array.isRequired,
   subjects: PropTypes.array.isRequired,
+  schoolType: PropTypes.string.isRequired,
+  groupsCount: PropTypes.number.isRequired,
   handleAddSubject: PropTypes.func.isRequired,
   handleRemoveSubject: PropTypes.func.isRequired,
   generateGroups: PropTypes.func.isRequired,

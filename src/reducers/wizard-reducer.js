@@ -5,34 +5,15 @@ import {
   ADD_TIMESLOT,
   REMOVE_TIMESLOT,
   SET_GROUPS_COUNT,
-  GENERATE_GROUPS,
   ADD_SUBJECT_TO_GROUP,
   REMOVE_SUBJECT_FROM_GROUP,
+  GENERATE_GROUPS_STARTED,
+  GENERATE_GROUPS_FINISHED,
 } from '../constants/action-types';
-
-const generateGroups = (state) => {
-  if (state.groups.length > 0) {
-    return state.groups;
-  }
-  const groups = [];
-  const letters = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И'];
-  const startGrade = state.schoolType === 'gymnasium' ? 8 : 1;
-  const endGrade = state.schoolType === 'gymnasium' ? 12 : 7;
-
-  for (let grade = startGrade; grade <= endGrade; grade += 1) {
-    for (
-      let groupIdx = 1;
-      groupIdx <= state.groupsCount && groupIdx < letters.length;
-      groupIdx += 1
-    ) {
-      groups.push({ name: `${grade}${letters[groupIdx - 1]}`, subjects: [] });
-    }
-  }
-  return groups;
-};
 
 const wizard = (
   state = {
+    generating: false,
     schoolType: 'gymnasium',
     groupsCount: 6,
     subjects: [],
@@ -74,8 +55,10 @@ const wizard = (
         ...state,
         timeslots: state.timeslots.filter(timeslot => timeslot !== action.timeslot),
       };
-    case GENERATE_GROUPS:
-      return { ...state, groups: generateGroups(state) };
+    case GENERATE_GROUPS_STARTED:
+      return { ...state, generating: true };
+    case GENERATE_GROUPS_FINISHED:
+      return { ...state, generating: false, groups: action.groups };
     case ADD_SUBJECT_TO_GROUP:
       return {
         ...state,

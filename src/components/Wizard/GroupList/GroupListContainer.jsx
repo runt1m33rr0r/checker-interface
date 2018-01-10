@@ -7,6 +7,8 @@ import GroupList from './GroupList';
 const mapStateToProps = ({ wizard }) => ({
   groups: wizard.groups,
   subjects: wizard.subjects,
+  schoolType: wizard.schoolType,
+  groupsCount: wizard.groupsCount,
 });
 
 const mapDispatchToProps = (dispatch) => {

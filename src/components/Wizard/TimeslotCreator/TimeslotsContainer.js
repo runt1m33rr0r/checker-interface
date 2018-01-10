@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import Creator from './Timeslots';
 import * as WizardActions from '../../../actions/wizard-actions';
+import toJS from '../../common/ToJS';
 
 const mapDispatchToProps = (dispatch) => {
   const actions = bindActionCreators(WizardActions, dispatch);
@@ -12,8 +13,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = ({ wizard }) => ({
-  timeslots: wizard.timeslots,
+const mapStateToProps = state => ({
+  timeslots: state.get('wizard').get('timeslots'),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Creator);
+export default connect(mapStateToProps, mapDispatchToProps)(toJS(Creator));

@@ -24,22 +24,22 @@ class GroupList extends Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {groups.map(group => <TableCell key={group.name}>{group.name}</TableCell>)}
+              {Object.keys(groups).map(key => <TableCell key={key}>{key}</TableCell>)}
             </TableRow>
           </TableHead>
           <TableBody>
             {subjects.map(subject => (
               <TableRow key={subject}>
-                {groups.map(group => (
-                  <TableCell key={group.name}>
+                {Object.keys(groups).map(key => (
+                  <TableCell key={key}>
                     <FormControlLabel
                       control={
                         <Switch
                           onChange={(e) => {
                             if (e.target.checked) {
-                              handleAddSubject(group.name, e.target.value);
+                              handleAddSubject(key, e.target.value);
                             } else {
-                              handleRemoveSubject(group.name, e.target.value);
+                              handleRemoveSubject(key, e.target.value);
                             }
                           }}
                           value={subject}
@@ -60,7 +60,7 @@ class GroupList extends Component {
 
 GroupList.propTypes = {
   classes: PropTypes.any.isRequired,
-  groups: PropTypes.array.isRequired,
+  groups: PropTypes.object.isRequired,
   subjects: PropTypes.array.isRequired,
   schoolType: PropTypes.string.isRequired,
   groupsCount: PropTypes.number.isRequired,

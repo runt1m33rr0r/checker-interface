@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Home from './HomePage';
 
-class HomeController extends Component {
+class HomeContainer extends Component {
   componentDidMount() {
     this.props.setTitle(this.props.title);
   }
@@ -13,9 +13,9 @@ class HomeController extends Component {
   }
 }
 
-HomeController.propTypes = {
+HomeContainer.propTypes = {
   title: PropTypes.string.isRequired,
   setTitle: PropTypes.func.isRequired,
 };
 
-export default HomeController;
+export default HomeContainer;

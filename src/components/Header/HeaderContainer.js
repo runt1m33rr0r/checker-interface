@@ -1,10 +1,14 @@
 import { connect } from 'react-redux';
 
 import Header from './Header';
+import toJS from '../common/ToJS';
 
-const mapStateToProps = ({ auth }) => ({
-  isAuthenticated: auth.isAuthenticated,
-  username: auth.username,
-});
+const mapStateToProps = (reducers) => {
+  const auth = reducers.get('auth');
+  return {
+    isAuthenticated: auth.get('isAuthenticated'),
+    username: auth.get('username'),
+  };
+};
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(toJS(Header));

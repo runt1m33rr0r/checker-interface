@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import RegisterForm from './RegisterForm';
 import { registerUser } from '../../../actions/auth-actions';
+import toJS from '../../common/ToJS';
 
 class RegisterContainer extends Component {
   componentDidMount() {
@@ -24,8 +25,8 @@ const mapDispatchToProps = dispatch => ({
   handleSubmit: creds => dispatch(registerUser(creds)),
 });
 
-const mapStateToProps = ({ auth }) => ({
-  isRegistered: auth.isRegistered,
+const mapStateToProps = state => ({
+  isRegistered: state.get('auth').get('isRegistered'),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(toJS(RegisterContainer));

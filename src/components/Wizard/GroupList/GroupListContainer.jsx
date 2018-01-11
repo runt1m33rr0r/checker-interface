@@ -5,7 +5,7 @@ import * as WizardActions from '../../../actions/wizard-actions';
 import GroupList from './GroupList';
 
 const mapStateToProps = ({ wizard }) => ({
-  groups: wizard.groups,
+  groups: wizard.groupNames,
   subjects: wizard.subjects,
   schoolType: wizard.schoolType,
   groupsCount: wizard.groupsCount,

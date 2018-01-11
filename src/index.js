@@ -9,6 +9,7 @@ import purple from 'material-ui/colors/purple';
 import green from 'material-ui/colors/green';
 import Reboot from 'material-ui/Reboot';
 import 'typeface-roboto';
+import invariant from 'redux-immutable-state-invariant';
 
 import './index.css';
 import App from './components/App';
@@ -17,7 +18,8 @@ import reducer from './reducers';
 
 /* eslint no-underscore-dangle: 0 */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
+const middleware = process.env.NODE_ENV !== 'production' ? [invariant(), thunk] : [thunk];
+const store = createStore(reducer, composeEnhancers(applyMiddleware(...middleware)));
 
 const theme = createMuiTheme({
   palette: {

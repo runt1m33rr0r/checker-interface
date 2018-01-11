@@ -23,23 +23,21 @@ class GroupList extends Component {
       <Paper className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
-            <TableRow>
-              {groups.map(group => <TableCell key={group.name}>{group.name}</TableCell>)}
-            </TableRow>
+            <TableRow>{groups.map(group => <TableCell key={group}>{group}</TableCell>)}</TableRow>
           </TableHead>
           <TableBody>
             {subjects.map(subject => (
               <TableRow key={subject}>
                 {groups.map(group => (
-                  <TableCell key={group.name}>
+                  <TableCell key={group}>
                     <FormControlLabel
                       control={
                         <Switch
                           onChange={(e) => {
                             if (e.target.checked) {
-                              handleAddSubject(group.name, e.target.value);
+                              handleAddSubject(group, e.target.value);
                             } else {
-                              handleRemoveSubject(group.name, e.target.value);
+                              handleRemoveSubject(group, e.target.value);
                             }
                           }}
                           value={subject}

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import LoginForm from './LoginForm';
 import { loginUser } from '../../../actions/auth-actions';
-import toJS from '../../common/ToJS';
 
 class LoginContainer extends Component {
   componentDidMount() {
@@ -25,8 +24,8 @@ const mapDispatchToProps = dispatch => ({
   handleSubmit: creds => dispatch(loginUser(creds)),
 });
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.get('auth').get('isAuthenticated'),
+const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(toJS(LoginContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

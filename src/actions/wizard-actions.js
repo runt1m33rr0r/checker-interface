@@ -48,14 +48,14 @@ const generateFinish = groups => ({ type: GENERATE_GROUPS_FINISHED, groups });
 export const generateGroups = (schoolType, groupsCount) => (dispatch) => {
   dispatch(generateStart());
 
-  const groups = {};
+  const groups = [];
   const letters = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И'];
   const startGrade = schoolType === 'gymnasium' ? 8 : 1;
   const endGrade = schoolType === 'gymnasium' ? 12 : 7;
 
   for (let grade = startGrade; grade <= endGrade; grade += 1) {
     for (let groupIdx = 1; groupIdx <= groupsCount && groupIdx < letters.length; groupIdx += 1) {
-      groups[`${grade}${letters[groupIdx - 1]}`] = [];
+      groups.push({ name: `${grade}${letters[groupIdx - 1]}`, subjects: [] });
     }
   }
 

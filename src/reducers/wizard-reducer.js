@@ -1,5 +1,3 @@
-import { Set, Map, fromJS } from 'immutable';
-
 import {
   SET_SCHOOL_TYPE,
   ADD_SUBJECT,
@@ -14,39 +12,79 @@ import {
 } from '../constants/action-types';
 
 const wizard = (
-  state = Map({
+  state = {
     generating: false,
     schoolType: 'gymnasium',
     groupsCount: 6,
-    subjects: Set(),
-    timeslots: Set(),
-    groups: Map(),
-  }),
+    subjects: [],
+    timeslots: [],
+    groups: [],
+  },
   action,
 ) => {
   switch (action.type) {
     case SET_SCHOOL_TYPE:
-      return state.set('schoolType', action.schoolType);
+      return { ...state, schoolType: action.schoolType };
     case SET_GROUPS_COUNT:
-      return state.set('groupsCount', action.schoolType);
+      return { ...state, groupsCount: action.count };
     case ADD_SUBJECT:
-      return state.update('subjects', subjects => subjects.add(action.subjectName));
+      if (state.subjects.includes(action.subjectName)) {
+        return state;
+      }
+
+      return {
+        ...state,
+        subjects: [...state.subjects, action.subjectName],
+      };
     case REMOVE_SUBJECT:
-      return state.update('subjects', subjects => subjects.delete(action.subjectName));
+      return {
+        ...state,
+        subjects: state.subjects.filter(subject => subject !== action.subjectName),
+      };
     case ADD_TIMESLOT:
-      return state.update('timeslots', timeslots => timeslots.add(action.timeslot));
+      if (state.timeslots.includes(action.timeslot)) {
+        return state;
+      }
+
+      return {
+        ...state,
+        timeslots: [...state.timeslots, action.timeslot],
+      };
     case REMOVE_TIMESLOT:
-      return state.update('timeslots', timeslots => timeslots.delete(action.timeslot));
+      return {
+        ...state,
+        timeslots: state.timeslots.filter(timeslot => timeslot !== action.timeslot),
+      };
     case GENERATE_GROUPS_STARTED:
-      return state.set('generating', true);
+      return { ...state, generating: true };
     case GENERATE_GROUPS_FINISHED:
-      return state.merge({ generating: false, groups: fromJS(action.groups) });
+      return { ...state, generating: false, groups: action.groups };
     case ADD_SUBJECT_TO_GROUP:
-      return state.updateIn(['groups', action.groupName], value => value.push(action.subjectName));
+      return {
+        ...state,
+        groups: state.groups.map((group) => {
+          if (group.name !== action.groupName) {
+            return group;
+          }
+          return {
+            ...group,
+            subjects: [...group.subjects, action.subjectName],
+          };
+        }),
+      };
     case REMOVE_SUBJECT_FROM_GROUP:
-      return state.updateIn(['groups', action.groupName], value =>
-        value.delete(value.indexOf(action.subjectName)),
-      );
+      return {
+        ...state,
+        groups: state.groups.map((group) => {
+          if (group.name !== action.groupName) {
+            return group;
+          }
+          return {
+            ...group,
+            subjects: group.subjects.filter(subject => subject !== action.subjectName),
+          };
+        }),
+      };
     default:
       return state;
   }

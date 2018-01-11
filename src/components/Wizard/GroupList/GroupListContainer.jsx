@@ -3,17 +3,13 @@ import { bindActionCreators } from 'redux';
 
 import * as WizardActions from '../../../actions/wizard-actions';
 import GroupList from './GroupList';
-import toJS from '../../common/ToJS';
 
-const mapStateToProps = (state) => {
-  const wizard = state.get('wizard');
-  return {
-    groups: wizard.get('groups'),
-    subjects: wizard.get('subjects'),
-    schoolType: wizard.get('schoolType'),
-    groupsCount: wizard.get('groupsCount'),
-  };
-};
+const mapStateToProps = ({ wizard }) => ({
+  groups: wizard.groups,
+  subjects: wizard.subjects,
+  schoolType: wizard.schoolType,
+  groupsCount: wizard.groupsCount,
+});
 
 const mapDispatchToProps = (dispatch) => {
   const actions = bindActionCreators(WizardActions, dispatch);
@@ -24,4 +20,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(toJS(GroupList));
+export default connect(mapStateToProps, mapDispatchToProps)(GroupList);

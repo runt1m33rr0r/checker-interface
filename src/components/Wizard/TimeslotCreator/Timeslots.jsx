@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
+import MenuItem from 'material-ui/Menu/MenuItem';
 import { withStyles } from 'material-ui/styles';
 
 import PrimaryButton from '../../common/PrimaryButton';
@@ -14,20 +15,34 @@ class TimeslotCreator extends Component {
     super(props);
 
     this.state = {
-      from: '00:00',
-      to: '00:00',
+      fromHour: 0,
+      toHour: 0,
+      fromMinute: 0,
+      toMinute: 0,
+      day: 1,
+      days: ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота', 'Неделя'],
     };
   }
 
   handleChangeFrom = (e) => {
+    const val = e.target.value.split(':');
     this.setState({
-      from: e.target.value,
+      fromHour: parseInt(val[0], 10),
+      fromMinute: parseInt(val[1], 10),
     });
   };
 
   handleChangeTo = (e) => {
+    const val = e.target.value.split(':');
     this.setState({
-      to: e.target.value,
+      fromHour: parseInt(val[0], 10),
+      fromMinute: parseInt(val[1], 10),
+    });
+  };
+
+  handleChangeDay = (e) => {
+    this.setState({
+      day: parseInt(this.state.days.indexOf(e.target.value) + 1, 10),
     });
   };
 
@@ -39,39 +54,75 @@ class TimeslotCreator extends Component {
         <form className={classes.form} noValidate autoComplete="off">
           <div className={classes.pickers}>
             <TextField
-              id="time"
+              id="fromTime"
               label="От"
               type="time"
-              defaultValue={this.state.from}
+              defaultValue="00:00"
               className={classes.textField}
               onChange={this.handleChangeFrom}
             />
             <TextField
-              id="time"
+              id="toTime"
               label="До"
               type="time"
-              defaultValue={this.state.to}
+              defaultValue="00:00"
               className={classes.textField}
               onChange={this.handleChangeTo}
             />
+            <TextField
+              id="day"
+              label="Ден"
+              select
+              value={this.state.days[this.state.day - 1]}
+              className={classes.textField}
+              onChange={this.handleChangeDay}
+            >
+              {this.state.days.map(option => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
           <PrimaryButton
             onClick={(e) => {
               e.preventDefault();
-              this.props.handleAdd(`От ${this.state.from} до ${this.state.to}`);
+              this.props.handleAdd(
+                this.state.fromHour,
+                this.state.fromMinute,
+                this.state.toHour,
+                this.state.toMinute,
+                this.state.day,
+              );
             }}
             content="Добави"
           />
         </form>
         <List>
-          {this.props.timeslots.map(value => (
-            <ListItem key={value} dense className={classes.listItem}>
-              <ListItemText primary={value} />
+          {this.props.timeslots.map(timeslot => (
+            <ListItem
+              key={`${timeslot.fromHour}:${timeslot.fromMinute}-${timeslot.toHour}:${
+                timeslot.toMinute
+              }-${timeslot.day}`}
+              dense
+              className={classes.listItem}
+            >
+              <ListItemText
+                primary={`${timeslot.fromHour}:${timeslot.fromMinute}-${timeslot.toHour}:${
+                  timeslot.toMinute
+                }-${timeslot.day}`}
+              />
               <ListItemSecondaryAction>
                 <IconButton
                   onClick={(e) => {
                     e.preventDefault();
-                    this.props.handleRemove(value);
+                    this.props.handleRemove(
+                      this.state.fromHour,
+                      this.state.fromMinute,
+                      this.state.toHour,
+                      this.state.toMinute,
+                      this.state.day,
+                    );
                   }}
                 >
                   <DeleteIcon />

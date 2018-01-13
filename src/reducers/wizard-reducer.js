@@ -11,7 +11,14 @@ import {
   GENERATE_GROUPS_FINISHED,
   FINISH_WIZARD,
 } from '../constants/action-types';
-import { addToArray, removeFromArray, addToArrayInObj, removeFromArrayInObj } from './utils';
+import {
+  addToArray,
+  removeFromArray,
+  addToArrayInObj,
+  removeFromArrayInObj,
+  addObjToArray,
+  removeObjFromArray,
+} from './utils';
 
 const wizard = (
   state = {
@@ -43,12 +50,24 @@ const wizard = (
     case ADD_TIMESLOT:
       return {
         ...state,
-        timeslots: addToArray(state.timeslots, action.timeslot),
+        timeslots: addObjToArray(state.timeslots, {
+          fromHour: action.fromHour,
+          fromMinute: action.fromMinute,
+          toHour: action.toHour,
+          toMinute: action.toMinute,
+          day: action.day,
+        }),
       };
     case REMOVE_TIMESLOT:
       return {
         ...state,
-        timeslots: removeFromArray(state.timeslots, action.timeslot),
+        timeslots: removeObjFromArray(state.timeslots, {
+          fromHour: action.fromHour,
+          fromMinute: action.fromMinute,
+          toHour: action.toHour,
+          toMinute: action.toMinute,
+          day: action.day,
+        }),
       };
     case GENERATE_GROUPS_STARTED:
       return { ...state, generating: true };

@@ -9,6 +9,7 @@ import {
   GENERATE_GROUPS_FINISHED,
   ADD_SUBJECT_TO_GROUP,
   REMOVE_SUBJECT_FROM_GROUP,
+  FINISH_WIZARD,
 } from '../constants/action-types';
 
 export const setSchoolType = type => ({
@@ -80,3 +81,9 @@ export const removeSubjectFromGroup = (groupName, subjectName) => ({
   groupName,
   subjectName,
 });
+
+export const finishWizard = () => (dispatch) => {
+  console.log('finishing');
+
+  dispatch({ type: FINISH_WIZARD });
+};

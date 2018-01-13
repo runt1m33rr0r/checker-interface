@@ -1,48 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Header from './Header';
 import Login from './Auth/Login';
 import Home from './Home';
 import Wizard from './Wizard';
-import Classbook from './Classbook';
+// import Classbook from './Classbook';
 import Register from './Auth/Register';
 import PrivateRoute from './common/PrivateRoute';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = props => (
+  <Header title={props.title}>
+    <Switch>
+      <Route exact path="/" render={() => <Home title="Начало" />} />
+      <Route path="/login" render={() => <Login title="Вход" />} />
+      <Route path="/register" render={() => <Register title="Регистрация" />} />
+      <PrivateRoute path="/wizard" component={Wizard} title="Начална настройка" />
+      <Route path="/book" />
+    </Switch>
+  </Header>
+);
 
-    this.state = { title: 'Home' };
-  }
+App.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
-  render() {
-    const setTitle = (title) => {
-      if (this.state.title !== title) {
-        this.setState({ title });
-      }
-    };
+const mapStateToProps = ({ ui }) => ({
+  title: ui.title,
+});
 
-    return (
-      <Header title={this.state.title}>
-        <Switch>
-          <Route exact path="/" render={() => <Home title="Начало" setTitle={setTitle} />} />
-          <Route path="/login" render={() => <Login title="Вход" setTitle={setTitle} />} />
-          <Route
-            path="/register"
-            render={() => <Register title="Регистрация" setTitle={setTitle} />}
-          />
-          <PrivateRoute
-            path="/wizard"
-            component={Wizard}
-            title="Начална настройка"
-            setTitle={setTitle}
-          />
-          <Route path="/book" component={Classbook} />
-        </Switch>
-      </Header>
-    );
-  }
-}
-
-export default withRouter(App);
+export default withRouter(connect(mapStateToProps)(App));

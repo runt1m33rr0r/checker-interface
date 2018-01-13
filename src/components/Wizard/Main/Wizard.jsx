@@ -50,7 +50,7 @@ class Wizard extends Component {
   }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, handleFinish } = this.props;
 
     return (
       <div className={classes.wizard}>
@@ -64,10 +64,12 @@ class Wizard extends Component {
           nextButton={
             <Button
               dense
-              onClick={this.handleNext}
-              disabled={this.state.activeStep === this.state.stepsCount - 1}
+              onClick={
+                this.state.activeStep === this.state.stepsCount - 1 ? handleFinish : this.handleNext
+              }
+              disabled={this.state.activeStep === this.state.stepsCount}
             >
-              Напред
+              {this.state.activeStep === this.state.stepsCount - 1 ? 'Готово' : 'Напред'}
               {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </Button>
           }
@@ -86,6 +88,7 @@ class Wizard extends Component {
 Wizard.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  handleFinish: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(Wizard);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import { setTitle } from '../../actions/ui-actions';
 import Home from './HomePage';
 
 class HomeController extends Component {
@@ -18,4 +20,8 @@ HomeController.propTypes = {
   setTitle: PropTypes.func.isRequired,
 };
 
-export default HomeController;
+const mapDispatchToProps = dispatch => ({
+  setTitle: title => dispatch(setTitle(title)),
+});
+
+export default connect(null, mapDispatchToProps)(HomeController);

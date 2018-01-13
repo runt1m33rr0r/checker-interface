@@ -1,9 +1,10 @@
-import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import RegisterForm from './RegisterForm';
 import { registerUser } from '../../../actions/auth-actions';
+import { setTitle } from '../../../actions/ui-actions';
 
 class RegisterContainer extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ RegisterContainer.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   handleSubmit: creds => dispatch(registerUser(creds)),
+  setTitle: title => dispatch(setTitle(title)),
 });
 
 const mapStateToProps = ({ auth }) => ({

@@ -9,6 +9,7 @@ import {
   REMOVE_SUBJECT_FROM_GROUP,
   GENERATE_GROUPS_STARTED,
   GENERATE_GROUPS_FINISHED,
+  FINISH_WIZARD,
 } from '../constants/action-types';
 import { addToArray, removeFromArray, addToArrayInObj, removeFromArrayInObj } from './utils';
 
@@ -67,6 +68,14 @@ const wizard = (
       return {
         ...state,
         groups: removeFromArrayInObj(state.groups, action.groupName, action.subjectName),
+      };
+    case FINISH_WIZARD:
+      return {
+        ...state,
+        subjects: [],
+        timeslots: [],
+        groupNames: [],
+        groups: {},
       };
     default:
       return state;

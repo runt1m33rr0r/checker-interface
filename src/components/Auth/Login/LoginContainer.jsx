@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import LoginForm from './LoginForm';
 import { loginUser } from '../../../actions/auth-actions';
+import { setTitle } from '../../../actions/ui-actions';
 
 class LoginContainer extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ LoginContainer.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   handleSubmit: creds => dispatch(loginUser(creds)),
+  setTitle: title => dispatch(setTitle(title)),
 });
 
 const mapStateToProps = ({ auth }) => ({

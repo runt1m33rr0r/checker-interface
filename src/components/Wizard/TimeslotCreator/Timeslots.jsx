@@ -46,8 +46,16 @@ class TimeslotCreator extends Component {
     });
   };
 
+  handleRemove = (e) => {
+    console.log(e);
+  };
+
   render() {
     const { classes } = this.props;
+    const parseTimeslot = timeslot =>
+      `${timeslot.fromHour}:${timeslot.fromMinute}-${timeslot.toHour}:${timeslot.toMinute}-${
+        timeslot.day
+      }`;
 
     return (
       <div className={classes.root}>
@@ -100,32 +108,11 @@ class TimeslotCreator extends Component {
         </form>
         <List>
           {this.props.timeslots.map(timeslot => (
-            <ListItem
-              key={`${timeslot.fromHour}:${timeslot.fromMinute}-${timeslot.toHour}:${
-                timeslot.toMinute
-              }-${timeslot.day}`}
-              dense
-              className={classes.listItem}
-            >
-              <ListItemText
-                primary={`${timeslot.fromHour}:${timeslot.fromMinute}-${timeslot.toHour}:${
-                  timeslot.toMinute
-                }-${timeslot.day}`}
-              />
+            <ListItem key={parseTimeslot(timeslot)} dense className={classes.listItem}>
+              <ListItemText primary={parseTimeslot(timeslot)} />
               <ListItemSecondaryAction>
-                <IconButton
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.props.handleRemove(
-                      this.state.fromHour,
-                      this.state.fromMinute,
-                      this.state.toHour,
-                      this.state.toMinute,
-                      this.state.day,
-                    );
-                  }}
-                >
-                  <DeleteIcon />
+                <IconButton>
+                  <DeleteIcon onClick={() => this.handleRemove(parseTimeslot(timeslot))} />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

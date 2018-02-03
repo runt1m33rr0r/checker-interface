@@ -51,7 +51,7 @@ class Main extends Component {
           <AppBar className={classes.appBar}>
             <Toolbar>
               <IconButton
-                color="contrast"
+                color="default"
                 onClick={this.handleDrawerToggle}
                 className={classes.navIconHide}
               >

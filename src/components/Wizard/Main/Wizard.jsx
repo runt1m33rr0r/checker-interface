@@ -63,7 +63,7 @@ class Wizard extends Component {
           activeStep={this.state.activeStep}
           nextButton={
             <Button
-              dense
+              size="small"
               onClick={
                 this.state.activeStep === this.state.stepsCount - 1 ? handleFinish : this.handleNext
               }
@@ -74,7 +74,7 @@ class Wizard extends Component {
             </Button>
           }
           backButton={
-            <Button dense onClick={this.handleBack} disabled={this.state.activeStep === 0}>
+            <Button size="small" onClick={this.handleBack} disabled={this.state.activeStep === 0}>
               {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
               Назад
             </Button>

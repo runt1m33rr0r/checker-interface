@@ -22,7 +22,7 @@ import {
 
 const wizard = (
   state = {
-    generating: false,
+    isGenerating: false,
     schoolType: 'gymnasium',
     groupsCount: 6,
     subjects: [],
@@ -70,11 +70,11 @@ const wizard = (
         }),
       };
     case GENERATE_GROUPS_STARTED:
-      return { ...state, generating: true };
+      return { ...state, isGenerating: true };
     case GENERATE_GROUPS_FINISHED:
       return {
         ...state,
-        generating: false,
+        isGenerating: false,
         groups: action.groups,
         groupNames: action.groupNames,
       };

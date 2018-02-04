@@ -10,6 +10,7 @@ import Hidden from 'material-ui/Hidden';
 import MenuIcon from 'material-ui-icons/Menu';
 
 import ControlsList from '../ControlsList';
+import Loading from '../common/Loading';
 import styles from './styles';
 
 class Main extends Component {
@@ -96,7 +97,7 @@ class Main extends Component {
               {drawer}
             </Drawer>
           </Hidden>
-          <main className={classes.content}>{children}</main>
+          <main className={classes.content}>{!this.props.isLoading ? children : <Loading />}</main>
         </div>
       </div>
     );
@@ -110,6 +111,7 @@ Main.propTypes = {
   children: PropTypes.element.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   username: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(Main);

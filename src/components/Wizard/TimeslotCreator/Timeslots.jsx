@@ -16,8 +16,8 @@ class TimeslotCreator extends Component {
 
     this.state = {
       fromHour: 0,
-      toHour: 0,
       fromMinute: 0,
+      toHour: 0,
       toMinute: 0,
       day: 1,
       days: ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота', 'Неделя'],
@@ -26,6 +26,7 @@ class TimeslotCreator extends Component {
 
   handleChangeFrom = (e) => {
     const val = e.target.value.split(':');
+    console.log(val);
     this.setState({
       fromHour: parseInt(val[0], 10),
       fromMinute: parseInt(val[1], 10),
@@ -35,8 +36,8 @@ class TimeslotCreator extends Component {
   handleChangeTo = (e) => {
     const val = e.target.value.split(':');
     this.setState({
-      fromHour: parseInt(val[0], 10),
-      fromMinute: parseInt(val[1], 10),
+      toHour: parseInt(val[0], 10),
+      toMinute: parseInt(val[1], 10),
     });
   };
 
@@ -46,16 +47,27 @@ class TimeslotCreator extends Component {
     });
   };
 
-  handleRemove = (e) => {
-    console.log(e);
+  timeslotToString = (timeslot) => {
+    const week = {
+      1: 'Понеделник',
+      2: 'Вторник',
+      3: 'Сряда',
+      4: 'Четвъртък',
+      5: 'Петък',
+      6: 'Събота',
+      7: 'Неделя',
+    };
+    const day = week[timeslot.day];
+    const modifyTime = time => (parseInt(time, 10) <= 9 ? `0${time}` : time);
+    const fromHour = modifyTime(timeslot.fromHour);
+    const fromMinute = modifyTime(timeslot.fromMinute);
+    const toHour = modifyTime(timeslot.toHour);
+    const toMinute = modifyTime(timeslot.toMinute);
+    return `${day} от ${fromHour}:${fromMinute} до ${toHour}:${toMinute}`;
   };
 
   render() {
-    const { classes } = this.props;
-    const parseTimeslot = timeslot =>
-      `${timeslot.fromHour}:${timeslot.fromMinute}-${timeslot.toHour}:${timeslot.toMinute}-${
-        timeslot.day
-      }`;
+    const { classes, handleRemove, handleAdd } = this.props;
 
     return (
       <div className={classes.root}>
@@ -95,7 +107,7 @@ class TimeslotCreator extends Component {
           <PrimaryButton
             onClick={(e) => {
               e.preventDefault();
-              this.props.handleAdd(
+              handleAdd(
                 this.state.fromHour,
                 this.state.fromMinute,
                 this.state.toHour,
@@ -108,11 +120,21 @@ class TimeslotCreator extends Component {
         </form>
         <List>
           {this.props.timeslots.map(timeslot => (
-            <ListItem key={parseTimeslot(timeslot)} dense className={classes.listItem}>
-              <ListItemText primary={parseTimeslot(timeslot)} />
+            <ListItem key={this.timeslotToString(timeslot)} dense className={classes.listItem}>
+              <ListItemText primary={this.timeslotToString(timeslot)} />
               <ListItemSecondaryAction>
                 <IconButton>
-                  <DeleteIcon onClick={() => this.handleRemove(parseTimeslot(timeslot))} />
+                  <DeleteIcon
+                    onClick={() =>
+                      handleRemove(
+                        timeslot.fromHour,
+                        timeslot.fromMinute,
+                        timeslot.toHour,
+                        timeslot.toMinute,
+                        timeslot.day,
+                      )
+                    }
+                  />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

@@ -1,48 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
-import Switch from 'material-ui/Switch';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Checkbox from 'material-ui/Checkbox';
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-});
+import styles from './styles';
 
 const Group = ({
-  classes, groupName, subjects, handleAddSubject, handleRemoveSubject,
-}) => (
-  <div className={classes.root}>
-    <List>
-      {subjects.map(subject => (
-        <ListItem key={subject}>
-          <ListItemText primary={subject} />
-          <ListItemSecondaryAction>
-            <Switch
+  classes, groupName, groups, subjects, handleAddSubject, handleRemoveSubject,
+}) => {
+  const check = (name, subject) => groups[name].indexOf(subject) >= 0;
+  return (
+    <div className={classes.root}>
+      <List>
+        {subjects.map(subject => (
+          <ListItem key={subject}>
+            <Checkbox
+              checked={check(groupName, subject)}
               onChange={(e) => {
-                console.log(subject);
-                console.log(groupName);
-                // if (e.target.checked) {
-                //   handleAddSubject(subject, groupName);
-                // } else {
-                //   handleRemoveSubject(subject, groupName);
-                // }
+                if (e.target.checked) {
+                  handleAddSubject(groupName, subject);
+                } else {
+                  handleRemoveSubject(groupName, subject);
+                }
               }}
             />
-          </ListItemSecondaryAction>
-        </ListItem>
-      ))}
-    </List>
-  </div>
-);
+            <ListItemText primary={subject} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+};
 
 Group.propTypes = {
   classes: PropTypes.object.isRequired,
   groupName: PropTypes.string.isRequired,
   subjects: PropTypes.array.isRequired,
+  groups: PropTypes.object.isRequired,
   handleAddSubject: PropTypes.func.isRequired,
   handleRemoveSubject: PropTypes.func.isRequired,
 };

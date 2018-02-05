@@ -5,14 +5,7 @@ import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
 import Group from '../Group';
-
-const styles = theme => ({
-  root: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-});
+import styles from './styles';
 
 class ScrollableTabsButtonAuto extends Component {
   constructor(props) {

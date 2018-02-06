@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 
 const PrimaryButton = props => (
-  <Button raised color="primary" onClick={props.onClick} className={props.classes.button}>
+  <Button variant="raised" color="primary" onClick={props.onClick} className={props.classes.button}>
     {props.content}
   </Button>
 );

@@ -7,11 +7,10 @@ const styles = theme => ({
     alignContent: 'center',
     width: '100%',
     height: '100%',
-    textAlign: 'center',
+    minHeight: '200px',
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    margin: theme.spacing.unit,
     width: 200,
   },
 });

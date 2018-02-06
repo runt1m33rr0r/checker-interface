@@ -7,6 +7,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
+import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 
 import ControlsList from '../ControlsList';
@@ -20,13 +21,11 @@ class Main extends Component {
     this.state = {
       mobileOpen: false,
     };
-
-    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
   }
 
-  handleDrawerToggle() {
+  handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
-  }
+  };
 
   render() {
     const {
@@ -42,6 +41,7 @@ class Main extends Component {
             </Typography>
           ) : null}
         </div>
+        <Divider />
         <ControlsList />
       </div>
     );
@@ -52,20 +52,21 @@ class Main extends Component {
           <AppBar className={classes.appBar}>
             <Toolbar>
               <IconButton
-                color="default"
+                color="inherit"
+                aria-label="open drawer"
                 onClick={this.handleDrawerToggle}
                 className={classes.navIconHide}
               >
                 <MenuIcon />
               </IconButton>
-              <Typography type="title" color="inherit" noWrap>
+              <Typography variant="title" color="inherit" noWrap>
                 {title}
               </Typography>
             </Toolbar>
           </AppBar>
-          <Hidden lgUp>
+          <Hidden mdUp>
             <Drawer
-              type="temporary"
+              variant="temporary"
               anchor={theme.direction === 'rtl' ? 'right' : 'left'}
               open={this.state.mobileOpen}
               classes={{
@@ -73,7 +74,7 @@ class Main extends Component {
               }}
               onClose={this.handleDrawerToggle}
               ModalProps={{
-                keepMounted: true,
+                keepMounted: true, // Better open performance on mobile.
               }}
             >
               <div
@@ -86,9 +87,9 @@ class Main extends Component {
               </div>
             </Drawer>
           </Hidden>
-          <Hidden mdDown implementation="css">
+          <Hidden smDown implementation="css">
             <Drawer
-              type="permanent"
+              variant="permanent"
               open
               classes={{
                 paper: classes.drawerPaper,

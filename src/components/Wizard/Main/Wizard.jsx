@@ -57,7 +57,7 @@ class Wizard extends Component {
         {this.getStepContent(this.state.activeStep)}
         <MobileStepper
           className={classes.root}
-          type="progress"
+          variant="dots"
           steps={this.state.stepsCount}
           position="bottom"
           activeStep={this.state.activeStep}

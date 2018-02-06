@@ -2,6 +2,7 @@ const styles = () => ({
   root: {
     width: '100%',
     maxWidth: 360,
+    overflowY: 'auto',
   },
   form: {
     display: 'flex',

@@ -25,9 +25,10 @@ class SubjectsCreator extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.root}>
-        <form className={this.props.classes.form} noValidate autoComplete="off">
+      <div className={classes.root}>
+        <form className={classes.form} noValidate autoComplete="off">
           <TextField
             label="Име на предмет"
             type="text"
@@ -44,7 +45,7 @@ class SubjectsCreator extends Component {
         </form>
         <List>
           {this.props.subjects.map(value => (
-            <ListItem key={value} dense className={this.props.classes.listItem}>
+            <ListItem key={value} dense className={classes.listItem}>
               <ListItemText primary={value} />
               <ListItemSecondaryAction>
                 <IconButton

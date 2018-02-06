@@ -1,26 +1,28 @@
 import axios from 'axios';
-import * as types from '../constants/action-types';
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+  LOGOUT_SUCCESS,
+} from '../constants/action-types';
 import ENDPOINT from '../constants/api-endpoint';
 
 const requestLogin = () => ({
-  type: types.LOGIN_REQUEST,
-  isFetching: true,
-  isAuthenticated: false,
+  type: LOGIN_REQUEST,
 });
 
 const receiveLogin = user => ({
-  type: types.LOGIN_SUCCESS,
-  isFetching: false,
-  isAuthenticated: true,
+  type: LOGIN_SUCCESS,
   token: user.token,
   username: user.username,
   roles: user.roles,
 });
 
 const loginError = message => ({
-  type: types.LOGIN_FAILURE,
-  isFetching: false,
-  isAuthenticated: false,
+  type: LOGIN_FAILURE,
   message,
 });
 
@@ -41,25 +43,20 @@ export const loginUser = creds => (dispatch) => {
         dispatch(loginError(response.data.message));
       }
     })
-    .catch(err => console.log('Error: ', err));
+    .catch(err => dispatch(loginError(err)));
 };
 
 const requestRegister = () => ({
-  type: types.REGISTER_REQUEST,
-  isFetching: true,
-  isRegistered: false,
+  type: REGISTER_REQUEST,
 });
 
 const receiveRegister = () => ({
-  type: types.REGISTER_SUCCESS,
-  isFetching: false,
-  isRegistered: true,
+  type: REGISTER_SUCCESS,
 });
 
-const registerError = () => ({
-  type: types.REGISTER_FAILURE,
-  isFetching: false,
-  isRegistered: false,
+const registerError = message => ({
+  type: REGISTER_FAILURE,
+  message,
 });
 
 export const registerUser = creds => (dispatch) => {
@@ -81,13 +78,11 @@ export const registerUser = creds => (dispatch) => {
         dispatch(registerError(response.message));
       }
     })
-    .catch(err => console.log('Error: ', err));
+    .catch(err => dispatch(registerError(err)));
 };
 
 const logout = () => ({
-  type: types.LOGOUT_SUCCESS,
-  isFetching: false,
-  isAuthenticated: false,
+  type: LOGOUT_SUCCESS,
   username: '',
   roles: [],
 });

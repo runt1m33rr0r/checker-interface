@@ -25,7 +25,7 @@ function Controls(props) {
           <List>
             <Link className={classes.link} to="/wizard">
               <ListItem button>
-                <ListItemText primary="Wizard" />
+                <ListItemText primary="Начална настройка" />
               </ListItem>
             </Link>
           </List>

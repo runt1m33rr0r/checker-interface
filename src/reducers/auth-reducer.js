@@ -8,9 +8,6 @@ import {
   REGISTER_SUCCESS,
 } from '../constants/action-types';
 
-// The auth reducer. The starting state sets authentication
-// based on a token being in local storage. In a real app,
-// we would also want a util to check if the token is expired.
 const auth = (
   state = {
     isFetching: false,
@@ -24,47 +21,42 @@ const auth = (
   switch (action.type) {
     case LOGIN_REQUEST:
       return Object.assign({}, state, {
-        isFetching: action.isFetching,
-        isAuthenticated: action.isAuthenticated,
+        isFetching: true,
+        isAuthenticated: false,
       });
     case LOGIN_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: action.isFetching,
-        isAuthenticated: action.isAuthenticated,
+        isFetching: false,
+        isAuthenticated: true,
         username: action.username,
         roles: action.roles,
-        errorMessage: '',
       });
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
-        isFetching: action.isFetching,
-        isAuthenticated: action.isAuthenticated,
-        errorMessage: action.message,
+        isFetching: false,
+        isAuthenticated: false,
       });
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: action.isFetching,
-        isAuthenticated: action.isAuthenticated,
+        isFetching: false,
+        isAuthenticated: false,
         username: action.username,
         roles: action.roles,
-        errorMessage: '',
       });
     case REGISTER_REQUEST:
       return Object.assign({}, state, {
-        isFetching: action.isFetching,
-        isRegistered: action.isRegistered,
+        isFetching: true,
+        isRegistered: false,
       });
     case REGISTER_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: action.isFetching,
-        isRegistered: action.isRegistered,
-        errorMessage: '',
+        isFetching: false,
+        isRegistered: true,
       });
     case REGISTER_FAILURE:
       return Object.assign({}, state, {
-        isFetching: action.isFetching,
-        isRegistered: action.isRegistered,
-        errorMessage: '',
+        isFetching: false,
+        isRegistered: false,
       });
     default:
       return state;

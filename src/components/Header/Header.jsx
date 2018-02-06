@@ -12,6 +12,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 
 import ControlsList from '../ControlsList';
 import Loading from '../common/Loading';
+import Snackbar from '../common/Snackbar';
 import styles from './styles';
 
 class Main extends Component {
@@ -36,7 +37,7 @@ class Main extends Component {
       <div>
         <div className={classes.drawerHeader}>
           {isAuthenticated ? (
-            <Typography type="title" gutterBottom>
+            <Typography variant="title" gutterBottom>
               {username}
             </Typography>
           ) : null}
@@ -98,7 +99,10 @@ class Main extends Component {
               {drawer}
             </Drawer>
           </Hidden>
-          <main className={classes.content}>{!this.props.isLoading ? children : <Loading />}</main>
+          <main className={classes.content}>
+            {!this.props.isLoading ? children : <Loading />}
+            <Snackbar />
+          </main>
         </div>
       </div>
     );

@@ -5,8 +5,8 @@ import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
 
-import PrimaryButton from '../../common/PrimaryButton';
 import styles from './styles';
 
 class SubjectsCreator extends Component {
@@ -35,13 +35,17 @@ class SubjectsCreator extends Component {
             margin="normal"
             onChange={this.handleChange}
           />
-          <PrimaryButton
+          <Button
+            disabled={this.state.subjectName.length < 3}
+            variant="raised"
+            color="primary"
             onClick={(e) => {
               e.preventDefault();
               this.props.handleAdd(this.state.subjectName);
             }}
-            content="Добави"
-          />
+          >
+            Добави
+          </Button>
         </form>
         <List>
           {this.props.subjects.map(value => (

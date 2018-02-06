@@ -6,8 +6,8 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import MenuItem from 'material-ui/Menu/MenuItem';
 import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
 
-import PrimaryButton from '../../common/PrimaryButton';
 import styles from './styles';
 
 class TimeslotCreator extends Component {
@@ -83,13 +83,16 @@ class TimeslotCreator extends Component {
               ))}
             </TextField>
           </div>
-          <PrimaryButton
+          <Button
+            variant="raised"
+            color="primary"
             onClick={(e) => {
               e.preventDefault();
               handleAdd(this.getTimeslot());
             }}
-            content="Добави"
-          />
+          >
+            Добави
+          </Button>
         </form>
         <List>
           {this.props.timeslots.map(timeslot => (

@@ -3,8 +3,8 @@ import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 
-import PrimaryButton from '../../common/PrimaryButton';
 import styles from '../styles';
 
 class RegisterForm extends Component {
@@ -33,8 +33,9 @@ class RegisterForm extends Component {
     }
 
     return (
-      <form className={this.props.classes.container} noValidate autoComplete="off">
+      <form className={this.props.classes.container} autoComplete="off">
         <TextField
+          required
           id="name"
           label="Потребителско име"
           className={this.props.classes.textField}
@@ -43,6 +44,7 @@ class RegisterForm extends Component {
           onChange={this.handleChange('username')}
         />
         <TextField
+          required
           id="password"
           label="Парола"
           className={this.props.classes.textField}
@@ -51,7 +53,10 @@ class RegisterForm extends Component {
           value={this.state.password}
           onChange={this.handleChange('password')}
         />
-        <PrimaryButton
+        <Button
+          variant="raised"
+          color="primary"
+          disabled={this.state.password.length < 3 || this.state.username.length < 3}
           onClick={(e) => {
             e.preventDefault();
             this.props.handleSubmit({
@@ -59,8 +64,9 @@ class RegisterForm extends Component {
               password: this.state.password,
             });
           }}
-          content="Регистрирай"
-        />
+        >
+          Регистрирай
+        </Button>
       </form>
     );
   }

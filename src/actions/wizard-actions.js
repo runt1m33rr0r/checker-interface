@@ -32,22 +32,14 @@ export const removeSubject = subjectName => ({
   subjectName,
 });
 
-export const addTimeslot = (fromHour, fromMinute, toHour, toMinute, day) => ({
+export const addTimeslot = timeslot => ({
   type: ADD_TIMESLOT,
-  fromHour,
-  fromMinute,
-  toHour,
-  toMinute,
-  day,
+  timeslot,
 });
 
-export const removeTimeslot = (fromHour, fromMinute, toHour, toMinute, day) => ({
+export const removeTimeslot = timeslot => ({
   type: REMOVE_TIMESLOT,
-  fromHour,
-  fromMinute,
-  toHour,
-  toMinute,
-  day,
+  timeslot,
 });
 
 // export const generateGroups = () => ({ type: GENERATE_GROUPS });

@@ -15,29 +15,22 @@ class TimeslotCreator extends Component {
     super(props);
 
     this.state = {
-      fromHour: 0,
-      fromMinute: 0,
-      toHour: 0,
-      toMinute: 0,
+      from: '00:00',
+      to: '00:00',
       day: 1,
       days: ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота', 'Неделя'],
     };
   }
 
   handleChangeFrom = (e) => {
-    const val = e.target.value.split(':');
-    console.log(val);
     this.setState({
-      fromHour: parseInt(val[0], 10),
-      fromMinute: parseInt(val[1], 10),
+      from: e.target.value,
     });
   };
 
   handleChangeTo = (e) => {
-    const val = e.target.value.split(':');
     this.setState({
-      toHour: parseInt(val[0], 10),
-      toMinute: parseInt(val[1], 10),
+      to: e.target.value,
     });
   };
 
@@ -47,23 +40,9 @@ class TimeslotCreator extends Component {
     });
   };
 
-  timeslotToString = (timeslot) => {
-    const week = {
-      1: 'Понеделник',
-      2: 'Вторник',
-      3: 'Сряда',
-      4: 'Четвъртък',
-      5: 'Петък',
-      6: 'Събота',
-      7: 'Неделя',
-    };
-    const day = week[timeslot.day];
-    const modifyTime = time => (parseInt(time, 10) <= 9 ? `0${time}` : time);
-    const fromHour = modifyTime(timeslot.fromHour);
-    const fromMinute = modifyTime(timeslot.fromMinute);
-    const toHour = modifyTime(timeslot.toHour);
-    const toMinute = modifyTime(timeslot.toMinute);
-    return `${day} от ${fromHour}:${fromMinute} до ${toHour}:${toMinute}`;
+  getTimeslot = () => {
+    const { from, to, day } = this.state;
+    return `${this.state.days[day - 1]} от ${from} до ${to}`;
   };
 
   render() {
@@ -77,7 +56,7 @@ class TimeslotCreator extends Component {
               id="fromTime"
               label="От"
               type="time"
-              defaultValue="00:00"
+              defaultValue={this.state.from}
               className={classes.textField}
               onChange={this.handleChangeFrom}
             />
@@ -85,7 +64,7 @@ class TimeslotCreator extends Component {
               id="toTime"
               label="До"
               type="time"
-              defaultValue="00:00"
+              defaultValue={this.state.to}
               className={classes.textField}
               onChange={this.handleChangeTo}
             />
@@ -107,34 +86,18 @@ class TimeslotCreator extends Component {
           <PrimaryButton
             onClick={(e) => {
               e.preventDefault();
-              handleAdd(
-                this.state.fromHour,
-                this.state.fromMinute,
-                this.state.toHour,
-                this.state.toMinute,
-                this.state.day,
-              );
+              handleAdd(this.getTimeslot());
             }}
             content="Добави"
           />
         </form>
         <List>
           {this.props.timeslots.map(timeslot => (
-            <ListItem key={this.timeslotToString(timeslot)} dense className={classes.listItem}>
-              <ListItemText primary={this.timeslotToString(timeslot)} />
+            <ListItem key={timeslot} dense className={classes.listItem}>
+              <ListItemText primary={timeslot} />
               <ListItemSecondaryAction>
                 <IconButton>
-                  <DeleteIcon
-                    onClick={() =>
-                      handleRemove(
-                        timeslot.fromHour,
-                        timeslot.fromMinute,
-                        timeslot.toHour,
-                        timeslot.toMinute,
-                        timeslot.day,
-                      )
-                    }
-                  />
+                  <DeleteIcon onClick={() => handleRemove(timeslot)} />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

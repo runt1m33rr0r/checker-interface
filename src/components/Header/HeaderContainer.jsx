@@ -1,11 +1,17 @@
 import { connect } from 'react-redux';
 
 import Header from './Header';
+import { resetMessage } from '../../actions/ui-actions';
 
-const mapStateToProps = ({ auth, wizard }) => ({
+const mapStateToProps = ({ auth, wizard, ui }) => ({
   isAuthenticated: auth.isAuthenticated,
-  isLoading: auth.isFetching || wizard.isGenerating,
+  isLoading: auth.isFetching || wizard.isGenerating || wizard.isFetching,
   username: auth.username,
+  message: ui.message,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = dispatch => ({
+  handleSnackbarClose: () => dispatch(resetMessage()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

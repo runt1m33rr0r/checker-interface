@@ -43,7 +43,7 @@ export const loginUser = creds => (dispatch) => {
         dispatch(loginError(response.data.message));
       }
     })
-    .catch(err => dispatch(loginError(err)));
+    .catch(err => dispatch(loginError(err.message)));
 };
 
 const requestRegister = () => ({
@@ -78,7 +78,7 @@ export const registerUser = creds => (dispatch) => {
         dispatch(registerError(response.message));
       }
     })
-    .catch(err => dispatch(registerError(err)));
+    .catch(err => dispatch(registerError(err.message)));
 };
 
 const logout = () => ({

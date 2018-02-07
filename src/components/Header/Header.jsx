@@ -30,7 +30,14 @@ class Main extends Component {
 
   render() {
     const {
-      classes, theme, children, title, isAuthenticated, username,
+      classes,
+      theme,
+      children,
+      title,
+      isAuthenticated,
+      username,
+      message,
+      handleSnackbarClose,
     } = this.props;
 
     const drawer = (
@@ -101,7 +108,7 @@ class Main extends Component {
           </Hidden>
           <main className={classes.content}>
             {!this.props.isLoading ? children : <Loading />}
-            <Snackbar />
+            <Snackbar message={message} handleClose={handleSnackbarClose} />
           </main>
         </div>
       </div>
@@ -117,6 +124,8 @@ Main.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   username: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
+  handleSnackbarClose: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(Main);

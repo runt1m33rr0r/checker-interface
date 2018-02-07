@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setTitle } from '../../actions/ui-actions';
 import Home from './HomePage';
 
-class HomeController extends Component {
+class HomeContainer extends Component {
   componentDidMount() {
     this.props.setTitle(this.props.title);
   }
@@ -15,7 +15,7 @@ class HomeController extends Component {
   }
 }
 
-HomeController.propTypes = {
+HomeContainer.propTypes = {
   title: PropTypes.string.isRequired,
   setTitle: PropTypes.func.isRequired,
 };
@@ -24,4 +24,4 @@ const mapDispatchToProps = dispatch => ({
   setTitle: title => dispatch(setTitle(title)),
 });
 
-export default connect(null, mapDispatchToProps)(HomeController);
+export default connect(null, mapDispatchToProps)(HomeContainer);

@@ -26,7 +26,7 @@ class RegisterForm extends Component {
   render() {
     if (this.props.isRegistered) {
       return (
-        <Typography className={this.props.classes.container} type="display3" gutterBottom>
+        <Typography className={this.props.classes.container} variant="display3" gutterBottom>
           Вече сте се регистрирали!
         </Typography>
       );

@@ -12,9 +12,14 @@ class WizardContainer extends Component {
   }
 
   render() {
-    return <Wizard handleFinish={this.props.handleFinish} />;
+    return <Wizard handleFinish={this.props.handleFinish} isReady={this.props.isReady} />;
   }
 }
+
+const mapStateToProps = ({ wizard }) => ({
+  isReady:
+    wizard.subjects.length > 0 && wizard.timeslots.length > 0 && wizard.groupNames.length > 0,
+});
 
 const mapDispatchToProps = dispatch => ({
   handleFinish: () => dispatch(finishWizard()),
@@ -25,6 +30,7 @@ WizardContainer.propTypes = {
   title: PropTypes.string.isRequired,
   setTitle: PropTypes.func.isRequired,
   handleFinish: PropTypes.func.isRequired,
+  isReady: PropTypes.bool.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(WizardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(WizardContainer);

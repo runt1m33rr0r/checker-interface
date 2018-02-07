@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from 'material-ui/Typography';
 
 const Home = () => (
-  <Typography type="title" noWrap>
+  <Typography variant="title" noWrap>
     Home
   </Typography>
 );

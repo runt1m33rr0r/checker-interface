@@ -26,7 +26,7 @@ class LoginForm extends Component {
   render() {
     if (this.props.isAuthenticated) {
       return (
-        <Typography className={this.props.classes.container} type="display3" gutterBottom>
+        <Typography className={this.props.classes.container} variant="display3" gutterBottom>
           Вече сте влезли в профила си!
         </Typography>
       );

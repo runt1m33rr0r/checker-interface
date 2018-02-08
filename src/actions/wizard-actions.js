@@ -82,15 +82,65 @@ export const removeSubjectFromGroup = (groupName, subjectName) => ({
   subjectName,
 });
 
+const processTimeslots = (timeslots) => {
+  const days = {
+    Понеделник: 1,
+    Вторник: 2,
+    Сряда: 3,
+    Четвъртък: 4,
+    Петък: 5,
+    Събота: 6,
+    Неделя: 7,
+  };
+
+  const result = [];
+  timeslots.forEach((timeslot) => {
+    const words = timeslot.split(' ');
+    const day = days[words[0]];
+    const from = words[2];
+    const fromNums = from.split(':');
+    const fromHour = parseInt(fromNums[0], 10);
+    const fromMinute = parseInt(fromNums[1], 10);
+    const to = words[4];
+    const toNums = to.split(':');
+    const toHour = parseInt(toNums[0], 10);
+    const toMinute = parseInt(toNums[1], 10);
+
+    result.push({
+      day,
+      fromHour,
+      fromMinute,
+      toHour,
+      toMinute,
+    });
+  });
+  return result;
+};
+
+const processGroups = (groups) => {
+  const result = [];
+  Object.keys(groups).forEach((groupName) => {
+    const subjects = groups[groupName];
+    result.push({
+      name: groupName,
+      subjects,
+    });
+  });
+  return result;
+};
+
 export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
+  const doneTimeslots = processTimeslots(timeslots);
+  const doneGroups = processGroups(groups);
+
   dispatch({ type: FINISH_WIZARD });
   const token = localStorage.getItem('token');
   return axios
     .post(
       `${ENDPOINT}/api/school/settings/base`,
       {
-        timeslots,
-        groups,
+        timeslots: doneTimeslots,
+        groups: doneGroups,
         subjects,
       },
       { headers: { 'x-access-token': token } },

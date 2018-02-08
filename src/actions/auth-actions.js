@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -85,4 +86,12 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('username');
   localStorage.removeItem('roles');
   dispatch(logout());
+};
+
+export const checkAuth = () => (dispatch) => {
+  const token = localStorage.getItem('token');
+  if (!token || jwtDecode(token).exp < Date.now() / 1000) {
+    localStorage.clear();
+    dispatch({ type: LOGIN_FAILURE, message: 'Нямате право за тази страница!' });
+  }
 };

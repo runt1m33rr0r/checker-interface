@@ -7,13 +7,9 @@ import { registerUser } from '../../../actions/auth-actions';
 import { setTitle } from '../../../actions/ui-actions';
 
 class RegisterContainer extends Component {
-  componentDidMount() {
-    this.props.setTitle(this.props.title);
-  }
+  componentDidMount = () => this.props.setTitle(this.props.title);
 
-  render() {
-    return <RegisterForm {...this.props} />;
-  }
+  render = () => <RegisterForm {...this.props} />;
 }
 
 RegisterContainer.propTypes = {

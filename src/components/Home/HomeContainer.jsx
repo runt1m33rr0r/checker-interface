@@ -6,13 +6,9 @@ import { setTitle } from '../../actions/ui-actions';
 import Home from './HomePage';
 
 class HomeContainer extends Component {
-  componentDidMount() {
-    this.props.setTitle(this.props.title);
-  }
+  componentDidMount = () => this.props.setTitle(this.props.title);
 
-  render() {
-    return <Home />;
-  }
+  render = () => <Home />;
 }
 
 HomeContainer.propTypes = {

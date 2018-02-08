@@ -7,13 +7,9 @@ import { loginUser } from '../../../actions/auth-actions';
 import { setTitle } from '../../../actions/ui-actions';
 
 class LoginContainer extends Component {
-  componentDidMount() {
-    this.props.setTitle(this.props.title);
-  }
+  componentDidMount = () => this.props.setTitle(this.props.title);
 
-  render() {
-    return <LoginForm {...this.props} />;
-  }
+  render = () => <LoginForm {...this.props} />;
 }
 
 LoginContainer.propTypes = {

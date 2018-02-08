@@ -23,7 +23,7 @@ class RegisterForm extends Component {
     });
   };
 
-  render() {
+  render = () => {
     if (this.props.isRegistered) {
       return (
         <Typography className={this.props.classes.container} variant="display3" gutterBottom>
@@ -69,7 +69,7 @@ class RegisterForm extends Component {
         </Button>
       </form>
     );
-  }
+  };
 }
 
 RegisterForm.propTypes = {

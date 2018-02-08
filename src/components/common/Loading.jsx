@@ -14,17 +14,14 @@ const styles = {
   },
 };
 
-function CircularIndeterminate(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <CircularProgress color="primary" size={200} thickness={6} />
-    </div>
-  );
-}
+const Loading = ({ classes }) => (
+  <div className={classes.root}>
+    <CircularProgress color="primary" size={200} thickness={6} />
+  </div>
+);
 
-CircularIndeterminate.propTypes = {
+Loading.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CircularIndeterminate);
+export default withStyles(styles)(Loading);

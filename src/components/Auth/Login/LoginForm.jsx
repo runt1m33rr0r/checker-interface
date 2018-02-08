@@ -23,7 +23,7 @@ class LoginForm extends Component {
     });
   };
 
-  render() {
+  render = () => {
     if (this.props.isAuthenticated) {
       return (
         <Typography className={this.props.classes.container} variant="display3" gutterBottom>
@@ -69,7 +69,7 @@ class LoginForm extends Component {
         </Button>
       </form>
     );
-  }
+  };
 }
 
 LoginForm.propTypes = {

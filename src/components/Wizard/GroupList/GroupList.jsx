@@ -15,16 +15,16 @@ class ScrollableTabsButtonAuto extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { generateGroups, schoolType, groupsCount } = this.props;
     generateGroups(schoolType, groupsCount);
-  }
+  };
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
-  render() {
+  render = () => {
     const { classes, groups } = this.props;
     const { value } = this.state;
 
@@ -45,7 +45,7 @@ class ScrollableTabsButtonAuto extends Component {
         {groups.length > 0 && <Group groupName={groups[value]} />}
       </div>
     );
-  }
+  };
 }
 
 ScrollableTabsButtonAuto.propTypes = {

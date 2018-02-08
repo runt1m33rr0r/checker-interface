@@ -45,7 +45,7 @@ class TimeslotCreator extends Component {
     return `${this.state.days[day - 1]} от ${from} до ${to}`;
   };
 
-  render() {
+  render = () => {
     const { classes, handleRemove, handleAdd } = this.props;
 
     return (
@@ -108,7 +108,7 @@ class TimeslotCreator extends Component {
         </List>
       </div>
     );
-  }
+  };
 }
 
 TimeslotCreator.propTypes = {

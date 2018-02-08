@@ -24,7 +24,7 @@ class SubjectsCreator extends Component {
     });
   };
 
-  render() {
+  render = () => {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -66,7 +66,7 @@ class SubjectsCreator extends Component {
         </List>
       </div>
     );
-  }
+  };
 }
 
 SubjectsCreator.propTypes = {

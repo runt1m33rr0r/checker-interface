@@ -7,29 +7,26 @@ import { Link } from 'react-router-dom';
 
 import styles from './styles';
 
-function Controls(props) {
-  const {
-    classes, isAuthenticated, handleLogout, isRegistered,
-  } = props;
-
-  return (
-    <div className={classes.root}>
-      {isAuthenticated ? (
-        <div>
-          <List>
-            <ListItem button onClick={() => handleLogout()}>
-              <ListItemText primary="Изход" />
+const Controls = ({
+  classes, isAuthenticated, handleLogout, isRegistered,
+}) => (
+  <div className={classes.root}>
+    {isAuthenticated ? (
+      <div>
+        <List>
+          <ListItem button onClick={() => handleLogout()}>
+            <ListItemText primary="Изход" />
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <Link className={classes.link} to="/wizard">
+            <ListItem button>
+              <ListItemText primary="Начална настройка" />
             </ListItem>
-          </List>
-          <Divider />
-          <List>
-            <Link className={classes.link} to="/wizard">
-              <ListItem button>
-                <ListItemText primary="Начална настройка" />
-              </ListItem>
-            </Link>
-          </List>
-        </div>
+          </Link>
+        </List>
+      </div>
       ) : (
         <List>
           <Link className={classes.link} to="/login">
@@ -46,9 +43,8 @@ function Controls(props) {
           ) : null}
         </List>
       )}
-    </div>
-  );
-}
+  </div>
+);
 
 Controls.propTypes = {
   classes: PropTypes.object.isRequired,

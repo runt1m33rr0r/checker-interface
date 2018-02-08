@@ -7,9 +7,7 @@ import { finishWizard } from '../../../actions/wizard-actions';
 import { setTitle } from '../../../actions/ui-actions';
 
 class WizardContainer extends Component {
-  componentDidMount = () => {
-    this.props.setTitle(this.props.title);
-  };
+  componentDidMount = () => this.props.setTitle(this.props.title);
 
   finish = () => {
     const {

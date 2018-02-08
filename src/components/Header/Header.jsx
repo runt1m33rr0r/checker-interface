@@ -28,7 +28,7 @@ class Main extends Component {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
-  render() {
+  render = () => {
     const {
       classes,
       theme,
@@ -113,7 +113,7 @@ class Main extends Component {
         </div>
       </div>
     );
-  }
+  };
 }
 
 Main.propTypes = {

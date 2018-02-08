@@ -8,11 +8,7 @@ import {
   REGISTER_FAILURE,
   LOGOUT_SUCCESS,
 } from '../constants/action-types';
-import ENDPOINT from '../constants/api-endpoint';
-
-const requestLogin = () => ({
-  type: LOGIN_REQUEST,
-});
+import ENDPOINT from '../constants/api-constants';
 
 const receiveLogin = user => ({
   type: LOGIN_SUCCESS,
@@ -21,14 +17,9 @@ const receiveLogin = user => ({
   roles: user.roles,
 });
 
-const loginError = message => ({
-  type: LOGIN_FAILURE,
-  message,
-});
-
 export const loginUser = creds => (dispatch) => {
-  dispatch(requestLogin());
-  return axios
+  dispatch({ type: LOGIN_REQUEST });
+  axios
     .post(`${ENDPOINT}/users/login`, {
       username: creds.username,
       password: creds.password,
@@ -40,10 +31,12 @@ export const loginUser = creds => (dispatch) => {
         localStorage.setItem('roles', response.data.roles);
         dispatch(receiveLogin(response.data));
       } else {
-        dispatch(loginError(response.data.message));
+        dispatch({ type: LOGIN_FAILURE });
       }
     })
-    .catch(err => dispatch(loginError(err.message)));
+    .catch((err) => {
+      dispatch({ type: LOGIN_FAILURE, message: err.message });
+    });
 };
 
 const requestRegister = () => ({

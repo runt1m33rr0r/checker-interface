@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   SET_SCHOOL_TYPE,
   ADD_SUBJECT,
@@ -10,7 +11,10 @@ import {
   ADD_SUBJECT_TO_GROUP,
   REMOVE_SUBJECT_FROM_GROUP,
   FINISH_WIZARD,
+  FINISH_WIZARD_SUCCESS,
+  FINISH_WIZARD_FAILURE,
 } from '../constants/action-types';
+import ENDPOINT from '../constants/api-constants';
 
 export const setSchoolType = type => ({
   type: SET_SCHOOL_TYPE,
@@ -42,16 +46,8 @@ export const removeTimeslot = timeslot => ({
   timeslot,
 });
 
-// export const generateGroups = () => ({ type: GENERATE_GROUPS });
-const generateStart = () => ({ type: GENERATE_GROUPS_STARTED });
-const generateFinish = (groups, groupNames) => ({
-  type: GENERATE_GROUPS_FINISHED,
-  groups,
-  groupNames,
-});
-
 export const generateGroups = (schoolType, groupsCount) => (dispatch) => {
-  dispatch(generateStart());
+  dispatch({ type: GENERATE_GROUPS_STARTED });
 
   const groups = {};
   const groupNames = [];
@@ -67,7 +63,11 @@ export const generateGroups = (schoolType, groupsCount) => (dispatch) => {
     }
   }
 
-  dispatch(generateFinish(groups, groupNames));
+  dispatch({
+    type: GENERATE_GROUPS_FINISHED,
+    groups,
+    groupNames,
+  });
 };
 
 export const addSubjectToGroup = (groupName, subjectName) => ({
@@ -82,8 +82,27 @@ export const removeSubjectFromGroup = (groupName, subjectName) => ({
   subjectName,
 });
 
-export const finishWizard = () => (dispatch) => {
-  console.log('finishing');
-
+export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
   dispatch({ type: FINISH_WIZARD });
+  const token = localStorage.getItem('token');
+  return axios
+    .post(
+      `${ENDPOINT}/api/school/settings/base`,
+      {
+        timeslots,
+        groups,
+        subjects,
+      },
+      { headers: { 'x-access-token': token } },
+    )
+    .then((response) => {
+      if (!response.data.success) {
+        dispatch({ type: FINISH_WIZARD_FAILURE, message: response.data.message });
+      } else {
+        dispatch({ type: FINISH_WIZARD_SUCCESS });
+      }
+    })
+    .catch((err) => {
+      dispatch({ type: FINISH_WIZARD_FAILURE, message: err.message });
+    });
 };

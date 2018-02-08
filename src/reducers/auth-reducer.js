@@ -10,7 +10,6 @@ import {
 
 const auth = (
   state = {
-    isFetching: false,
     isAuthenticated: !!localStorage.getItem('token'),
     isRegistered: !!localStorage.getItem('registered'),
     username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
@@ -20,44 +19,29 @@ const auth = (
 ) => {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true,
-        isAuthenticated: false,
-      });
+      return { ...state, isAuthenticated: false };
     case LOGIN_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
+      return {
+        ...state,
         isAuthenticated: true,
         username: action.username,
         roles: action.roles,
-      });
+      };
     case LOGIN_FAILURE:
-      return Object.assign({}, state, {
-        isFetching: false,
-        isAuthenticated: false,
-      });
+      return { ...state, isAuthenticated: false };
     case LOGOUT_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
+      return {
+        ...state,
         isAuthenticated: false,
         username: action.username,
         roles: action.roles,
-      });
+      };
     case REGISTER_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true,
-        isRegistered: false,
-      });
+      return { ...state, isRegistered: false };
     case REGISTER_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        isRegistered: true,
-      });
+      return { ...state, isRegistered: true };
     case REGISTER_FAILURE:
-      return Object.assign({}, state, {
-        isFetching: false,
-        isRegistered: false,
-      });
+      return { ...state, isRegistered: false };
     default:
       return state;
   }

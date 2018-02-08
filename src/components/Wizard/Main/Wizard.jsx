@@ -34,7 +34,7 @@ class Wizard extends Component {
     });
   };
 
-  getStepContent(step) {
+  getStepContent = (step) => {
     switch (step) {
       case 0:
         return <SchoolTypeChooser />;
@@ -47,12 +47,10 @@ class Wizard extends Component {
       default:
         return 'Непозната стъпка';
     }
-  }
+  };
 
-  render() {
-    const {
-      classes, theme, handleFinish, isReady,
-    } = this.props;
+  render = () => {
+    const { classes, theme, isReady } = this.props;
 
     const isLastStep = this.state.activeStep === this.state.stepsCount - 1;
 
@@ -68,7 +66,7 @@ class Wizard extends Component {
           nextButton={
             <Button
               size="small"
-              onClick={isLastStep ? handleFinish : this.handleNext}
+              onClick={isLastStep ? this.props.handleFinish : this.handleNext}
               disabled={this.state.activeStep === this.state.stepsCount || (!isReady && isLastStep)}
             >
               {isLastStep ? 'Готово' : 'Напред'}
@@ -84,7 +82,7 @@ class Wizard extends Component {
         />
       </div>
     );
-  }
+  };
 }
 
 Wizard.propTypes = {

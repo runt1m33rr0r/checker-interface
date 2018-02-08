@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import Header from './Header';
 import { resetMessage } from '../../actions/ui-actions';
 
-const mapStateToProps = ({ auth, wizard, ui }) => ({
+const mapStateToProps = ({ auth, wizard, network }) => ({
   isAuthenticated: auth.isAuthenticated,
-  isLoading: auth.isFetching || wizard.isGenerating || wizard.isFetching,
+  isLoading: network.isFetching || wizard.isGenerating,
   username: auth.username,
-  message: ui.message,
+  message: network.message,
 });
 
 const mapDispatchToProps = dispatch => ({

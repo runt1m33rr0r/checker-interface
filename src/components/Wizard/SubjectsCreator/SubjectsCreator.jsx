@@ -30,9 +30,9 @@ class SubjectsCreator extends Component {
       <div className={classes.root}>
         <form className={classes.form} noValidate autoComplete="off">
           <TextField
-            label="Име на предмет"
-            type="text"
             margin="normal"
+            label="Име на предмет"
+            className={classes.textField}
             onChange={this.handleChange}
           />
           <Button

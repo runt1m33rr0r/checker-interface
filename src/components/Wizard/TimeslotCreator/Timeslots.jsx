@@ -53,7 +53,6 @@ class TimeslotCreator extends Component {
         <form className={classes.form} noValidate autoComplete="off">
           <div className={classes.pickers}>
             <TextField
-              id="fromTime"
               label="От"
               type="time"
               defaultValue={this.state.from}
@@ -61,7 +60,6 @@ class TimeslotCreator extends Component {
               onChange={this.handleChangeFrom}
             />
             <TextField
-              id="toTime"
               label="До"
               type="time"
               defaultValue={this.state.to}
@@ -69,7 +67,6 @@ class TimeslotCreator extends Component {
               onChange={this.handleChangeTo}
             />
             <TextField
-              id="day"
               label="Ден"
               select
               value={this.state.days[this.state.day - 1]}

@@ -118,20 +118,45 @@ const processTimeslots = (timeslots) => {
 };
 
 const processGroups = (groups) => {
-  const result = [];
+  const doneGroups = [];
+
   Object.keys(groups).forEach((groupName) => {
     const subjects = groups[groupName];
-    result.push({
+    const doneSubjects = [];
+
+    subjects.forEach((subject) => {
+      doneSubjects.push(`${subject}-${groupName}`);
+    });
+
+    doneGroups.push({
       name: groupName,
-      subjects,
+      subjects: doneSubjects,
     });
   });
-  return result;
+  return doneGroups;
+};
+
+const processSubjects = (groups) => {
+  const doneSubjects = [];
+
+  Object.keys(groups).forEach((groupName) => {
+    const subjects = groups[groupName];
+    subjects.forEach((subject) => {
+      doneSubjects.push({
+        name: subject,
+        code: `${subject}-${groupName}`,
+      });
+    });
+  });
+
+  return doneSubjects;
 };
 
 export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
   const doneTimeslots = processTimeslots(timeslots);
   const doneGroups = processGroups(groups);
+  // we need the subjects inside the groups, because the subject code includes the group name
+  const doneSubjects = processSubjects(groups);
 
   dispatch({ type: FINISH_WIZARD });
   const token = localStorage.getItem('token');
@@ -141,7 +166,7 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
       {
         timeslots: doneTimeslots,
         groups: doneGroups,
-        subjects,
+        subjects: doneSubjects,
       },
       { headers: { Authorization: `Bearer ${token}` } },
     )

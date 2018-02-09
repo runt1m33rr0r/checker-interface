@@ -20,6 +20,7 @@ const receiveLogin = user => ({
 
 export const loginUser = creds => (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
+
   axios
     .post(`${ENDPOINT}/users/login`, {
       username: creds.username,
@@ -32,7 +33,7 @@ export const loginUser = creds => (dispatch) => {
         localStorage.setItem('roles', response.data.roles);
         dispatch(receiveLogin(response.data));
       } else {
-        dispatch({ type: LOGIN_FAILURE });
+        dispatch({ type: LOGIN_FAILURE, message: response.data.message });
       }
     })
     .catch((err) => {
@@ -40,21 +41,9 @@ export const loginUser = creds => (dispatch) => {
     });
 };
 
-const requestRegister = () => ({
-  type: REGISTER_REQUEST,
-});
-
-const receiveRegister = () => ({
-  type: REGISTER_SUCCESS,
-});
-
-const registerError = message => ({
-  type: REGISTER_FAILURE,
-  message,
-});
-
 export const registerUser = creds => (dispatch) => {
-  dispatch(requestRegister());
+  dispatch({ type: REGISTER_REQUEST });
+
   return axios
     .post(`${ENDPOINT}/users/register`, {
       username: creds.username,
@@ -67,25 +56,23 @@ export const registerUser = creds => (dispatch) => {
     .then((response) => {
       if (response.data.success) {
         localStorage.setItem('registered', true);
-        dispatch(receiveRegister(response.data));
+        dispatch({ type: REGISTER_SUCCESS });
       } else {
-        dispatch(registerError(response.message));
+        dispatch({ type: REGISTER_FAILURE, message: response.data.message });
       }
     })
-    .catch(err => dispatch(registerError(err.message)));
+    .catch(err => dispatch({ type: REGISTER_FAILURE, message: err.message }));
 };
-
-const logout = () => ({
-  type: LOGOUT_SUCCESS,
-  username: '',
-  roles: [],
-});
 
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('token');
   localStorage.removeItem('username');
   localStorage.removeItem('roles');
-  dispatch(logout());
+  dispatch({
+    type: LOGOUT_SUCCESS,
+    username: '',
+    roles: [],
+  });
 };
 
 export const checkAuth = () => (dispatch) => {

@@ -143,7 +143,7 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
         groups: doneGroups,
         subjects,
       },
-      { headers: { 'x-access-token': token } },
+      { headers: { Authorization: `Bearer ${token}` } },
     )
     .then((response) => {
       if (!response.data.success) {

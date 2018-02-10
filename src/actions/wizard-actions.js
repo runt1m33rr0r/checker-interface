@@ -131,7 +131,7 @@ const processGroups = (groups) => {
     const doneSubjects = [];
 
     subjects.forEach((subject) => {
-      doneSubjects.push(`${subject}-${groupName}`);
+      doneSubjects.push(`${subject}-${groupName.replace(/\D/g, '')}`);
     });
 
     doneGroups.push({
@@ -150,7 +150,7 @@ const processSubjects = (groups) => {
     subjects.forEach((subject) => {
       doneSubjects.push({
         name: subject,
-        code: `${subject}-${groupName}`,
+        code: `${subject}-${groupName.replace(/\D/g, '')}`,
       });
     });
   });

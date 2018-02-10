@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import { checkAuth } from '../../actions/auth-actions';
 
 class PrivateRoute extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     this.props.authCheck();
   }
 

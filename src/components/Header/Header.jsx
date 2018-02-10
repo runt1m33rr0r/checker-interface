@@ -107,7 +107,10 @@ class Main extends Component {
             </Drawer>
           </Hidden>
           <main className={classes.content}>
-            {!this.props.isLoading ? children : <Loading />}
+            {this.props.isLoading && <Loading />}
+            <div className={this.props.isLoading ? classes.hidden : classes.children}>
+              {children}
+            </div>
             <Snackbar message={message} handleClose={handleSnackbarClose} />
           </main>
         </div>

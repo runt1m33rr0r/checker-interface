@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Wizard from './Wizard';
-import { finishWizard } from '../../../actions/wizard-actions';
+import { finishWizard, checkSetup, resetSetup } from '../../../actions/wizard-actions';
 import { setTitle } from '../../../actions/ui-actions';
 
 class WizardContainer extends Component {
-  componentDidMount = () => this.props.setTitle(this.props.title);
+  componentDidMount = () => {
+    this.props.setTitle(this.props.title);
+    this.props.checkSetup();
+  };
 
   finish = () => {
     const {
@@ -16,7 +19,14 @@ class WizardContainer extends Component {
     handleFinish(timeslots, subjects, groups);
   };
 
-  render = () => <Wizard handleFinish={this.finish} isReady={this.props.isReady} />;
+  render = () => (
+    <Wizard
+      handleFinish={this.finish}
+      isReady={this.props.isReady}
+      setupFinished={this.props.setupFinished}
+      handleReset={this.props.handleReset}
+    />
+  );
 }
 
 WizardContainer.propTypes = {
@@ -27,6 +37,9 @@ WizardContainer.propTypes = {
   subjects: PropTypes.array.isRequired,
   timeslots: PropTypes.array.isRequired,
   groups: PropTypes.object.isRequired,
+  checkSetup: PropTypes.func.isRequired,
+  setupFinished: PropTypes.bool.isRequired,
+  handleReset: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wizard }) => ({
@@ -35,12 +48,15 @@ const mapStateToProps = ({ wizard }) => ({
   subjects: wizard.subjects,
   timeslots: wizard.timeslots,
   groups: wizard.groups,
+  setupFinished: wizard.setupFinished,
 });
 
 const mapDispatchToProps = dispatch => ({
   handleFinish: (timeslots, subjects, groups) =>
     dispatch(finishWizard(timeslots, subjects, groups)),
   setTitle: title => dispatch(setTitle(title)),
+  checkSetup: () => dispatch(checkSetup()),
+  handleReset: () => dispatch(resetSetup()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WizardContainer);

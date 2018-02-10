@@ -13,6 +13,12 @@ import {
   FINISH_WIZARD,
   FINISH_WIZARD_SUCCESS,
   FINISH_WIZARD_FAILURE,
+  CHECK_SETUP,
+  CHECK_SETUP_SUCCESS,
+  CHECK_SETUP_FAILURE,
+  RESET_SETUP,
+  RESET_SETUP_SUCCESS,
+  RESET_SETUP_FAILURE,
 } from '../constants/action-types';
 import ENDPOINT from '../constants/api-constants';
 
@@ -180,4 +186,38 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
     .catch((err) => {
       dispatch({ type: FINISH_WIZARD_FAILURE, message: err.message });
     });
+};
+
+export const checkSetup = () => (dispatch) => {
+  dispatch({ type: CHECK_SETUP });
+
+  const token = localStorage.getItem('token');
+  axios
+    .get(`${ENDPOINT}/api/settings/setup`, { headers: { Authorization: `Bearer ${token}` } })
+    .then((response) => {
+      if (response.data.success === true) {
+        return dispatch({ type: CHECK_SETUP_SUCCESS, setupFinished: response.data.setupFinished });
+      }
+      return dispatch({ type: CHECK_SETUP_FAILURE, message: response.data.message });
+    })
+    .catch(err => dispatch({ type: CHECK_SETUP_FAILURE, message: err.message }));
+};
+
+export const resetSetup = () => (dispatch) => {
+  dispatch({ type: RESET_SETUP });
+
+  const token = localStorage.getItem('token');
+  axios
+    .post(
+      `${ENDPOINT}/api/settings/setup`,
+      { setupFinished: false },
+      { headers: { Authorization: `Bearer ${token}` } },
+    )
+    .then((response) => {
+      if (response.data.success === true) {
+        return dispatch({ type: RESET_SETUP_SUCCESS });
+      }
+      return dispatch({ type: RESET_SETUP_FAILURE, message: response.data.message });
+    })
+    .catch(err => dispatch({ type: RESET_SETUP_FAILURE, message: err.message }));
 };

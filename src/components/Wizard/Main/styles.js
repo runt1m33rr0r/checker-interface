@@ -16,6 +16,14 @@ const styles = theme => ({
       paddingLeft: '250px',
     },
   },
+  finished: {
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

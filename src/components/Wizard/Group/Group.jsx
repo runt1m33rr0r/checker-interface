@@ -9,7 +9,7 @@ import styles from './styles';
 const Group = ({
   classes, groupName, groups, subjects, handleAddSubject, handleRemoveSubject,
 }) => {
-  const check = (name, subject) => groups[name].indexOf(subject) >= 0;
+  const check = (name, subject) => groups[name].includes(subject);
   return (
     <div className={classes.root}>
       <List>

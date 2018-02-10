@@ -7,7 +7,8 @@ const styles = theme => ({
     alignContent: 'center',
     width: '100%',
     height: '100%',
-    minHeight: '200px',
+    minHeight: '400px',
+    overflowY: 'auto',
   },
   textField: {
     margin: theme.spacing.unit,

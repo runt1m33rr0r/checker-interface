@@ -41,13 +41,13 @@ export const loginUser = creds => (dispatch) => {
     });
 };
 
-export const registerUser = creds => (dispatch) => {
+export const registerUser = data => (dispatch) => {
   dispatch({ type: REGISTER_REQUEST });
 
   return axios
     .post(`${ENDPOINT}/users/register`, {
-      username: creds.username,
-      password: creds.password,
+      username: data.username,
+      password: data.password,
       firstName: 'FirstName',
       lastName: 'LastName',
       group: '9G',

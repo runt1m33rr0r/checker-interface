@@ -11,6 +11,8 @@ import Wizard from './Wizard';
 import Register from './Auth/Register';
 import PrivateRoute from './common/PrivateRoute';
 
+import Generator from './Timetable/Generator';
+
 const App = props => (
   <Header title={props.title}>
     <Switch>
@@ -22,6 +24,12 @@ const App = props => (
         component={Wizard}
         requiredRoles={['Teacher']}
         title="Начална настройка"
+      />
+      <PrivateRoute
+        path="/timetable"
+        component={Generator}
+        requiredRoles={['Teacher']}
+        title="Генератор на програма"
       />
       <Route path="/book" />
     </Switch>

@@ -7,7 +7,7 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import Group from '../Group';
 import styles from './styles';
 
-class ScrollableTabsButtonAuto extends Component {
+class GroupList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,7 +48,7 @@ class ScrollableTabsButtonAuto extends Component {
   };
 }
 
-ScrollableTabsButtonAuto.propTypes = {
+GroupList.propTypes = {
   classes: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
   schoolType: PropTypes.string.isRequired,
@@ -56,4 +56,4 @@ ScrollableTabsButtonAuto.propTypes = {
   generateGroups: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(ScrollableTabsButtonAuto);
+export default withStyles(styles)(GroupList);

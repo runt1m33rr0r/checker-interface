@@ -166,7 +166,7 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
 
   dispatch({ type: FINISH_WIZARD });
   const token = localStorage.getItem('token');
-  return axios
+  axios
     .post(
       `${ENDPOINT}/api/school/settings/base`,
       {

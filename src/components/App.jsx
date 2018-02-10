@@ -17,7 +17,12 @@ const App = props => (
       <Route exact path="/" render={() => <Home title="Начало" />} />
       <Route path="/login" render={() => <Login title="Вход" />} />
       <Route path="/register" render={() => <Register title="Регистрация" />} />
-      <PrivateRoute path="/wizard" component={Wizard} title="Начална настройка" />
+      <PrivateRoute
+        path="/wizard"
+        component={Wizard}
+        requiredRoles={['Teacher']}
+        title="Начална настройка"
+      />
       <Route path="/book" />
     </Switch>
   </Header>

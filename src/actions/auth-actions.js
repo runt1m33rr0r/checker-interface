@@ -30,7 +30,7 @@ export const loginUser = creds => (dispatch) => {
       if (response.data.success) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', response.data.username);
-        localStorage.setItem('roles', response.data.roles);
+        localStorage.setItem('roles', JSON.stringify(response.data.roles));
         dispatch(receiveLogin(response.data));
       } else {
         dispatch({ type: LOGIN_FAILURE, message: response.data.message });

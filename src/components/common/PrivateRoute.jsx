@@ -10,12 +10,29 @@ class PrivateRoute extends Component {
     this.props.authCheck();
   }
 
+  inRoles = (requiredRoles, actualRoles) => {
+    let result = true;
+    requiredRoles.forEach((role) => {
+      if (actualRoles.includes(role) === false) {
+        result = false;
+      }
+    });
+
+    return result;
+  };
+
   render = () => {
-    const { component: ProtectedComponent, isAuthenticated, ...rest } = this.props;
+    const {
+      component: ProtectedComponent,
+      isAuthenticated,
+      requiredRoles,
+      actualRoles,
+      ...rest
+    } = this.props;
     return (
       <Route
         render={props =>
-          (isAuthenticated ? (
+          (isAuthenticated && this.inRoles(requiredRoles, actualRoles) ? (
             <ProtectedComponent {...rest} />
           ) : (
             <Redirect
@@ -36,10 +53,13 @@ PrivateRoute.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   authCheck: PropTypes.func.isRequired,
+  requiredRoles: PropTypes.array.isRequired,
+  actualRoles: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = ({ auth }) => ({
   isAuthenticated: auth.isAuthenticated,
+  actualRoles: auth.roles,
 });
 
 const mapDispatchToProps = dispatch => ({

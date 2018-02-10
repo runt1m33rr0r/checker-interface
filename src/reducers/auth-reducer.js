@@ -13,7 +13,7 @@ const auth = (
     isAuthenticated: !!localStorage.getItem('token'),
     isRegistered: !!localStorage.getItem('registered'),
     username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
-    roles: localStorage.getItem('roles') ? localStorage.getItem('roles') : '',
+    roles: localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : [],
   },
   action,
 ) => {

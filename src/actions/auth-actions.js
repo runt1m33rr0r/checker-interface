@@ -43,16 +43,26 @@ export const loginUser = creds => (dispatch) => {
 
 export const registerUser = data => (dispatch) => {
   dispatch({ type: REGISTER_REQUEST });
+  const {
+    userType, username, password, firstName, lastName, group, subjects,
+  } = data;
+
+  const sendData = {
+    userType,
+    username,
+    password,
+    firstName,
+    lastName,
+    leadTeacher: false,
+  };
+  if (userType === 'Student') {
+    sendData.group = group;
+  } else {
+    sendData.subjects = subjects;
+  }
 
   return axios
-    .post(`${ENDPOINT}/users/register`, {
-      username: data.username,
-      password: data.password,
-      firstName: 'FirstName',
-      lastName: 'LastName',
-      group: '9G',
-      userType: 'Student',
-    })
+    .post(`${ENDPOINT}/users/register`, sendData)
     .then((response) => {
       if (response.data.success) {
         localStorage.setItem('registered', true);

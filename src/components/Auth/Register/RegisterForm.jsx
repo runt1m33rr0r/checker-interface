@@ -22,6 +22,8 @@ class RegisterForm extends Component {
     this.state = {
       username: '',
       password: '',
+      firstName: '',
+      lastName: '',
       subjects: [],
       group: '',
       userType: 'Student',
@@ -59,24 +61,35 @@ class RegisterForm extends Component {
       <form className={this.props.classes.container} autoComplete="off">
         <TextField
           required
-          id="name"
+          label="Име"
+          className={this.props.classes.textField}
+          value={this.state.firstName}
+          onChange={this.handleChange('firstName')}
+        />
+        <TextField
+          required
+          label="Фамилия"
+          className={this.props.classes.textField}
+          value={this.state.lastName}
+          onChange={this.handleChange('lastName')}
+        />
+        <TextField
+          required
           label="Потребителско име"
           className={this.props.classes.textField}
-          margin="normal"
           value={this.state.username}
           onChange={this.handleChange('username')}
         />
         <TextField
           required
-          id="password"
           label="Парола"
           className={this.props.classes.textField}
           type="password"
-          margin="normal"
           value={this.state.password}
           onChange={this.handleChange('password')}
         />
         <TextField
+          required
           label="Вид потребител"
           select
           value={this.state.userType}
@@ -88,6 +101,7 @@ class RegisterForm extends Component {
         </TextField>
         {this.state.userType === 'Student' && (
           <TextField
+            required
             label="Група"
             select
             value={this.state.group}
@@ -125,13 +139,24 @@ class RegisterForm extends Component {
         <Button
           variant="raised"
           color="primary"
-          disabled={this.state.password.length < 3 || this.state.username.length < 3}
+          disabled={
+            this.state.password.length < 3 ||
+            this.state.username.length < 3 ||
+            this.state.firstName.length < 3 ||
+            this.state.lastName.length < 3 ||
+            (this.state.userType === 'Teacher' && this.state.subjects.length < 1) ||
+            (this.state.userType === 'Student' && this.state.group === '')
+          }
           onClick={(e) => {
             e.preventDefault();
             this.props.handleSubmit({
+              userType: this.state.userType,
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
               username: this.state.username,
               password: this.state.password,
               subjects: this.state.subjects,
+              group: this.state.group,
             });
           }}
         >

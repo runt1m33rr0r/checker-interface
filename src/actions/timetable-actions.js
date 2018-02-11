@@ -7,6 +7,9 @@ import {
   FETCH_SUBJECTS,
   FETCH_SUBJECTS_SUCCESS,
   FETCH_SUBJECTS_FAILURE,
+  FETCH_GROUPS,
+  FETCH_GROUPS_SUCCESS,
+  FETCH_GROUPS_FAILURE,
 } from '../constants/action-types';
 import ENDPOINT from '../constants/api-constants';
 
@@ -40,4 +43,17 @@ export const fetchSubjects = () => (dispatch) => {
       return dispatch({ type: FETCH_SUBJECTS_FAILURE, message: response.data.message });
     })
     .catch(err => dispatch({ type: FETCH_SUBJECTS_FAILURE, message: err.message }));
+};
+
+export const fetchGroups = () => (dispatch) => {
+  dispatch({ type: FETCH_GROUPS });
+  axios
+    .get(`${ENDPOINT}/api/groups`)
+    .then((response) => {
+      if (response.data.success) {
+        return dispatch({ type: FETCH_GROUPS_SUCCESS, groups: response.data.groups });
+      }
+      return dispatch({ type: FETCH_GROUPS_FAILURE, message: response.data.message });
+    })
+    .catch(err => dispatch({ type: FETCH_GROUPS_FAILURE, message: err.message }));
 };

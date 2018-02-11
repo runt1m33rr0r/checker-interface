@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { generateTimetable } from '../../actions/timetable-actions';
 
 const Generator = ({ generate }) => (
-  <Button variant="raised" color="primary" onClick={generate}>
+  <Button variant="raised" color="primary" onClick={() => generate()}>
     Генерирай програма
   </Button>
 );

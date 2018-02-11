@@ -4,8 +4,14 @@ import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import List, {
+  ListItem,
+  ListItemText,
+  ListSubheader,
+  ListItemSecondaryAction,
+} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
+import { MenuItem } from 'material-ui/Menu';
 
 import styles from '../styles';
 
@@ -17,6 +23,8 @@ class RegisterForm extends Component {
       username: '',
       password: '',
       subjects: [],
+      group: '',
+      userType: 'Student',
     };
   }
 
@@ -68,19 +76,52 @@ class RegisterForm extends Component {
           value={this.state.password}
           onChange={this.handleChange('password')}
         />
-        <div>
-          <List disablePadding dense>
-            {this.props.subjects.map(subject => (
-              <ListItem key={subject.code}>
-                <Checkbox
-                  checked={this.state.subjects.includes(subject.code)}
-                  onClick={this.handleSubjectsChange(subject.code)}
-                />
-                <ListItemText primary={subject.code} />
-              </ListItem>
+        <TextField
+          label="Вид потребител"
+          select
+          value={this.state.userType}
+          className={this.props.classes.textField}
+          onChange={this.handleChange('userType')}
+        >
+          <MenuItem value="Student">Ученик</MenuItem>
+          <MenuItem value="Teacher">Учител</MenuItem>
+        </TextField>
+        {this.state.userType === 'Student' && (
+          <TextField
+            label="Група"
+            select
+            value={this.state.group}
+            className={this.props.classes.textField}
+            onChange={this.handleChange('group')}
+          >
+            {this.props.groups.map(option => (
+              <MenuItem key={option.name} value={option.name}>
+                {option.name}
+              </MenuItem>
             ))}
-          </List>
-        </div>
+          </TextField>
+        )}
+        {this.state.userType === 'Teacher' && (
+          <div>
+            <List
+              className={this.props.classes.list}
+              disablePadding
+              subheader={<ListSubheader>Преподавани предмети:</ListSubheader>}
+            >
+              {this.props.subjects.map(subject => (
+                <ListItem key={subject.code}>
+                  <ListItemText primary={subject.code} />
+                  <ListItemSecondaryAction>
+                    <Checkbox
+                      checked={this.state.subjects.includes(subject.code)}
+                      onClick={this.handleSubjectsChange(subject.code)}
+                    />
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        )}
         <Button
           variant="raised"
           color="primary"
@@ -106,6 +147,7 @@ RegisterForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isRegistered: PropTypes.bool.isRequired,
   subjects: PropTypes.array.isRequired,
+  groups: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(RegisterForm);

@@ -73,3 +73,4 @@ typings/
 
 # ide stuff
 .vscode
+*.code-workspace

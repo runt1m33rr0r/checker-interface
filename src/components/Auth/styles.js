@@ -14,6 +14,10 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     width: 200,
   },
+  list: {
+    backgroundColor: theme.palette.background.paper,
+    marginBottom: '10px',
+  },
 });
 
 export default styles;

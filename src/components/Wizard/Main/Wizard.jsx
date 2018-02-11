@@ -67,7 +67,7 @@ class Wizard extends Component {
             nextButton={
               <Button
                 size="small"
-                onClick={isLastStep ? this.props.handleFinish : this.handleNext}
+                onClick={isLastStep ? () => this.props.handleFinish() : this.handleNext}
                 disabled={
                   this.state.activeStep === this.state.stepsCount || (!isReady && isLastStep)
                 }
@@ -90,7 +90,12 @@ class Wizard extends Component {
       <div className={classes.wizard}>
         <div className={classes.finished}>
           <Typography variant="display3">Настройката е направена!</Typography>
-          <Button variant="raised" size="large" color="primary" onClick={this.props.handleReset}>
+          <Button
+            variant="raised"
+            size="large"
+            color="primary"
+            onClick={() => this.props.handleReset()}
+          >
             Пренастрой
           </Button>
         </div>

@@ -25,7 +25,7 @@ export const generateTimetable = () => (dispatch) => {
     )
     .then((response) => {
       if (response.data.success) {
-        return dispatch({ type: GENERATE_TIMETABLE_SUCCESS, timetable: response.data.timetable });
+        return dispatch({ type: GENERATE_TIMETABLE_SUCCESS, lessons: response.data.lessons });
       }
       return dispatch({ type: GENERATE_TIMETABLE_FAILURE, message: response.data.message });
     })

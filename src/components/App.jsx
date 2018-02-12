@@ -31,7 +31,6 @@ const App = props => (
         requiredRoles={['Teacher']}
         title="Генератор на програма"
       />
-      <Route path="/book" />
     </Switch>
   </Header>
 );

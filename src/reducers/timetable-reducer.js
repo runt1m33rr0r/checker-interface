@@ -4,10 +4,10 @@ import {
   FETCH_GROUPS_SUCCESS,
 } from '../constants/action-types';
 
-const timetable = (state = { timetable: {}, subjects: [], groups: [] }, action) => {
+const timetable = (state = { lessons: [], subjects: [], groups: [] }, action) => {
   switch (action.type) {
     case GENERATE_TIMETABLE_SUCCESS:
-      return { ...state, timetable: action.timetable };
+      return { ...state, lessons: action.lessons };
     case FETCH_SUBJECTS_SUCCESS:
       return { ...state, subjects: action.subjects };
     case FETCH_GROUPS_SUCCESS:

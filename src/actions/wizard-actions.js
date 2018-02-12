@@ -142,16 +142,30 @@ const processGroups = (groups) => {
   return doneGroups;
 };
 
+const isSubjInArr = (arr, subjCode) => {
+  let result = false;
+  arr.forEach((el) => {
+    if (el.code === subjCode) {
+      result = true;
+    }
+  });
+
+  return result;
+};
+
 const processSubjects = (groups) => {
   const doneSubjects = [];
 
   Object.keys(groups).forEach((groupName) => {
     const subjects = groups[groupName];
     subjects.forEach((subject) => {
-      doneSubjects.push({
-        name: subject,
-        code: `${subject}-${groupName.replace(/\D/g, '')}`,
-      });
+      const subjCode = `${subject}-${groupName.replace(/\D/g, '')}`;
+      if (isSubjInArr(doneSubjects, subjCode) === false) {
+        doneSubjects.push({
+          name: subject,
+          code: subjCode,
+        });
+      }
     });
   });
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import IconButton from 'material-ui/IconButton';
-import PhotoCamera from 'material-ui-icons/PhotoCamera';
-import Input, { InputLabel } from 'material-ui/Input';
+// import IconButton from 'material-ui/IconButton';
+// import PhotoCamera from 'material-ui-icons/PhotoCamera';
+// import Input, { InputLabel } from 'material-ui/Input';
 
 const styles = {
   input: {

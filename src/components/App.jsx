@@ -10,8 +10,8 @@ import Wizard from './Wizard';
 // import Classbook from './Classbook';
 import Register from './Auth/Register';
 import PrivateRoute from './common/PrivateRoute';
-
 import Generator from './Timetable/Generator';
+import Checker from './User/Checker';
 
 const App = props => (
   <Header title={props.title}>
@@ -30,6 +30,12 @@ const App = props => (
         component={Generator}
         requiredRoles={['Teacher']}
         title="Генератор на програма"
+      />
+      <PrivateRoute
+        path="/check"
+        component={Checker}
+        requiredRoles={['Normal']}
+        title="Присъствия"
       />
     </Switch>
   </Header>

@@ -4,56 +4,47 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
-import Group from '../Group';
 import styles from './styles';
 
-class GroupList extends Component {
+class TabView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      idx: 0,
     };
   }
 
-  componentDidMount = () => {
-    const { generateGroups, schoolType, groupsCount } = this.props;
-    generateGroups(schoolType, groupsCount);
-  };
-
   handleChange = (event, value) => {
-    this.setState({ value });
+    this.setState({ idx: value });
   };
 
   render = () => {
-    const { classes, groups } = this.props;
-    const { value } = this.state;
-
+    const { classes, tabNames, handleTabChange } = this.props;
+    const { idx } = this.state;
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
-            value={value}
+            value={idx}
             onChange={this.handleChange}
             indicatorColor="primary"
             textColor="primary"
             scrollable
             scrollButtons="auto"
           >
-            {groups.map(group => <Tab key={group} label={group} />)}
+            {tabNames.length > 0 && tabNames.map(el => <Tab key={el} label={el} />)}
           </Tabs>
         </AppBar>
-        {groups.length > 0 && <Group groupName={groups[value]} />}
+        {tabNames.length > 0 && handleTabChange(tabNames[idx], idx)}
       </div>
     );
   };
 }
 
-GroupList.propTypes = {
+TabView.propTypes = {
   classes: PropTypes.object.isRequired,
-  groups: PropTypes.array.isRequired,
-  schoolType: PropTypes.string.isRequired,
-  groupsCount: PropTypes.number.isRequired,
-  generateGroups: PropTypes.func.isRequired,
+  tabNames: PropTypes.array.isRequired,
+  handleTabChange: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(GroupList);
+export default withStyles(styles)(TabView);

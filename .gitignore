@@ -71,6 +71,5 @@ typings/
 .env.test.local
 .env.production.local
 
-# ide stuff
+# ide
 .vscode
-*.code-workspace

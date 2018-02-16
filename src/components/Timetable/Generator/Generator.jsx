@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 
 import { connect } from 'react-redux';
-import { generateTimetable } from '../../actions/timetable-actions';
+import { generateTimetable } from '../../../actions/timetable-actions';
 
 const Generator = ({ generate }) => (
   <Button variant="raised" color="primary" onClick={() => generate()}>

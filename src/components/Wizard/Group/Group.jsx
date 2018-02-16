@@ -7,16 +7,21 @@ import Checkbox from 'material-ui/Checkbox';
 import styles from './styles';
 
 const Group = ({
-  classes, groupName, groups, subjects, handleAddSubject, handleRemoveSubject,
+  classes,
+  groupSubjects,
+  groupName,
+  subjects,
+  handleAddSubject,
+  handleRemoveSubject,
 }) => {
-  const check = (name, subject) => groups[name].includes(subject);
+  const check = subject => groupSubjects.includes(subject);
   return (
     <div className={classes.root}>
       <List>
         {subjects.map(subject => (
           <ListItem key={subject}>
             <Checkbox
-              checked={check(groupName, subject)}
+              checked={check(subject)}
               onChange={(e) => {
                 if (e.target.checked) {
                   handleAddSubject(groupName, subject);
@@ -35,9 +40,9 @@ const Group = ({
 
 Group.propTypes = {
   classes: PropTypes.object.isRequired,
-  groupName: PropTypes.string.isRequired,
   subjects: PropTypes.array.isRequired,
-  groups: PropTypes.object.isRequired,
+  groupSubjects: PropTypes.array.isRequired,
+  groupName: PropTypes.string.isRequired,
   handleAddSubject: PropTypes.func.isRequired,
   handleRemoveSubject: PropTypes.func.isRequired,
 };

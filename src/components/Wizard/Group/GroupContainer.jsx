@@ -6,7 +6,6 @@ import Group from './Group';
 
 const mapStateToProps = ({ wizard }) => ({
   subjects: wizard.subjects,
-  groups: wizard.groups,
 });
 
 const mapDispatchToProps = (dispatch) => {

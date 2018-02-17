@@ -19,7 +19,7 @@ class TabView extends Component {
   };
 
   render = () => {
-    const { classes, tabNames, handleTabChange } = this.props;
+    const { classes, tabNames } = this.props;
     const { idx } = this.state;
     return (
       <div className={classes.root}>
@@ -35,7 +35,7 @@ class TabView extends Component {
             {tabNames.length > 0 && tabNames.map(el => <Tab key={el} label={el} />)}
           </Tabs>
         </AppBar>
-        {tabNames.length > 0 && handleTabChange(tabNames[idx], idx)}
+        {tabNames.length > 0 && this.props.children[idx]}
       </div>
     );
   };
@@ -44,7 +44,7 @@ class TabView extends Component {
 TabView.propTypes = {
   classes: PropTypes.object.isRequired,
   tabNames: PropTypes.array.isRequired,
-  handleTabChange: PropTypes.func.isRequired,
+  children: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(TabView);

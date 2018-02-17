@@ -10,13 +10,15 @@ import {
   FETCH_GROUPS,
   FETCH_GROUPS_SUCCESS,
   FETCH_GROUPS_FAILURE,
+  FETCH_LESSONS,
+  FETCH_LESSONS_SUCCESS,
+  FETCH_LESSONS_FAILURE,
 } from '../constants/action-types';
 import ENDPOINT from '../constants/api-constants';
 
 export const generateTimetable = () => (dispatch) => {
   dispatch({ type: GENERATE_TIMETABLE });
   const token = localStorage.getItem('token');
-
   axios
     .post(
       `${ENDPOINT}/api/school/settings/timetable/generate`,
@@ -56,4 +58,20 @@ export const fetchGroups = () => (dispatch) => {
       return dispatch({ type: FETCH_GROUPS_FAILURE, message: response.data.message });
     })
     .catch(err => dispatch({ type: FETCH_GROUPS_FAILURE, message: err.message }));
+};
+
+export const fetchLessons = groupName => (dispatch) => {
+  dispatch({ type: FETCH_LESSONS });
+  const token = localStorage.getItem('token');
+  axios
+    .get(`${ENDPOINT}/api/groups/${groupName}/lessons`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((response) => {
+      if (response.data.success) {
+        return dispatch({ type: FETCH_LESSONS_SUCCESS, lessons: response.data.lessons });
+      }
+      return dispatch({ type: FETCH_LESSONS_FAILURE, message: response.data.message });
+    })
+    .catch(err => dispatch({ type: FETCH_LESSONS_FAILURE, message: err.message }));
 };

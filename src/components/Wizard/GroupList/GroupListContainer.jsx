@@ -11,9 +11,13 @@ class GroupList extends Component {
     this.props.generate(this.props.schoolType, this.props.groupsCount);
   };
 
-  handleChange = title => <Group groupSubjects={this.props.groups[title]} groupName={title} />;
-
-  render = () => <TabView tabNames={this.props.groupNames} handleTabChange={this.handleChange} />;
+  render = () => (
+    <TabView tabNames={this.props.groupNames}>
+      {this.props.groupNames.map(name => (
+        <Group key={name} groupSubjects={this.props.groups[name]} groupName={name} />
+      ))}
+    </TabView>
+  );
 }
 
 GroupList.propTypes = {

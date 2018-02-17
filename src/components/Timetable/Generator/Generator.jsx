@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
 
-import { connect } from 'react-redux';
-import { generateTimetable, fetchGroups } from '../../../actions/timetable-actions';
 import TabView from '../../common/TabView';
 import Table from '../Table';
+
+import styles from './styles';
 
 class Generator extends Component {
   componentDidMount = () => {
@@ -13,13 +14,18 @@ class Generator extends Component {
   };
 
   render = () => (
-    <div>
-      <Button variant="raised" color="primary" onClick={() => this.props.generate()}>
-        Генерирай програма
-      </Button>
+    <div className={this.props.classes.root}>
       <TabView tabNames={this.props.groupNames}>
         {this.props.groupNames.map(name => <Table key={name} groupName={name} />)}
       </TabView>
+      <Button
+        className={this.props.classes.btn}
+        variant="raised"
+        color="primary"
+        onClick={() => this.props.generate()}
+      >
+        Генерирай програма
+      </Button>
     </div>
   );
 }
@@ -28,15 +34,7 @@ Generator.propTypes = {
   generate: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
   groupNames: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ timetable }) => ({
-  groupNames: timetable.groups,
-});
-
-const mapDispatchToProps = dispatch => ({
-  generate: () => dispatch(generateTimetable()),
-  fetchGroups: () => dispatch(fetchGroups()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Generator);
+export default withStyles(styles)(Generator);

@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import { makeRequest } from '../api';
 import {
   GENERATE_TIMETABLE,
   GENERATE_TIMETABLE_SUCCESS,
@@ -19,59 +18,48 @@ import ENDPOINT from '../constants/api-constants';
 export const generateTimetable = () => (dispatch) => {
   dispatch({ type: GENERATE_TIMETABLE });
   const token = localStorage.getItem('token');
-  axios
-    .post(
-      `${ENDPOINT}/api/school/settings/timetable/generate`,
-      {},
-      { headers: { Authorization: `Bearer ${token}` } },
-    )
-    .then((response) => {
-      if (response.data.success) {
-        return dispatch({ type: GENERATE_TIMETABLE_SUCCESS });
-      }
-      return dispatch({ type: GENERATE_TIMETABLE_FAILURE, message: response.data.message });
-    })
+  makeRequest({
+    url: `${ENDPOINT}/api/school/settings/timetable/generate`,
+    method: 'post',
+    token,
+    data: {},
+    dispatch,
+  })
+    .then(() => dispatch({ type: GENERATE_TIMETABLE_SUCCESS }))
     .catch(err => dispatch({ type: GENERATE_TIMETABLE_FAILURE, message: err.message }));
 };
 
 export const fetchSubjects = () => (dispatch) => {
   dispatch({ type: FETCH_SUBJECTS });
-  axios
-    .get(`${ENDPOINT}/api/subjects`)
-    .then((response) => {
-      if (response.data.success) {
-        return dispatch({ type: FETCH_SUBJECTS_SUCCESS, subjects: response.data.subjects });
-      }
-      return dispatch({ type: FETCH_SUBJECTS_FAILURE, message: response.data.message });
-    })
+  makeRequest({
+    url: `${ENDPOINT}/api/subjects`,
+    method: 'get',
+    dispatch,
+  })
+    .then(data => dispatch({ type: FETCH_SUBJECTS_SUCCESS, subjectCodes: data.subjectCodes }))
     .catch(err => dispatch({ type: FETCH_SUBJECTS_FAILURE, message: err.message }));
 };
 
 export const fetchGroups = () => (dispatch) => {
   dispatch({ type: FETCH_GROUPS });
-  axios
-    .get(`${ENDPOINT}/api/groups`)
-    .then((response) => {
-      if (response.data.success) {
-        return dispatch({ type: FETCH_GROUPS_SUCCESS, groups: response.data.groups });
-      }
-      return dispatch({ type: FETCH_GROUPS_FAILURE, message: response.data.message });
-    })
+  makeRequest({
+    url: `${ENDPOINT}/api/groups`,
+    method: 'get',
+    dispatch,
+  })
+    .then(data => dispatch({ type: FETCH_GROUPS_SUCCESS, groupNames: data.groupNames }))
     .catch(err => dispatch({ type: FETCH_GROUPS_FAILURE, message: err.message }));
 };
 
 export const fetchLessons = groupName => (dispatch) => {
   dispatch({ type: FETCH_LESSONS });
   const token = localStorage.getItem('token');
-  axios
-    .get(`${ENDPOINT}/api/groups/${groupName}/lessons`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((response) => {
-      if (response.data.success) {
-        return dispatch({ type: FETCH_LESSONS_SUCCESS, lessons: response.data.lessons });
-      }
-      return dispatch({ type: FETCH_LESSONS_FAILURE, message: response.data.message });
-    })
+  makeRequest({
+    url: `${ENDPOINT}/api/groups/${groupName}/lessons`,
+    method: 'get',
+    token,
+    dispatch,
+  })
+    .then(data => dispatch({ type: FETCH_LESSONS_SUCCESS, lessons: data.lessons }))
     .catch(err => dispatch({ type: FETCH_LESSONS_FAILURE, message: err.message }));
 };

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import {
   LOGIN_REQUEST,
@@ -9,6 +8,7 @@ import {
   REGISTER_FAILURE,
   LOGOUT_SUCCESS,
 } from '../constants/action-types';
+import { makeRequest } from '../api';
 import ENDPOINT from '../constants/api-constants';
 
 const receiveLogin = user => ({
@@ -20,25 +20,22 @@ const receiveLogin = user => ({
 
 export const loginUser = creds => (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
-
-  axios
-    .post(`${ENDPOINT}/users/login`, {
+  makeRequest({
+    url: `${ENDPOINT}/users/login`,
+    method: 'post',
+    data: {
       username: creds.username,
       password: creds.password,
+    },
+    dispatch,
+  })
+    .then((data) => {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', data.username);
+      localStorage.setItem('roles', JSON.stringify(data.roles));
+      dispatch(receiveLogin(data));
     })
-    .then((response) => {
-      if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('username', response.data.username);
-        localStorage.setItem('roles', JSON.stringify(response.data.roles));
-        dispatch(receiveLogin(response.data));
-      } else {
-        dispatch({ type: LOGIN_FAILURE, message: response.data.message });
-      }
-    })
-    .catch((err) => {
-      dispatch({ type: LOGIN_FAILURE, message: err.message });
-    });
+    .catch(err => dispatch({ type: LOGIN_FAILURE, message: err.message }));
 };
 
 export const registerUser = data => (dispatch) => {
@@ -61,15 +58,15 @@ export const registerUser = data => (dispatch) => {
     sendData.subjects = subjects;
   }
 
-  return axios
-    .post(`${ENDPOINT}/users/register`, sendData)
-    .then((response) => {
-      if (response.data.success) {
-        localStorage.setItem('registered', true);
-        dispatch({ type: REGISTER_SUCCESS });
-      } else {
-        dispatch({ type: REGISTER_FAILURE, message: response.data.message });
-      }
+  makeRequest({
+    url: `${ENDPOINT}/users/register`,
+    method: 'post',
+    data: sendData,
+    dispatch,
+  })
+    .then(() => {
+      localStorage.setItem('registered', true);
+      dispatch({ type: REGISTER_SUCCESS });
     })
     .catch(err => dispatch({ type: REGISTER_FAILURE, message: err.message }));
 };

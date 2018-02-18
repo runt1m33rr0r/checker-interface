@@ -4,7 +4,7 @@ import { generateTimetable, fetchGroups } from '../../../actions/timetable-actio
 import Generator from './Generator';
 
 const mapStateToProps = ({ timetable }) => ({
-  groupNames: timetable.groups,
+  groupNames: timetable.groupNames,
 });
 
 const mapDispatchToProps = dispatch => ({

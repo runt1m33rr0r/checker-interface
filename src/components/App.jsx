@@ -26,7 +26,7 @@ const App = props => (
         title="Начална настройка"
       />
       <PrivateRoute
-        path="/timetable"
+        path="/generator"
         component={Generator}
         requiredRoles={['Teacher']}
         title="Генератор на програма"

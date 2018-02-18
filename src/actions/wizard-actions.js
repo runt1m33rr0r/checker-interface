@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { makeRequest } from '../api';
 import {
   SET_SCHOOL_TYPE,
   ADD_SUBJECT,
@@ -180,40 +180,32 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
 
   dispatch({ type: FINISH_WIZARD });
   const token = localStorage.getItem('token');
-  axios
-    .post(
-      `${ENDPOINT}/api/school/settings/base`,
-      {
-        timeslots: doneTimeslots,
-        groups: doneGroups,
-        subjects: doneSubjects,
-      },
-      { headers: { Authorization: `Bearer ${token}` } },
-    )
-    .then((response) => {
-      if (!response.data.success) {
-        dispatch({ type: FINISH_WIZARD_FAILURE, message: response.data.message });
-      } else {
-        dispatch({ type: FINISH_WIZARD_SUCCESS });
-      }
-    })
-    .catch((err) => {
-      dispatch({ type: FINISH_WIZARD_FAILURE, message: err.message });
-    });
+  makeRequest({
+    url: `${ENDPOINT}/api/school/settings/base`,
+    method: 'post',
+    token,
+    data: {
+      timeslots: doneTimeslots,
+      groups: doneGroups,
+      subjects: doneSubjects,
+    },
+    dispatch,
+  })
+    .then(() => dispatch({ type: FINISH_WIZARD_SUCCESS }))
+    .catch(err => dispatch({ type: FINISH_WIZARD_FAILURE, message: err.message }));
 };
 
 export const checkSetup = () => (dispatch) => {
   dispatch({ type: CHECK_SETUP });
 
   const token = localStorage.getItem('token');
-  axios
-    .get(`${ENDPOINT}/api/settings/setup`, { headers: { Authorization: `Bearer ${token}` } })
-    .then((response) => {
-      if (response.data.success === true) {
-        return dispatch({ type: CHECK_SETUP_SUCCESS, setupFinished: response.data.setupFinished });
-      }
-      return dispatch({ type: CHECK_SETUP_FAILURE, message: response.data.message });
-    })
+  makeRequest({
+    url: `${ENDPOINT}/api/settings/setup`,
+    method: 'get',
+    token,
+    dispatch,
+  })
+    .then(data => dispatch({ type: CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished }))
     .catch(err => dispatch({ type: CHECK_SETUP_FAILURE, message: err.message }));
 };
 
@@ -221,17 +213,13 @@ export const resetSetup = () => (dispatch) => {
   dispatch({ type: RESET_SETUP });
 
   const token = localStorage.getItem('token');
-  axios
-    .post(
-      `${ENDPOINT}/api/settings/setup`,
-      { setupFinished: false },
-      { headers: { Authorization: `Bearer ${token}` } },
-    )
-    .then((response) => {
-      if (response.data.success === true) {
-        return dispatch({ type: RESET_SETUP_SUCCESS });
-      }
-      return dispatch({ type: RESET_SETUP_FAILURE, message: response.data.message });
-    })
+  makeRequest({
+    url: `${ENDPOINT}/api/settings/setup`,
+    method: 'post',
+    data: { setupFinished: false },
+    token,
+    dispatch,
+  })
+    .then(() => dispatch({ type: RESET_SETUP_SUCCESS }))
     .catch(err => dispatch({ type: RESET_SETUP_FAILURE, message: err.message }));
 };

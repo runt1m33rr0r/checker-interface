@@ -1,59 +1,39 @@
 import { makeRequest } from '../api';
-import {
-  SET_SCHOOL_TYPE,
-  ADD_SUBJECT,
-  REMOVE_SUBJECT,
-  ADD_TIMESLOT,
-  REMOVE_TIMESLOT,
-  SET_GROUPS_COUNT,
-  GENERATE_GROUPS_STARTED,
-  GENERATE_GROUPS_FINISHED,
-  ADD_SUBJECT_TO_GROUP,
-  REMOVE_SUBJECT_FROM_GROUP,
-  FINISH_WIZARD,
-  FINISH_WIZARD_SUCCESS,
-  FINISH_WIZARD_FAILURE,
-  CHECK_SETUP,
-  CHECK_SETUP_SUCCESS,
-  CHECK_SETUP_FAILURE,
-  RESET_SETUP,
-  RESET_SETUP_SUCCESS,
-  RESET_SETUP_FAILURE,
-} from '../constants/action-types';
+import * as actions from '../constants/action-types';
 import ENDPOINT from '../constants/api-constants';
 
 export const setSchoolType = type => ({
-  type: SET_SCHOOL_TYPE,
+  type: actions.SET_SCHOOL_TYPE,
   schoolType: type,
 });
 
 export const setGroupsCount = count => ({
-  type: SET_GROUPS_COUNT,
+  type: actions.SET_GROUPS_COUNT,
   count,
 });
 
 export const addSubject = subjectName => ({
-  type: ADD_SUBJECT,
+  type: actions.ADD_SUBJECT,
   subjectName,
 });
 
 export const removeSubject = subjectName => ({
-  type: REMOVE_SUBJECT,
+  type: actions.REMOVE_SUBJECT,
   subjectName,
 });
 
 export const addTimeslot = timeslot => ({
-  type: ADD_TIMESLOT,
+  type: actions.ADD_TIMESLOT,
   timeslot,
 });
 
 export const removeTimeslot = timeslot => ({
-  type: REMOVE_TIMESLOT,
+  type: actions.REMOVE_TIMESLOT,
   timeslot,
 });
 
 export const generateGroups = (schoolType, groupsCount) => (dispatch) => {
-  dispatch({ type: GENERATE_GROUPS_STARTED });
+  dispatch({ type: actions.GENERATE_GROUPS_STARTED });
 
   const groups = {};
   const groupNames = [];
@@ -70,20 +50,20 @@ export const generateGroups = (schoolType, groupsCount) => (dispatch) => {
   }
 
   dispatch({
-    type: GENERATE_GROUPS_FINISHED,
+    type: actions.GENERATE_GROUPS_FINISHED,
     groups,
     groupNames,
   });
 };
 
 export const addSubjectToGroup = (groupName, subjectName) => ({
-  type: ADD_SUBJECT_TO_GROUP,
+  type: actions.ADD_SUBJECT_TO_GROUP,
   groupName,
   subjectName,
 });
 
 export const removeSubjectFromGroup = (groupName, subjectName) => ({
-  type: REMOVE_SUBJECT_FROM_GROUP,
+  type: actions.REMOVE_SUBJECT_FROM_GROUP,
   groupName,
   subjectName,
 });
@@ -178,7 +158,7 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
   // we need the subjects inside the groups, because the subject code includes the group name
   const doneSubjects = processSubjects(groups);
 
-  dispatch({ type: FINISH_WIZARD });
+  dispatch({ type: actions.FINISH_WIZARD });
   const token = localStorage.getItem('token');
   makeRequest({
     url: `${ENDPOINT}/api/school/settings/base`,
@@ -191,12 +171,12 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
     },
     dispatch,
   })
-    .then(() => dispatch({ type: FINISH_WIZARD_SUCCESS }))
-    .catch(err => dispatch({ type: FINISH_WIZARD_FAILURE, message: err.message }));
+    .then(() => dispatch({ type: actions.FINISH_WIZARD_SUCCESS }))
+    .catch(err => dispatch({ type: actions.FINISH_WIZARD_FAILURE, message: err.message }));
 };
 
 export const checkSetup = () => (dispatch) => {
-  dispatch({ type: CHECK_SETUP });
+  dispatch({ type: actions.CHECK_SETUP });
 
   const token = localStorage.getItem('token');
   makeRequest({
@@ -205,12 +185,14 @@ export const checkSetup = () => (dispatch) => {
     token,
     dispatch,
   })
-    .then(data => dispatch({ type: CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished }))
-    .catch(err => dispatch({ type: CHECK_SETUP_FAILURE, message: err.message }));
+    .then(data =>
+      dispatch({ type: actions.CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished }),
+    )
+    .catch(err => dispatch({ type: actions.CHECK_SETUP_FAILURE, message: err.message }));
 };
 
 export const resetSetup = () => (dispatch) => {
-  dispatch({ type: RESET_SETUP });
+  dispatch({ type: actions.RESET_SETUP });
 
   const token = localStorage.getItem('token');
   makeRequest({
@@ -220,6 +202,6 @@ export const resetSetup = () => (dispatch) => {
     token,
     dispatch,
   })
-    .then(() => dispatch({ type: RESET_SETUP_SUCCESS }))
-    .catch(err => dispatch({ type: RESET_SETUP_FAILURE, message: err.message }));
+    .then(() => dispatch({ type: actions.RESET_SETUP_SUCCESS }))
+    .catch(err => dispatch({ type: actions.RESET_SETUP_FAILURE, message: err.message }));
 };

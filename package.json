@@ -7,16 +7,16 @@
     "classnames": "2.2.5",
     "jwt-decode": "2.2.0",
     "keycode": "2.1.9",
-    "material-ui": "^1.0.0-beta.33",
+    "material-ui": "1.0.0-beta.34",
     "material-ui-icons": "1.0.0-beta.17",
     "prop-types": "15.6.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "react-redux": "5.0.6",
+    "react-redux": "5.0.7",
     "react-router-dom": "4.2.2",
     "react-scripts": "1.1.1",
     "redux": "3.7.2",
-    "redux-devtools-extension": "^2.13.2",
+    "redux-devtools-extension": "2.13.2",
     "redux-immutable-state-invariant": "2.1.0",
     "redux-thunk": "2.2.0",
     "typeface-roboto": "0.0.54"
@@ -28,7 +28,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "4.17.0",
+    "eslint": "4.18.0",
     "eslint-config-airbnb": "16.1.0",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "6.0.3",

@@ -8,7 +8,7 @@ const mapStateToProps = ({ timetable }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  generate: () => dispatch(generateTimetable()),
+  generate: groupToRefresh => dispatch(generateTimetable(groupToRefresh)),
   fetchGroups: () => dispatch(fetchGroups()),
 });
 

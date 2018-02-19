@@ -12,6 +12,7 @@ import Register from './Auth/Register';
 import PrivateRoute from './common/PrivateRoute';
 import Generator from './Timetable/Generator';
 import Checker from './User/Checker';
+import Creator from './Timetable/Creator';
 
 const App = props => (
   <Header title={props.title}>
@@ -36,6 +37,12 @@ const App = props => (
         component={Checker}
         requiredRoles={['Normal']}
         title="Присъствия"
+      />
+      <PrivateRoute
+        path="/creator"
+        component={Creator}
+        requiredRoles={['Normal']}
+        title="Създаване на програма"
       />
     </Switch>
   </Header>

@@ -2,6 +2,27 @@ import { makeRequest } from '../api';
 import * as actions from '../constants/action-types';
 import ENDPOINT from '../constants/api-constants';
 
+const sortLessons = (lessons) => {
+  lessons.sort((first, second) => {
+    const firstTimeslot = new Date(
+      1990,
+      1,
+      first.timeslot.day,
+      first.timeslot.fromHour,
+      first.timeslot.fromMinute,
+    );
+    const secondTimeslot = new Date(
+      1990,
+      1,
+      second.timeslot.day,
+      second.timeslot.fromHour,
+      second.timeslot.fromMinute,
+    );
+    return firstTimeslot > secondTimeslot;
+  });
+  return lessons;
+};
+
 export const fetchSubjects = () => (dispatch) => {
   dispatch({ type: actions.FETCH_SUBJECTS });
   makeRequest({
@@ -35,7 +56,9 @@ export const fetchLessons = groupName => (dispatch) => {
     token,
     dispatch,
   })
-    .then(data => dispatch({ type: actions.FETCH_LESSONS_SUCCESS, lessons: data.lessons }))
+    .then(data =>
+      dispatch({ type: actions.FETCH_LESSONS_SUCCESS, lessons: sortLessons(data.lessons) }),
+    )
     .catch(err => dispatch({ type: actions.FETCH_LESSONS_FAILURE, message: err.message }));
 };
 

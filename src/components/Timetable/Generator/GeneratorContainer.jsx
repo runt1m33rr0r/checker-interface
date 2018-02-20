@@ -9,7 +9,7 @@ const mapStateToProps = ({ timetable }) => ({
 
 const mapDispatchToProps = dispatch => ({
   generate: groupToRefresh => dispatch(generateTimetable(groupToRefresh)),
-  fetchGroups: () => dispatch(fetchGroups()),
+  fetchGroups: groupLessonsToRefresh => dispatch(fetchGroups(groupLessonsToRefresh)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Generator);

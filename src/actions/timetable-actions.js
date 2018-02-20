@@ -65,7 +65,7 @@ export const fetchTeachers = () => (dispatch) => {
     .catch(err => dispatch({ type: actions.FETCH_TEACHERS_FAILURE, message: err.message }));
 };
 
-export const generateTimetable = () => (dispatch) => {
+export const generateTimetable = groupLessonsToRefresh => (dispatch) => {
   dispatch({ type: actions.GENERATE_TIMETABLE });
   const token = localStorage.getItem('token');
   makeRequest({
@@ -77,6 +77,7 @@ export const generateTimetable = () => (dispatch) => {
   })
     .then(() => {
       dispatch({ type: actions.GENERATE_TIMETABLE_SUCCESS });
+      dispatch(fetchLessons(groupLessonsToRefresh));
     })
     .catch(err => dispatch({ type: actions.GENERATE_TIMETABLE_FAILURE, message: err.message }));
 };

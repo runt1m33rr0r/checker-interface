@@ -16,6 +16,9 @@ class TabView extends Component {
 
   handleChange = (event, value) => {
     this.setState({ idx: value });
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(value, this.props.tabNames[value]);
+    }
   };
 
   render = () => {
@@ -45,6 +48,7 @@ TabView.propTypes = {
   classes: PropTypes.object.isRequired,
   tabNames: PropTypes.array.isRequired,
   children: PropTypes.array.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default withStyles(styles)(TabView);

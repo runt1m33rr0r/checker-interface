@@ -39,88 +39,110 @@ class Creator extends Component {
     this.setState({ [valueName]: value });
   };
 
-  render = () => (
-    <div className={this.props.classes.root}>
-      <TabView tabNames={this.props.groupNames}>
-        {this.props.groupNames.map(name => <Table key={name} groupName={name} />)}
-      </TabView>
-      <div className={this.props.classes.createForm}>
-        <FormControl>
-          <InputLabel htmlFor="time">Време</InputLabel>
-          <Select
-            value={this.state.timeslotIdx}
-            id="time"
-            onChange={e => this.handleChange('timeslotIdx', e.target.value)}
-          >
-            {this.props.timeslots.map((option, idx) => (
-              <MenuItem key={this.timeslotToString(option)} value={idx}>
-                {this.timeslotToString(option)}
-              </MenuItem>
+  /* eslint no-underscore-dangle: 0 */
+  render = () => {
+    const { root, createForm, btn } = this.props.classes;
+    const {
+      groupNames, timeslots, subjectCodes, teachers, createLesson,
+    } = this.props;
+    const {
+      timeslotIdx, subjectIdx, teacherIdx, groupIdx,
+    } = this.state;
+
+    return (
+      <div className={root}>
+        <div>
+          <TabView tabNames={groupNames}>
+            {groupNames.map(name => (
+              <Table
+                deleteHandler={lesson => this.props.deleteLesson(lesson)}
+                key={name}
+                groupName={name}
+              />
             ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="subject">Предмет</InputLabel>
-          <Select
-            value={this.state.subjectIdx}
-            id="subject"
-            onChange={e => this.handleChange('subject', e.target.value)}
+          </TabView>
+        </div>
+        <div className={createForm}>
+          <FormControl>
+            <InputLabel htmlFor="time">Време</InputLabel>
+            <Select
+              value={timeslotIdx}
+              id="time"
+              onChange={e => this.handleChange('timeslotIdx', e.target.value)}
+            >
+              {timeslots.map((option, idx) => (
+                <MenuItem key={this.timeslotToString(option)} value={idx}>
+                  {this.timeslotToString(option)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="subject">Предмет</InputLabel>
+            <Select
+              value={subjectIdx}
+              id="subject"
+              onChange={e => this.handleChange('subjectIdx', e.target.value)}
+            >
+              {subjectCodes.map((option, idx) => (
+                <MenuItem key={option} value={idx}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="teacher">Учител/ка</InputLabel>
+            <Select
+              value={teacherIdx}
+              id="teacher"
+              onChange={e => this.handleChange('teacherIdx', e.target.value)}
+            >
+              {teachers.map((option, idx) => (
+                <MenuItem key={option} value={idx}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="group">Клас</InputLabel>
+            <Select
+              value={groupIdx}
+              id="group"
+              onChange={e => this.handleChange('groupIdx', e.target.value)}
+            >
+              {groupNames.map((option, idx) => (
+                <MenuItem key={option} value={idx}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Button
+            variant="raised"
+            color="primary"
+            className={btn}
+            onClick={() =>
+              createLesson(
+                groupNames[groupIdx],
+                subjectCodes[subjectIdx],
+                teachers[teacherIdx],
+                timeslots[timeslotIdx]._id,
+              )
+            }
           >
-            {this.props.subjectCodes.map((option, idx) => (
-              <MenuItem key={option} value={idx}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="teacher">Учител/ка</InputLabel>
-          <Select
-            value={this.state.teacherIdx}
-            id="teacher"
-            onChange={e => this.handleChange('teacherIdx', e.target.value)}
-          >
-            {this.props.teachers.map((option, idx) => (
-              <MenuItem key={option} value={idx}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="group">Клас</InputLabel>
-          <Select
-            value={this.state.groupIdx}
-            id="group"
-            onChange={e => this.handleChange('groupIdx', e.target.value)}
-          >
-            {this.props.groupNames.map((option, idx) => (
-              <MenuItem key={option} value={idx}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            Добави
+          </Button>
+        </div>
       </div>
-      <Button
-        variant="raised"
-        color="primary"
-        className={this.props.classes.btn}
-        onClick={() => this.props.createLesson(
-          this.props.groupNames[this.state.groupIdx],
-          this.props.subjectCodes[this.state.subjectIdx],
-          this.props.teachers[this.state.teacherIdx],
-          this.props.timeslots[this.state.timeslotIdx]._id,
-        )``}
-      >
-        Добави
-      </Button>
-    </div>
-  );
+    );
+  };
 }
 
 Creator.propTypes = {
   createLesson: PropTypes.func.isRequired,
+  deleteLesson: PropTypes.func.isRequired,
   groupNames: PropTypes.array.isRequired,
   subjectCodes: PropTypes.array.isRequired,
   timeslots: PropTypes.array.isRequired,

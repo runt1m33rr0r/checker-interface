@@ -102,3 +102,20 @@ export const createLesson = (groupName, subjectCode, teacherUsername, timeslotID
     })
     .catch(err => dispatch({ type: actions.CREATE_LESSON_FAILURE, message: err.message }));
 };
+
+export const deleteLesson = lesson => (dispatch) => {
+  dispatch({ type: actions.DELETE_LESSON });
+  const token = localStorage.getItem('token');
+  makeRequest({
+    url: `${ENDPOINT}/api/lessons`,
+    method: 'delete',
+    dispatch,
+    token,
+    data: { lesson },
+  })
+    .then(() => {
+      dispatch({ type: actions.DELETE_LESSON_SUCCESS });
+      dispatch(fetchLessons(lesson.groupName));
+    })
+    .catch(err => dispatch({ type: actions.DELETE_LESSON_FAILURE, message: err.message }));
+};

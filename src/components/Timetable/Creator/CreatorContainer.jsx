@@ -7,6 +7,7 @@ import {
   fetchTimeslots,
   fetchTeachers,
   createLesson,
+  deleteLesson,
 } from '../../../actions/timetable-actions';
 
 import Creator from './Creator';
@@ -43,6 +44,7 @@ const mapDispatchToProps = dispatch => ({
   fetchTeachers: () => dispatch(fetchTeachers()),
   createLesson: (groupName, subjectCode, teacherUsername, timeslotID) =>
     dispatch(createLesson(groupName, subjectCode, teacherUsername, timeslotID)),
+  deleteLesson: lesson => dispatch(deleteLesson(lesson)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatorContainer);

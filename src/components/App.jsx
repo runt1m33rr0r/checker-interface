@@ -7,12 +7,12 @@ import Header from './Header';
 import Login from './Auth/Login';
 import Home from './Home';
 import Wizard from './Wizard';
-// import Classbook from './Classbook';
 import Register from './Auth/Register';
 import PrivateRoute from './common/PrivateRoute';
 import Generator from './Timetable/Generator';
 import Checker from './User/Checker';
 import Creator from './Timetable/Creator';
+import Status from './System/Status';
 
 const App = props => (
   <Header title={props.title}>
@@ -43,6 +43,12 @@ const App = props => (
         component={Creator}
         requiredRoles={['Normal']}
         title="Създаване на програма"
+      />
+      <PrivateRoute
+        path="/status"
+        component={Status}
+        requiredRoles={['Teacher']}
+        title="Състояние на системата"
       />
     </Switch>
   </Header>

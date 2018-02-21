@@ -9,16 +9,12 @@ import {
   REMOVE_SUBJECT_FROM_GROUP,
   GENERATE_GROUPS_STARTED,
   GENERATE_GROUPS_FINISHED,
-  FINISH_WIZARD_SUCCESS,
-  CHECK_SETUP_SUCCESS,
-  RESET_SETUP_SUCCESS,
 } from '../constants/action-types';
 import { addToArray, removeFromArray, addToArrayInObj, removeFromArrayInObj } from './utils';
 
 const wizard = (
   state = {
     isGenerating: false,
-    setupFinished: false,
     schoolType: 'gymnasium',
     groupsCount: 6,
     subjects: [],
@@ -29,10 +25,6 @@ const wizard = (
   action,
 ) => {
   switch (action.type) {
-    case CHECK_SETUP_SUCCESS:
-      return { ...state, setupFinished: action.setupFinished };
-    case RESET_SETUP_SUCCESS:
-      return { ...state, setupFinished: false };
     case SET_SCHOOL_TYPE:
       return { ...state, schoolType: action.schoolType };
     case SET_GROUPS_COUNT:
@@ -75,11 +67,6 @@ const wizard = (
       return {
         ...state,
         groups: removeFromArrayInObj(state.groups, action.groupName, action.subjectName),
-      };
-    case FINISH_WIZARD_SUCCESS:
-      return {
-        ...state,
-        setupFinished: true,
       };
     default:
       return state;

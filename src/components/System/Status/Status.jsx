@@ -16,31 +16,35 @@ const Status = ({
   subjectsCount,
 }) => (
   <div className={classes.root}>
-    <Typography variant="display1" gutterBottom>
-      Системата е настроена: {setupFinished ? 'Да' : 'Не'}
-    </Typography>
-    <Typography variant="display1" gutterBottom>
-      Брой на учители: {teachersCount}
-    </Typography>
-    <Typography variant="display1" gutterBottom>
-      Брой на ученици: {studentsCount}
-    </Typography>
-    <Typography variant="display1" gutterBottom>
-      Брой на класове: {groupsCount}
-    </Typography>
-    <Typography variant="display1" gutterBottom>
-      Брой на предмети: {subjectsCount}
-    </Typography>
-    <Typography variant="display1" gutterBottom>
-      Предмети без учители:
-    </Typography>
-    <List>
-      {freeSubjects.map(subject => (
-        <ListItem key={subject}>
-          <ListItemText primary={subject} />
-        </ListItem>
-      ))}
-    </List>
+    <div className={classes.content}>
+      <Typography className={classes.text} variant="headline" gutterBottom>
+        Системата е настроена: {setupFinished ? 'да' : 'не'}
+      </Typography>
+      <Typography className={classes.text} variant="headline" gutterBottom>
+        Брой на учители: {teachersCount}
+      </Typography>
+      <Typography className={classes.text} variant="headline" gutterBottom>
+        Брой на ученици: {studentsCount}
+      </Typography>
+      <Typography className={classes.text} variant="headline" gutterBottom>
+        Брой на класове: {groupsCount}
+      </Typography>
+      <Typography className={classes.text} variant="headline" gutterBottom>
+        Брой на предмети: {subjectsCount}
+      </Typography>
+      <Typography className={classes.text} variant="title" gutterBottom>
+        Предмети без учители:
+      </Typography>
+    </div>
+    <div>
+      <List className={classes.list}>
+        {freeSubjects.map(subject => (
+          <ListItem button key={subject}>
+            <ListItemText primary={subject} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
   </div>
 );
 

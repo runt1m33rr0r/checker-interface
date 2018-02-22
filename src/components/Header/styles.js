@@ -57,6 +57,15 @@ const styles = theme => ({
   hidden: {
     display: 'none',
   },
+  lampOff: {
+    color: 'black',
+  },
+  lampOn: {
+    color: 'inherit',
+  },
+  flex: {
+    flex: 1,
+  },
 });
 
 export default styles;

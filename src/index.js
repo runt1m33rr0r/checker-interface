@@ -4,10 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import purple from 'material-ui/colors/purple';
-import green from 'material-ui/colors/green';
-import Reboot from 'material-ui/Reboot';
+
 import 'typeface-roboto';
 import invariant from 'redux-immutable-state-invariant';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -21,22 +18,11 @@ import reducer from './reducers';
 const middleware = process.env.NODE_ENV !== 'production' ? [invariant(), thunk] : [thunk];
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(...middleware)));
 
-const theme = createMuiTheme({
-  palette: {
-    primary: purple,
-    secondary: green,
-    type: 'dark',
-  },
-});
-
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <Reboot />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </MuiThemeProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root'),
 );

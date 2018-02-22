@@ -9,6 +9,7 @@ import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
+import Lamp from 'material-ui-icons/LightbulbOutline';
 
 import ControlsList from '../ControlsList';
 import Loading from '../common/Loading';
@@ -67,9 +68,17 @@ class Main extends Component {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" noWrap>
+              <Typography variant="title" color="inherit" noWrap className={classes.flex}>
                 {title}
               </Typography>
+              <div>
+                <IconButton
+                  className={this.props.dark === true ? classes.lampOff : classes.lampOn}
+                  onClick={() => this.props.toggleDarkness()}
+                >
+                  <Lamp />
+                </IconButton>
+              </div>
             </Toolbar>
           </AppBar>
           <Hidden mdUp>
@@ -129,6 +138,8 @@ Main.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
   handleSnackbarClose: PropTypes.func.isRequired,
+  toggleDarkness: PropTypes.func.isRequired,
+  dark: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(Main);

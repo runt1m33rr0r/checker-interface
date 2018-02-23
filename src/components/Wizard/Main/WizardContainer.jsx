@@ -20,7 +20,7 @@ class WizardContainer extends Component {
     handleFinish(timeslots, subjects, groups);
   };
 
-  render = () => <Wizard {...this.props} />;
+  render = () => <Wizard {...this.props} handleFinish={this.finish} />;
 }
 
 WizardContainer.propTypes = {

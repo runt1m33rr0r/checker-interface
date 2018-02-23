@@ -8,10 +8,6 @@ import Chip from 'material-ui/Chip';
 import styles from './styles';
 
 class TableComponent extends Component {
-  componentDidMount = () => {
-    this.props.fetchLessons(this.props.groupName);
-  };
-
   lessonsByDay = day =>
     this.props.lessons.map(
       lesson =>
@@ -34,14 +30,11 @@ class TableComponent extends Component {
                 onDelete={() => this.props.deleteHandler(lesson)}
               />
             ) : (
-              <Chip
-                label={
-                  <div>
-                    <div>{lesson.subjectCode}</div>
-                    <div>{lesson.teacherUsername}</div>
-                  </div>
-                }
-              />
+              <div>
+                <div>{lesson.subjectCode}</div>
+                <div>{lesson.teacherUsername}</div>
+                {this.props.showGroups && <div>{lesson.groupName}</div>}
+              </div>
             )}
           </TableCell>
         ),
@@ -77,10 +70,9 @@ class TableComponent extends Component {
 }
 
 TableComponent.propTypes = {
-  groupName: PropTypes.string.isRequired,
-  fetchLessons: PropTypes.func.isRequired,
   lessons: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
+  showGroups: PropTypes.bool,
   deleteHandler: PropTypes.func,
 };
 

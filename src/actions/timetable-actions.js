@@ -47,11 +47,14 @@ export const fetchGroups = () => (dispatch) => {
     .catch(err => dispatch({ type: actions.FETCH_GROUPS_FAILURE, message: err.message }));
 };
 
-export const fetchLessons = groupName => (dispatch) => {
+const fetchLessons = (groupName = null) => (dispatch) => {
   dispatch({ type: actions.FETCH_LESSONS });
   const token = localStorage.getItem('token');
+
   makeRequest({
-    url: `${ENDPOINT}/api/groups/${groupName}/lessons`,
+    url: groupName
+      ? `${ENDPOINT}/api/lessons?group=${groupName}`
+      : `${ENDPOINT}/api/lessons?mine=true`,
     method: 'get',
     token,
     dispatch,
@@ -61,6 +64,10 @@ export const fetchLessons = groupName => (dispatch) => {
     )
     .catch(err => dispatch({ type: actions.FETCH_LESSONS_FAILURE, message: err.message }));
 };
+
+export const fetchGroupLessons = groupName => dispatch => dispatch(fetchLessons(groupName));
+
+export const fetchUserLessons = () => dispatch => dispatch(fetchLessons());
 
 export const fetchTimeslots = () => (dispatch) => {
   dispatch({ type: actions.FETCH_TIMESLOTS });

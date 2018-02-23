@@ -109,8 +109,8 @@ class RegisterForm extends Component {
             onChange={this.handleChange('group')}
           >
             {this.props.groups.map(option => (
-              <MenuItem key={option.name} value={option.name}>
-                {option.name}
+              <MenuItem key={option} value={option}>
+                {option}
               </MenuItem>
             ))}
           </TextField>
@@ -123,12 +123,12 @@ class RegisterForm extends Component {
               subheader={<ListSubheader>Преподавани предмети:</ListSubheader>}
             >
               {this.props.subjects.map(subject => (
-                <ListItem key={subject.code}>
-                  <ListItemText primary={subject.code} />
+                <ListItem key={subject}>
+                  <ListItemText primary={subject} />
                   <ListItemSecondaryAction>
                     <Checkbox
-                      checked={this.state.subjects.includes(subject.code)}
-                      onClick={this.handleSubjectsChange(subject.code)}
+                      checked={this.state.subjects.includes(subject)}
+                      onClick={this.handleSubjectsChange(subject)}
                     />
                   </ListItemSecondaryAction>
                 </ListItem>

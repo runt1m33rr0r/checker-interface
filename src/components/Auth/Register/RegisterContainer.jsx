@@ -33,8 +33,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = ({ auth, timetable }) => ({
   isRegistered: auth.isRegistered,
-  subjects: timetable.subjects,
-  groups: timetable.groups,
+  subjects: timetable.subjectCodes,
+  groups: timetable.groupNames,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);

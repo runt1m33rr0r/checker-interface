@@ -17,6 +17,7 @@ import Generator from './Timetable/Generator';
 import Checker from './User/Checker';
 import Creator from './Timetable/Creator';
 import Status from './System/Status';
+import UserTable from './Timetable/UserTable';
 import { getDarkness } from '../actions/ui-actions';
 
 class App extends Component {
@@ -81,6 +82,12 @@ class App extends Component {
             component={Status}
             requiredRoles={['Teacher']}
             title="Състояние на системата"
+          />
+          <PrivateRoute
+            path="/timetable"
+            component={UserTable}
+            requiredRoles={['Student', 'Teacher']}
+            title="Моята програма"
           />
         </Switch>
       </Header>

@@ -11,14 +11,23 @@ class PrivateRoute extends Component {
   }
 
   inRoles = (requiredRoles, actualRoles) => {
-    let result = true;
-    requiredRoles.forEach((role) => {
-      if (actualRoles.includes(role) === false) {
-        result = false;
+    if (this.props.allRequired === true) {
+      for (let i = 0; i < requiredRoles.length; i += 1) {
+        if (actualRoles.includes(requiredRoles[i]) === false) {
+          return false;
+        }
       }
-    });
+      return true;
+    }
 
-    return result;
+    if (!this.props.allRequired) {
+      for (let i = 0; i < requiredRoles.length; i += 1) {
+        if (actualRoles.includes(requiredRoles[i]) === true) {
+          return true;
+        }
+      }
+      return false;
+    }
   };
 
   render = () => {
@@ -54,6 +63,7 @@ PrivateRoute.propTypes = {
   location: PropTypes.object.isRequired,
   authCheck: PropTypes.func.isRequired,
   requiredRoles: PropTypes.array.isRequired,
+  allRequired: PropTypes.bool,
   actualRoles: PropTypes.array.isRequired,
 };
 

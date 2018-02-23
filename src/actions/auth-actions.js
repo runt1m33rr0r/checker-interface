@@ -7,6 +7,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   LOGOUT_SUCCESS,
+  FETCH_PROFILE,
+  FETCH_PROFILE_SUCCESS,
+  FETCH_PROFILE_FAILURE,
 } from '../constants/action-types';
 import { makeRequest } from '../api';
 import ENDPOINT from '../constants/api-constants';
@@ -88,4 +91,18 @@ export const checkAuth = () => (dispatch) => {
     localStorage.clear();
     dispatch({ type: LOGIN_FAILURE, message: 'Нямате право за тази страница!' });
   }
+};
+
+export const fetchProfile = () => (dispatch) => {
+  dispatch({ type: FETCH_PROFILE });
+
+  const token = localStorage.getItem('token');
+  makeRequest({
+    url: `${ENDPOINT}/api/profile`,
+    method: 'get',
+    dispatch,
+    token,
+  })
+    .then(data => dispatch({ type: FETCH_PROFILE_SUCCESS, profile: data.profile }))
+    .catch(err => dispatch({ type: FETCH_PROFILE_FAILURE, message: err.message }));
 };

@@ -6,6 +6,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
+  FETCH_PROFILE_SUCCESS,
 } from '../constants/action-types';
 
 const auth = (
@@ -14,6 +15,7 @@ const auth = (
     isRegistered: !!localStorage.getItem('registered'),
     username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
     roles: localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : [],
+    profile: {},
   },
   action,
 ) => {
@@ -42,6 +44,8 @@ const auth = (
       return { ...state, isRegistered: true };
     case REGISTER_FAILURE:
       return { ...state, isRegistered: false };
+    case FETCH_PROFILE_SUCCESS:
+      return { ...state, profile: action.profile };
     default:
       return state;
   }

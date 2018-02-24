@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import styles from './styles';
 
 const Controls = ({
-  classes, isAuthenticated, handleLogout, isRegistered,
+  classes, isAuthenticated, handleLogout, isRegistered, roles,
 }) => (
   <div className={classes.root}>
     {isAuthenticated ? (
@@ -25,24 +25,50 @@ const Controls = ({
               <ListItemText primary="Начална настройка" />
             </ListItem>
           </Link>
-        </List>
-      </div>
-      ) : (
-        <List>
-          <Link className={classes.link} to="/login">
+          <Link className={classes.link} to="/timetable">
             <ListItem button>
-              <ListItemText primary="Вход" />
+              <ListItemText primary="Седмична програма" />
             </ListItem>
           </Link>
-          {!isRegistered ? (
-            <Link className={classes.link} to="/register">
+          {roles.includes('Student') && (
+            <Link className={classes.link} to="/check">
               <ListItem button>
-                <ListItemText primary="Регистрация" />
+                <ListItemText primary="Отбелязване на присъствие" />
               </ListItem>
             </Link>
-          ) : null}
+          )}
+          {roles.includes('Teacher') && (
+            <Link className={classes.link} to="/generator">
+              <ListItem button>
+                <ListItemText primary="Генератор на програма" />
+              </ListItem>
+            </Link>
+          )}
+          {roles.includes('Teacher') && (
+            <Link className={classes.link} to="/creator">
+              <ListItem button>
+                <ListItemText primary="Създаване на програма" />
+              </ListItem>
+            </Link>
+          )}
         </List>
-      )}
+      </div>
+    ) : (
+      <List>
+        <Link className={classes.link} to="/login">
+          <ListItem button>
+            <ListItemText primary="Вход" />
+          </ListItem>
+        </Link>
+        {!isRegistered ? (
+          <Link className={classes.link} to="/register">
+            <ListItem button>
+              <ListItemText primary="Регистрация" />
+            </ListItem>
+          </Link>
+        ) : null}
+      </List>
+    )}
   </div>
 );
 
@@ -51,6 +77,7 @@ Controls.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   isRegistered: PropTypes.bool.isRequired,
   handleLogout: PropTypes.func.isRequired,
+  roles: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(Controls);

@@ -10,6 +10,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = ({ auth }) => ({
   isAuthenticated: auth.isAuthenticated,
   isRegistered: auth.isRegistered,
+  roles: auth.roles,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

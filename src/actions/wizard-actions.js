@@ -158,7 +158,6 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
   // we need the subjects inside the groups, because the subject code includes the group name
   const doneSubjects = processSubjects(groups);
 
-  dispatch({ type: actions.FINISH_WIZARD });
   const token = localStorage.getItem('token');
   makeRequest({
     url: `${ENDPOINT}/api/school/settings/base`,
@@ -170,10 +169,8 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
       subjects: doneSubjects,
     },
     dispatch,
-  })
-    .then(() => {
-      dispatch({ type: actions.FINISH_WIZARD_SUCCESS });
-      dispatch({ type: actions.CHECK_SETUP_SUCCESS, setupFinished: true });
-    })
-    .catch(err => dispatch({ type: actions.FINISH_WIZARD_FAILURE, message: err.message }));
+  }).then(() => {
+    dispatch({ type: actions.FINISH_WIZARD_SUCCESS });
+    dispatch({ type: actions.CHECK_SETUP_SUCCESS, setupFinished: true });
+  });
 };

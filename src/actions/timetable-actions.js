@@ -24,33 +24,24 @@ const sortLessons = (lessons) => {
 };
 
 export const fetchSubjects = () => (dispatch) => {
-  dispatch({ type: actions.FETCH_SUBJECTS });
   makeRequest({
     url: `${ENDPOINT}/api/subjects`,
     method: 'get',
     dispatch,
-  })
-    .then(data =>
-      dispatch({ type: actions.FETCH_SUBJECTS_SUCCESS, subjectCodes: data.subjectCodes }),
-    )
-    .catch(err => dispatch({ type: actions.FETCH_SUBJECTS_FAILURE, message: err.message }));
+  }).then(data =>
+    dispatch({ type: actions.FETCH_SUBJECTS_SUCCESS, subjectCodes: data.subjectCodes }));
 };
 
 export const fetchGroups = () => (dispatch) => {
-  dispatch({ type: actions.FETCH_GROUPS });
   makeRequest({
     url: `${ENDPOINT}/api/groups`,
     method: 'get',
     dispatch,
-  })
-    .then(data => dispatch({ type: actions.FETCH_GROUPS_SUCCESS, groupNames: data.groupNames }))
-    .catch(err => dispatch({ type: actions.FETCH_GROUPS_FAILURE, message: err.message }));
+  }).then(data => dispatch({ type: actions.FETCH_GROUPS_SUCCESS, groupNames: data.groupNames }));
 };
 
 const fetchLessons = (groupName = null) => (dispatch) => {
-  dispatch({ type: actions.FETCH_LESSONS });
   const token = localStorage.getItem('token');
-
   makeRequest({
     url: groupName
       ? `${ENDPOINT}/api/lessons?group=${groupName}`
@@ -58,11 +49,8 @@ const fetchLessons = (groupName = null) => (dispatch) => {
     method: 'get',
     token,
     dispatch,
-  })
-    .then(data =>
-      dispatch({ type: actions.FETCH_LESSONS_SUCCESS, lessons: sortLessons(data.lessons) }),
-    )
-    .catch(err => dispatch({ type: actions.FETCH_LESSONS_FAILURE, message: err.message }));
+  }).then(data =>
+    dispatch({ type: actions.FETCH_LESSONS_SUCCESS, lessons: sortLessons(data.lessons) }));
 };
 
 export const fetchGroupLessons = groupName => dispatch => dispatch(fetchLessons(groupName));
@@ -70,33 +58,26 @@ export const fetchGroupLessons = groupName => dispatch => dispatch(fetchLessons(
 export const fetchUserLessons = () => dispatch => dispatch(fetchLessons());
 
 export const fetchTimeslots = () => (dispatch) => {
-  dispatch({ type: actions.FETCH_TIMESLOTS });
   const token = localStorage.getItem('token');
   makeRequest({
     url: `${ENDPOINT}/api/timeslots`,
     method: 'get',
     dispatch,
     token,
-  })
-    .then(data => dispatch({ type: actions.FETCH_TIMESLOTS_SUCCESS, timeslots: data.timeslots }))
-    .catch(err => dispatch({ type: actions.FETCH_TIMESLOTS_FAILURE, message: err.message }));
+  }).then(data => dispatch({ type: actions.FETCH_TIMESLOTS_SUCCESS, timeslots: data.timeslots }));
 };
 
 export const fetchTeachers = () => (dispatch) => {
-  dispatch({ type: actions.FETCH_TEACHERS });
   const token = localStorage.getItem('token');
   makeRequest({
     url: `${ENDPOINT}/api/teachers`,
     method: 'get',
     dispatch,
     token,
-  })
-    .then(data => dispatch({ type: actions.FETCH_TEACHERS_SUCCESS, teachers: data.usernames }))
-    .catch(err => dispatch({ type: actions.FETCH_TEACHERS_FAILURE, message: err.message }));
+  }).then(data => dispatch({ type: actions.FETCH_TEACHERS_SUCCESS, teachers: data.usernames }));
 };
 
 export const generateTimetable = groupLessonsToRefresh => (dispatch) => {
-  dispatch({ type: actions.GENERATE_TIMETABLE });
   const token = localStorage.getItem('token');
   makeRequest({
     url: `${ENDPOINT}/api/school/settings/timetable/generate`,
@@ -104,16 +85,13 @@ export const generateTimetable = groupLessonsToRefresh => (dispatch) => {
     token,
     data: {},
     dispatch,
-  })
-    .then(() => {
-      dispatch({ type: actions.GENERATE_TIMETABLE_SUCCESS });
-      dispatch(fetchLessons(groupLessonsToRefresh));
-    })
-    .catch(err => dispatch({ type: actions.GENERATE_TIMETABLE_FAILURE, message: err.message }));
+  }).then(() => {
+    dispatch({ type: actions.GENERATE_TIMETABLE_SUCCESS });
+    dispatch(fetchLessons(groupLessonsToRefresh));
+  });
 };
 
 export const createLesson = (groupName, subjectCode, teacherUsername, timeslotID) => (dispatch) => {
-  dispatch({ type: actions.CREATE_LESSON });
   const token = localStorage.getItem('token');
   makeRequest({
     url: `${ENDPOINT}/api/lessons`,
@@ -126,16 +104,13 @@ export const createLesson = (groupName, subjectCode, teacherUsername, timeslotID
       teacherUsername,
       timeslotID,
     },
-  })
-    .then(() => {
-      dispatch({ type: actions.CREATE_LESSON_SUCCESS });
-      dispatch(fetchLessons(groupName));
-    })
-    .catch(err => dispatch({ type: actions.CREATE_LESSON_FAILURE, message: err.message }));
+  }).then(() => {
+    dispatch({ type: actions.CREATE_LESSON_SUCCESS });
+    dispatch(fetchLessons(groupName));
+  });
 };
 
 export const deleteLesson = lesson => (dispatch) => {
-  dispatch({ type: actions.DELETE_LESSON });
   const token = localStorage.getItem('token');
   makeRequest({
     url: `${ENDPOINT}/api/lessons`,
@@ -143,10 +118,8 @@ export const deleteLesson = lesson => (dispatch) => {
     dispatch,
     token,
     data: { lesson },
-  })
-    .then(() => {
-      dispatch({ type: actions.DELETE_LESSON_SUCCESS });
-      dispatch(fetchLessons(lesson.groupName));
-    })
-    .catch(err => dispatch({ type: actions.DELETE_LESSON_FAILURE, message: err.message }));
+  }).then(() => {
+    dispatch({ type: actions.DELETE_LESSON_SUCCESS });
+    dispatch(fetchLessons(lesson.groupName));
+  });
 };

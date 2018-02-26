@@ -18,6 +18,7 @@ import Checker from './User/Checker';
 import Creator from './Timetable/Creator';
 import Status from './System/Status';
 import UserTable from './Timetable/UserTable';
+import AbsencesViewer from './User/AbsencesViewer';
 import { getDarkness } from '../actions/ui-actions';
 
 class App extends Component {
@@ -88,6 +89,12 @@ class App extends Component {
             component={UserTable}
             requiredRoles={['Student', 'Teacher']}
             title="Моята програма"
+          />
+          <PrivateRoute
+            path="/absences"
+            component={AbsencesViewer}
+            requiredRoles={['Student', 'Teacher']}
+            title="Отсъствия"
           />
         </Switch>
       </Header>

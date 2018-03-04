@@ -33,41 +33,43 @@ class LoginForm extends Component {
     }
 
     return (
-      <form className={this.props.classes.form}>
-        <TextField
-          required
-          id="name"
-          label="Потребителско име"
-          className={this.props.classes.textField}
-          margin="normal"
-          value={this.state.username}
-          onChange={this.handleChange('username')}
-        />
-        <TextField
-          required
-          id="password"
-          label="Парола"
-          className={this.props.classes.textField}
-          type="password"
-          margin="normal"
-          value={this.state.password}
-          onChange={this.handleChange('password')}
-        />
-        <Button
-          variant="raised"
-          color="primary"
-          disabled={this.state.password.length < 3 || this.state.username.length < 3}
-          onClick={(e) => {
-            e.preventDefault();
-            this.props.handleSubmit({
-              username: this.state.username,
-              password: this.state.password,
-            });
-          }}
-        >
-          Вход
-        </Button>
-      </form>
+      <div className={this.props.classes.root}>
+        <form className={this.props.classes.form}>
+          <TextField
+            required
+            id="name"
+            label="Потребителско име"
+            className={this.props.classes.textField}
+            margin="normal"
+            value={this.state.username}
+            onChange={this.handleChange('username')}
+          />
+          <TextField
+            required
+            id="password"
+            label="Парола"
+            className={this.props.classes.textField}
+            type="password"
+            margin="normal"
+            value={this.state.password}
+            onChange={this.handleChange('password')}
+          />
+          <Button
+            variant="raised"
+            color="primary"
+            disabled={this.state.password.length < 3 || this.state.username.length < 3}
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.handleSubmit({
+                username: this.state.username,
+                password: this.state.password,
+              });
+            }}
+          >
+            Вход
+          </Button>
+        </form>
+      </div>
     );
   };
 }

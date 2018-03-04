@@ -1,5 +1,5 @@
 const styles = theme => ({
-  form: {
+  root: {
     width: '100%',
     height: '100%',
     display: 'flex',
@@ -7,6 +7,13 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+    overflow: 'auto',
+  },
+  form: {
+    flexShrink: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     overflow: 'auto',
   },
   textField: {

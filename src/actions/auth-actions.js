@@ -42,7 +42,14 @@ export const loginUser = creds => (dispatch) => {
 export const registerUser = data => (dispatch) => {
   dispatch({ type: REGISTER_REQUEST });
   const {
-    userType, username, password, firstName, lastName, group, subjects,
+    userType,
+    username,
+    password,
+    firstName,
+    lastName,
+    group,
+    subjects,
+    isLeadTeacher,
   } = data;
 
   const sendData = {
@@ -51,10 +58,13 @@ export const registerUser = data => (dispatch) => {
     password,
     firstName,
     lastName,
-    leadTeacher: false,
+    leadTeacher: isLeadTeacher,
   };
   if (userType === 'Student') {
     sendData.group = group;
+  } else if (userType === 'Teacher' && isLeadTeacher) {
+    sendData.group = group;
+    sendData.subjects = subjects;
   } else {
     sendData.subjects = subjects;
   }

@@ -12,6 +12,7 @@ import List, {
 } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import { MenuItem } from 'material-ui/Menu';
+import { FormControlLabel } from 'material-ui/Form';
 
 import styles from '../styles';
 
@@ -27,6 +28,7 @@ class RegisterForm extends Component {
       subjects: [],
       group: '',
       userType: 'Student',
+      isLeadTeacher: false,
     };
   }
 
@@ -34,6 +36,10 @@ class RegisterForm extends Component {
     this.setState({
       [name]: event.target.value,
     });
+  };
+
+  handleCheckChange = name => (event) => {
+    this.setState({ [name]: event.target.checked });
   };
 
   handleSubjectsChange = subject => () => {
@@ -58,7 +64,7 @@ class RegisterForm extends Component {
     }
 
     return (
-      <form className={this.props.classes.container} autoComplete="off">
+      <form className={this.props.classes.form}>
         <TextField
           required
           label="Име"
@@ -99,7 +105,8 @@ class RegisterForm extends Component {
           <MenuItem value="Student">Ученик</MenuItem>
           <MenuItem value="Teacher">Учител</MenuItem>
         </TextField>
-        {this.state.userType === 'Student' && (
+        {(this.state.userType === 'Student' ||
+          (this.state.userType === 'Teacher' && this.state.isLeadTeacher)) && (
           <TextField
             required
             label="Група"
@@ -117,6 +124,15 @@ class RegisterForm extends Component {
         )}
         {this.state.userType === 'Teacher' && (
           <div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.isLeadTeacher}
+                  onChange={this.handleCheckChange('isLeadTeacher')}
+                />
+              }
+              label="класен ръководител"
+            />
             <List
               className={this.props.classes.list}
               disablePadding
@@ -144,6 +160,7 @@ class RegisterForm extends Component {
             this.state.username.length < 3 ||
             this.state.firstName.length < 3 ||
             this.state.lastName.length < 3 ||
+            (this.state.isLeadTeacher && this.state.group === '') ||
             (this.state.userType === 'Teacher' && this.state.subjects.length < 1) ||
             (this.state.userType === 'Student' && this.state.group === '')
           }
@@ -157,6 +174,7 @@ class RegisterForm extends Component {
               password: this.state.password,
               subjects: this.state.subjects,
               group: this.state.group,
+              isLeadTeacher: this.state.isLeadTeacher,
             });
           }}
         >

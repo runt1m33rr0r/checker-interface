@@ -33,7 +33,7 @@ class LoginForm extends Component {
     }
 
     return (
-      <form className={this.props.classes.container} autoComplete="off">
+      <form className={this.props.classes.form}>
         <TextField
           required
           id="name"

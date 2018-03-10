@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import {
   fetchSubjects,
   fetchGroups,
@@ -9,11 +10,12 @@ import {
   createLesson,
   deleteLesson,
 } from '../../../actions/timetable-actions';
-
+import { setTitle } from '../../../actions/ui-actions';
 import Creator from './Creator';
 
 class CreatorContainer extends Component {
   componentDidMount = () => {
+    this.props.setTitle(this.props.title);
     this.props.fetchGroups();
     this.props.fetchSubjects();
     this.props.fetchTimeslots();
@@ -24,6 +26,8 @@ class CreatorContainer extends Component {
 }
 
 CreatorContainer.propTypes = {
+  title: PropTypes.string.isRequired,
+  setTitle: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
   fetchSubjects: PropTypes.func.isRequired,
   fetchTimeslots: PropTypes.func.isRequired,
@@ -38,6 +42,7 @@ const mapStateToProps = ({ timetable }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  setTitle: title => dispatch(setTitle(title)),
   fetchSubjects: () => dispatch(fetchSubjects()),
   fetchGroups: () => dispatch(fetchGroups()),
   fetchTimeslots: () => dispatch(fetchTimeslots()),

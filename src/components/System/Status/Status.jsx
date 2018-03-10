@@ -33,18 +33,20 @@ const Status = ({
         Брой на предмети: {subjectsCount}
       </Typography>
       <Typography className={classes.text} variant="title" gutterBottom>
-        Предмети без учители:
+        Предмети без учители: {freeSubjects.length === 0 && 'Няма'}
       </Typography>
     </div>
-    <div>
-      <List className={classes.list}>
-        {freeSubjects.map(subject => (
-          <ListItem button key={subject}>
-            <ListItemText primary={subject} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    {freeSubjects.length > 0 && (
+      <div>
+        <List className={classes.list}>
+          {freeSubjects.map(subject => (
+            <ListItem button key={subject}>
+              <ListItemText primary={subject} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    )}
   </div>
 );
 

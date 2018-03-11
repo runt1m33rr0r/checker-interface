@@ -16,30 +16,14 @@ import Loading from '../common/Loading';
 import Snackbar from '../common/Snackbar';
 import styles from './styles';
 
-class Main extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       mobileOpen: false,
-      shouldBeLoading: false,
     };
   }
-
-  componentWillReceiveProps = (nextProps) => {
-    if (nextProps.isLoading === true) {
-      const timeout = setTimeout(() => {
-        if (this.props.isLoading === true) {
-          this.setState({ shouldBeLoading: true });
-        } else {
-          this.setState({ shouldBeLoading: false });
-        }
-        clearTimeout(timeout);
-      }, 150);
-    } else {
-      this.setState({ shouldBeLoading: false });
-    }
-  };
 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -132,8 +116,8 @@ class Main extends Component {
             </Drawer>
           </Hidden>
           <main className={classes.content}>
-            <Loading isHidden={!this.state.shouldBeLoading} />
-            <div className={this.state.shouldBeLoading ? classes.hidden : classes.children}>
+            <Loading isHidden={!this.props.isLoading} />
+            <div className={this.props.isLoading ? classes.hidden : classes.children}>
               {children}
             </div>
             <Snackbar message={message} handleClose={() => handleSnackbarClose()} />
@@ -144,7 +128,7 @@ class Main extends Component {
   };
 }
 
-Main.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
@@ -158,4 +142,4 @@ Main.propTypes = {
   dark: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Main);
+export default withStyles(styles, { withTheme: true })(Header);

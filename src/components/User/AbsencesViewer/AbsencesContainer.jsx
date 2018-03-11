@@ -4,20 +4,15 @@ import PropTypes from 'prop-types';
 
 import AbsencesViewer from './Absences';
 import { fetchProfile } from '../../../actions/auth-actions';
-import { setTitle } from '../../../actions/ui-actions';
+import titled from '../../common/TitledComponent';
 
 class AbsencesCotainer extends Component {
-  componentDidMount = () => {
-    this.props.setTitle(this.props.title);
-    this.props.fetchProfile();
-  };
+  componentDidMount = () => this.props.fetchProfile();
 
   render = () => <AbsencesViewer absences={this.profile ? this.props.profile.absences : []} />;
 }
 
 AbsencesCotainer.propTypes = {
-  title: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
   fetchProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 };
@@ -28,7 +23,6 @@ const mapStateToProps = ({ auth }) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(fetchProfile()),
-  setTitle: title => dispatch(setTitle(title)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AbsencesCotainer);
+export default connect(mapStateToProps, mapDispatchToProps)(titled(AbsencesCotainer, 'Отсъствия'));

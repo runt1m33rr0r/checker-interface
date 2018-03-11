@@ -57,6 +57,10 @@ class PrivateRoute extends Component {
   };
 }
 
+PrivateRoute.defaultProps = {
+  allRequired: false,
+};
+
 PrivateRoute.propTypes = {
   component: PropTypes.any.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,

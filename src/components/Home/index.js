@@ -1,3 +1,4 @@
-import Home from './HomeContainer';
+import Home from './HomePage';
+import titled from '../common/TitledComponent';
 
-export default Home;
+export default titled(Home, 'Начало');

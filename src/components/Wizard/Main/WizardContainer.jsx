@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 
 import Wizard from './Wizard';
 import { finishWizard } from '../../../actions/wizard-actions';
-import { setTitle } from '../../../actions/ui-actions';
 import { checkSetup, resetSetup } from '../../../actions/system-actions';
+import titled from '../../common/TitledComponent';
 
 class WizardContainer extends Component {
-  componentDidMount = () => {
-    this.props.setTitle(this.props.title);
-    this.props.checkSetup();
-  };
+  componentDidMount = () => this.props.checkSetup();
 
   finish = () => {
     const {
@@ -24,8 +21,6 @@ class WizardContainer extends Component {
 }
 
 WizardContainer.propTypes = {
-  title: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
   handleFinish: PropTypes.func.isRequired,
   subjects: PropTypes.array.isRequired,
   timeslots: PropTypes.array.isRequired,
@@ -45,9 +40,8 @@ const mapStateToProps = ({ wizard, system }) => ({
 const mapDispatchToProps = dispatch => ({
   handleFinish: (timeslots, subjects, groups) =>
     dispatch(finishWizard(timeslots, subjects, groups)),
-  setTitle: title => dispatch(setTitle(title)),
   checkSetup: () => dispatch(checkSetup()),
   handleReset: () => dispatch(resetSetup()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WizardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(titled(WizardContainer, 'Начална настройка'));

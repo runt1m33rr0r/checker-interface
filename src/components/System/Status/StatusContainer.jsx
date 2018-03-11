@@ -11,11 +11,10 @@ import {
   fetchGroupsCount,
   fetchSubjectsCount,
 } from '../../../actions/system-actions';
-import { setTitle } from '../../../actions/ui-actions';
+import titled from '../../common/TitledComponent';
 
 class StatusContainer extends Component {
   componentDidMount = () => {
-    this.props.setTitle(this.props.title);
     this.props.checkSetup();
     this.props.fetchFreeSubjects();
     this.props.fetchTeachersCount();
@@ -28,8 +27,6 @@ class StatusContainer extends Component {
 }
 
 StatusContainer.propTypes = {
-  title: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
   checkSetup: PropTypes.func.isRequired,
   fetchFreeSubjects: PropTypes.func.isRequired,
   fetchTeachersCount: PropTypes.func.isRequired,
@@ -48,7 +45,6 @@ const mapStateToProps = ({ system }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setTitle: title => dispatch(setTitle(title)),
   checkSetup: () => dispatch(checkSetup()),
   fetchFreeSubjects: () => dispatch(fetchFreeSubjects()),
   fetchTeachersCount: () => dispatch(fetchTeachersCount()),
@@ -57,4 +53,4 @@ const mapDispatchToProps = dispatch => ({
   fetchSubjectsCount: () => dispatch(fetchSubjectsCount()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StatusContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(titled(StatusContainer, 'Състояние на системата'));

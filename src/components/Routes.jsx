@@ -15,45 +15,19 @@ import AbsencesViewer from './User/AbsencesViewer';
 
 const Routes = () => (
   <Switch>
-    <Route exact path="/" render={() => <Home title="Начало" />} />
-    <Route path="/login" render={() => <Login title="Вход" />} />
-    <Route path="/register" render={() => <Register title="Регистрация" />} />
-    <PrivateRoute
-      path="/wizard"
-      component={Wizard}
-      requiredRoles={['Teacher']}
-      title="Начална настройка"
-    />
-    <PrivateRoute
-      path="/generator"
-      component={Generator}
-      requiredRoles={['Teacher']}
-      title="Генератор на програма"
-    />
-    <PrivateRoute path="/check" component={Checker} requiredRoles={['Normal']} title="Присъствия" />
-    <PrivateRoute
-      path="/creator"
-      component={Creator}
-      requiredRoles={['Normal']}
-      title="Създаване на програма"
-    />
-    <PrivateRoute
-      path="/status"
-      component={Status}
-      requiredRoles={['Teacher']}
-      title="Състояние на системата"
-    />
-    <PrivateRoute
-      path="/timetable"
-      component={UserTable}
-      requiredRoles={['Student', 'Teacher']}
-      title="Моята програма"
-    />
+    <Route exact path="/" component={Home} />
+    <Route path="/login" component={Login} />
+    <Route path="/register" component={Register} />
+    <PrivateRoute path="/wizard" component={Wizard} requiredRoles={['Teacher']} />
+    <PrivateRoute path="/generator" component={Generator} requiredRoles={['Teacher']} />
+    <PrivateRoute path="/check" component={Checker} requiredRoles={['Normal']} />
+    <PrivateRoute path="/creator" component={Creator} requiredRoles={['Normal']} />
+    <PrivateRoute path="/status" component={Status} requiredRoles={['Teacher']} />
+    <PrivateRoute path="/timetable" component={UserTable} requiredRoles={['Student', 'Teacher']} />
     <PrivateRoute
       path="/absences"
       component={AbsencesViewer}
       requiredRoles={['Student', 'Teacher']}
-      title="Отсъствия"
     />
   </Switch>
 );

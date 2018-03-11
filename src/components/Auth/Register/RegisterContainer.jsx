@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 
 import RegisterForm from './RegisterForm';
 import { registerUser } from '../../../actions/auth-actions';
-import { setTitle } from '../../../actions/ui-actions';
 import { fetchSubjects, fetchGroups } from '../../../actions/timetable-actions';
+import titled from '../../common/TitledComponent';
 
 class RegisterContainer extends Component {
   componentDidMount = () => {
-    this.props.setTitle(this.props.title);
     this.props.fetchSubjects();
     this.props.fetchGroups();
   };
@@ -18,15 +17,12 @@ class RegisterContainer extends Component {
 }
 
 RegisterContainer.propTypes = {
-  title: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
   fetchSubjects: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   handleSubmit: creds => dispatch(registerUser(creds)),
-  setTitle: title => dispatch(setTitle(title)),
   fetchSubjects: () => dispatch(fetchSubjects()),
   fetchGroups: () => dispatch(fetchGroups()),
 });
@@ -37,4 +33,4 @@ const mapStateToProps = ({ auth, timetable }) => ({
   groups: timetable.groupNames,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(titled(RegisterContainer, 'Регистрация'));

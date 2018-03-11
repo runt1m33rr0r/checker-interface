@@ -10,12 +10,11 @@ import {
   createLesson,
   deleteLesson,
 } from '../../../actions/timetable-actions';
-import { setTitle } from '../../../actions/ui-actions';
 import Creator from './Creator';
+import titled from '../../common/TitledComponent';
 
 class CreatorContainer extends Component {
   componentDidMount = () => {
-    this.props.setTitle(this.props.title);
     this.props.fetchGroups();
     this.props.fetchSubjects();
     this.props.fetchTimeslots();
@@ -26,8 +25,6 @@ class CreatorContainer extends Component {
 }
 
 CreatorContainer.propTypes = {
-  title: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
   fetchSubjects: PropTypes.func.isRequired,
   fetchTimeslots: PropTypes.func.isRequired,
@@ -42,7 +39,6 @@ const mapStateToProps = ({ timetable }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setTitle: title => dispatch(setTitle(title)),
   fetchSubjects: () => dispatch(fetchSubjects()),
   fetchGroups: () => dispatch(fetchGroups()),
   fetchTimeslots: () => dispatch(fetchTimeslots()),
@@ -52,4 +48,4 @@ const mapDispatchToProps = dispatch => ({
   deleteLesson: lesson => dispatch(deleteLesson(lesson)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatorContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(titled(CreatorContainer, 'Създаване на програма'));

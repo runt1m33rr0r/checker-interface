@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { CircularProgress } from 'material-ui/Progress';
+import classNames from 'classnames';
 
 const styles = {
   root: {
@@ -12,16 +13,20 @@ const styles = {
     width: '100%',
     height: '100%',
   },
+  hidden: {
+    display: 'none',
+  },
 };
 
-const Loading = ({ classes }) => (
-  <div className={classes.root}>
+const Loading = ({ classes, isHidden }) => (
+  <div className={isHidden ? classNames(classes.root, classes.hidden) : classes.root}>
     <CircularProgress color="primary" size={200} thickness={6} />
   </div>
 );
 
 Loading.propTypes = {
   classes: PropTypes.object.isRequired,
+  isHidden: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Loading);

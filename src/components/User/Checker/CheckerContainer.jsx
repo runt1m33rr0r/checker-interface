@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Checker from './Checker';
 import { sendImage } from '../../../actions/student-actions';
+import { fetchProfile } from '../../../actions/auth-actions';
 import titled from '../../common/TitledComponent';
 
 class CheckerCotainer extends Component {
@@ -18,6 +19,7 @@ CheckerCotainer.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   handleSend: image => dispatch(sendImage(image)),
+  fetchProfile: () => dispatch(fetchProfile()),
 });
 
 export default connect(null, mapDispatchToProps)(titled(CheckerCotainer, 'Присъствия'));

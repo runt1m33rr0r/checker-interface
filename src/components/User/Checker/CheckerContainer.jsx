@@ -22,4 +22,6 @@ const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(fetchProfile()),
 });
 
-export default connect(null, mapDispatchToProps)(titled(CheckerCotainer, 'Присъствия'));
+export default connect(null, mapDispatchToProps)(
+  titled(CheckerCotainer, 'Присъствия'),
+);

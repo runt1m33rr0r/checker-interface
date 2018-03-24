@@ -16,16 +16,16 @@ class Checker extends Component {
     this.state = {
       paused: false,
       image: '',
-      longitude: 0,
-      latitude: 0,
-      accuracy: 0,
+      // longitude: 0,
+      // latitude: 0,
+      // accuracy: 0
     };
   }
 
   componentDidMount = () => {
     this.init();
-    this.calcLocation();
-    console.log(this.calcDistance(42.6123581, 23.0636016, 42.6122532, 23.0636185));
+    // this.calcLocation();
+    // console.log(this.calcDistance(42.6123581, 23.0636016, 42.6122532, 23.0636185));
   };
 
   componentWillUnmount = () => {
@@ -33,9 +33,9 @@ class Checker extends Component {
   };
 
   init = () => {
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-      this.video.srcObject = stream;
-    });
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(stream => (this.video.srcObject = stream));
   };
 
   unload = () => {
@@ -55,49 +55,55 @@ class Checker extends Component {
     this.setState({ paused: false });
   };
 
-  calcLocation = () => {
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    };
+  // calcLocation = () => {
+  //   const options = {
+  //     enableHighAccuracy: true,
+  //     timeout: 5000,
+  //     maximumAge: 0,
+  //   };
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        console.log(pos.coords);
-        this.setState({
-          longitude: pos.coords.longitude,
-          latitude: pos.coords.latitude,
-          accuracy: pos.coords.accuracy,
-        });
-      },
-      error => console.log('error', error.message),
-      options,
-    );
-  };
+  //   navigator.geolocation.getCurrentPosition(
+  //     (pos) => {
+  //       console.log(pos.coords);
+  //       this.setState({
+  //         longitude: pos.coords.longitude,
+  //         latitude: pos.coords.latitude,
+  //         accuracy: pos.coords.accuracy,
+  //       });
+  //     },
+  //     error => console.log('error', error.message),
+  //     options,
+  //   );
+  // };
 
-  toRadians = degrees => degrees * (Math.PI / 180);
+  // toRadians = degrees => degrees * (Math.PI / 180);
 
-  calcDistance = (firstLat, firstLon, secondLat, secondLon) => {
-    const earthRadius = 6371;
-    const degLat = this.toRadians(secondLat - firstLat);
-    const degLon = this.toRadians(secondLon - firstLon);
-    const radLat1 = this.toRadians(firstLat);
-    const radLat2 = this.toRadians(secondLat);
-    const a =
-      Math.sin(degLat / 2) * Math.sin(degLat / 2) +
-      Math.sin(degLon / 2) * Math.sin(degLon / 2) * Math.cos(radLat1) * Math.cos(radLat2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return earthRadius * c * 1000;
-  };
+  // calcDistance = (firstLat, firstLon, secondLat, secondLon) => {
+  //   const earthRadius = 6371;
+  //   const degLat = this.toRadians(secondLat - firstLat);
+  //   const degLon = this.toRadians(secondLon - firstLon);
+  //   const radLat1 = this.toRadians(firstLat);
+  //   const radLat2 = this.toRadians(secondLat);
+  //   const a =
+  //     Math.sin(degLat / 2) * Math.sin(degLat / 2) +
+  //     Math.sin(degLon / 2) * Math.sin(degLon / 2) * Math.cos(radLat1) * Math.cos(radLat2);
+  //   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  //   return earthRadius * c * 1000;
+  // };
 
   render = () => {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Typography variant="body2">{`longitude: ${this.state.longitude}`}</Typography>
-        <Typography variant="body2">{`latitude: ${this.state.latitude}`}</Typography>
-        <Typography variant="body2">{`accuracy: ${this.state.accuracy}`}</Typography>
+        {/* <Typography variant="body2">{`longitude: ${
+          this.state.longitude
+        }`}</Typography>
+        <Typography variant="body2">{`latitude: ${
+          this.state.latitude
+        }`}</Typography>
+        <Typography variant="body2">{`accuracy: ${
+          this.state.accuracy
+        }`}</Typography> */}
         <video width="100%" ref={vid => (this.video = vid)} autoPlay />
         <canvas className={classes.canvas} ref={canv => (this.canvas = canv)} />
         <div>

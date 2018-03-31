@@ -1,6 +1,6 @@
 import { makeRequest } from '../api';
-import * as actions from '../constants/action-types';
-import ENDPOINT from '../constants/api-constants';
+import * as actions from '../constants/action.types';
+import ENDPOINT from '../constants/api.constants';
 
 export const checkSetup = () => (dispatch) => {
   const token = localStorage.getItem('token');

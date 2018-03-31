@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import RegisterForm from './RegisterForm';
-import { registerUser } from '../../../actions/auth-actions';
-import { fetchSubjects, fetchGroups } from '../../../actions/timetable-actions';
+import { registerUser } from '../../../actions/auth.actions';
+import { fetchSubjects, fetchGroups } from '../../../actions/timetable.actions';
 import titled from '../../common/TitledComponent';
 
 class RegisterContainer extends Component {

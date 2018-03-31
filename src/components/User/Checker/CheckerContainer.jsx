@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Checker from './Checker';
-import { sendImage } from '../../../actions/student-actions';
-import { fetchProfile } from '../../../actions/auth-actions';
+import { sendImage } from '../../../actions/student.actions';
+import { fetchProfile } from '../../../actions/auth.actions';
 import titled from '../../common/TitledComponent';
 
 class CheckerCotainer extends Component {
@@ -22,6 +22,4 @@ const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(fetchProfile()),
 });
 
-export default connect(null, mapDispatchToProps)(
-  titled(CheckerCotainer, 'Присъствия'),
-);
+export default connect(null, mapDispatchToProps)(titled(CheckerCotainer, 'Присъствия'));

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Controls from './ControlsList';
-import { logoutUser } from '../../actions/auth-actions';
+import { logoutUser } from '../../actions/auth.actions';
 
 const mapDispatchToProps = dispatch => ({
   handleLogout: () => dispatch(logoutUser()),

@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 
 import Header from './Header';
 import Routes from './Routes';
-import { getDarkness } from '../actions/ui-actions';
+import { getDarkness } from '../actions/ui.actions';
 
 class App extends Component {
   componentDidMount = () => {

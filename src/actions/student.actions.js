@@ -1,5 +1,5 @@
-import { SEND_IMAGE_SUCCESS } from '../constants/action-types';
-import ENDPOINT from '../constants/api-constants';
+import { SEND_IMAGE_SUCCESS } from '../constants/action.types';
+import ENDPOINT from '../constants/api.constants';
 import { makeRequest } from '../api';
 
 /* eslint import/prefer-default-export: 0 */

@@ -7,7 +7,7 @@ import {
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   FETCH_PROFILE_SUCCESS,
-} from '../constants/action-types';
+} from '../constants/action.types';
 
 const auth = (
   state = {

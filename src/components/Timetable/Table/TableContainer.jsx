@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchGroupLessons, fetchUserLessons } from '../../../actions/timetable-actions';
+import { fetchGroupLessons, fetchUserLessons } from '../../../actions/timetable.actions';
 import Table from './Table';
 
 class TableContainer extends Component {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Header from './Header';
-import { resetMessage, toggleDarkness } from '../../actions/ui-actions';
+import { resetMessage, toggleDarkness } from '../../actions/ui.actions';
 
 class HeaderContainer extends Component {
   constructor(props) {

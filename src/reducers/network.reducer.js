@@ -3,7 +3,7 @@ import {
   NETWORK_SUCCESS,
   NETWORK_FAILURE,
   RESET_MESSAGE,
-} from '../constants/action-types';
+} from '../constants/action.types';
 
 const network = (state = { isFetching: false, message: '' }, action) => {
   switch (action.type) {

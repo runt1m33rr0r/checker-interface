@@ -9,7 +9,7 @@ import {
   fetchTeachers,
   createLesson,
   deleteLesson,
-} from '../../../actions/timetable-actions';
+} from '../../../actions/timetable.actions';
 import Creator from './Creator';
 import titled from '../../common/TitledComponent';
 

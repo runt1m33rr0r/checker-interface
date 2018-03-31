@@ -1,4 +1,4 @@
-import { SET_TITLE, RESET_MESSAGE, SET_DARK_MODE } from '../constants/action-types';
+import { SET_TITLE, RESET_MESSAGE, SET_DARK_MODE } from '../constants/action.types';
 
 export const setTitle = title => ({ type: SET_TITLE, title });
 

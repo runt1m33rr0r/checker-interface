@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { checkAuth } from '../../actions/auth-actions';
+import { checkAuth } from '../../actions/auth.actions';
 
 class PrivateRoute extends Component {
   componentDidMount() {

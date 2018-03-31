@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { generateGroups } from '../../../actions/wizard-actions';
+import { generateGroups } from '../../../actions/wizard.actions';
 import Group from '../Group';
 import TabView from '../../common/TabView';
 

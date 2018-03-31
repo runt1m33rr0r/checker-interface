@@ -10,7 +10,7 @@ import {
   fetchStudentsCount,
   fetchGroupsCount,
   fetchSubjectsCount,
-} from '../../../actions/system-actions';
+} from '../../../actions/system.actions';
 import titled from '../../common/TitledComponent';
 
 class StatusContainer extends Component {

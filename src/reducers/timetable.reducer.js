@@ -4,7 +4,7 @@ import {
   FETCH_LESSONS_SUCCESS,
   FETCH_TIMESLOTS_SUCCESS,
   FETCH_TEACHERS_SUCCESS,
-} from '../constants/action-types';
+} from '../constants/action.types';
 
 const timetable = (
   state = {

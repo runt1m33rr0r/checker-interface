@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as WizardActions from '../../../actions/wizard-actions';
+import * as WizardActions from '../../../actions/wizard.actions';
 import Group from './Group';
 
 const mapStateToProps = ({ wizard }) => ({

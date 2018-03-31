@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Wizard from './Wizard';
-import { finishWizard } from '../../../actions/wizard-actions';
-import { checkSetup, resetSetup } from '../../../actions/system-actions';
+import { finishWizard } from '../../../actions/wizard.actions';
+import { checkSetup, resetSetup } from '../../../actions/system.actions';
 import titled from '../../common/TitledComponent';
 
 class WizardContainer extends Component {

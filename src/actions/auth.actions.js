@@ -8,9 +8,9 @@ import {
   REGISTER_FAILURE,
   LOGOUT_SUCCESS,
   FETCH_PROFILE_SUCCESS,
-} from '../constants/action-types';
+} from '../constants/action.types';
 import { makeRequest } from '../api';
-import ENDPOINT from '../constants/api-constants';
+import ENDPOINT from '../constants/api.constants';
 
 const receiveLogin = user => ({
   type: LOGIN_SUCCESS,

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { generateTimetable, fetchGroups } from '../../../actions/timetable-actions';
+import { generateTimetable, fetchGroups } from '../../../actions/timetable.actions';
 import Generator from './Generator';
 import titled from '../../common/TitledComponent';
 

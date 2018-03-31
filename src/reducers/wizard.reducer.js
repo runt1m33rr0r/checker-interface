@@ -9,7 +9,7 @@ import {
   REMOVE_SUBJECT_FROM_GROUP,
   GENERATE_GROUPS_STARTED,
   GENERATE_GROUPS_FINISHED,
-} from '../constants/action-types';
+} from '../constants/action.types';
 import { addToArray, removeFromArray, addToArrayInObj, removeFromArrayInObj } from './utils';
 
 const wizard = (

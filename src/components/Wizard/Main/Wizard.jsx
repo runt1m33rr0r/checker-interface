@@ -23,18 +23,6 @@ class Wizard extends Component {
     };
   }
 
-  handleNext = () => {
-    this.setState({
-      activeStep: this.state.activeStep + 1,
-    });
-  };
-
-  handleBack = () => {
-    this.setState({
-      activeStep: this.state.activeStep - 1,
-    });
-  };
-
   getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -48,6 +36,18 @@ class Wizard extends Component {
       default:
         return 'Непозната стъпка';
     }
+  };
+
+  handleNext = () => {
+    this.setState({
+      activeStep: this.state.activeStep + 1,
+    });
+  };
+
+  handleBack = () => {
+    this.setState({
+      activeStep: this.state.activeStep - 1,
+    });
   };
 
   render = () => {

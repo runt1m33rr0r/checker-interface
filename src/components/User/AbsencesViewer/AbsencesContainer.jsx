@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import AbsencesViewer from './Absences';
-import { fetchProfile } from '../../../actions/auth-actions';
+import { fetchProfile } from '../../../actions/auth.actions';
 import titled from '../../common/TitledComponent';
 
 class AbsencesCotainer extends Component {

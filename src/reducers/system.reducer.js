@@ -6,7 +6,7 @@ import {
   FETCH_STUDENTS_COUNT_SUCCESS,
   FETCH_GROUPS_COUNT_SUCCESS,
   FETCH_SUBJECTS_COUNT_SUCCESS,
-} from '../constants/action-types';
+} from '../constants/action.types';
 
 const system = (
   state = {

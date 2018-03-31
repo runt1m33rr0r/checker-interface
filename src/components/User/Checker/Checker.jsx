@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+// import Typography from 'material-ui/Typography';
 
 import styles from './styles';
 

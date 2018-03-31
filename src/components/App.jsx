@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import purple from 'material-ui/colors/purple';
 import green from 'material-ui/colors/green';
-import Reboot from 'material-ui/Reboot';
+import CssBaseline from 'material-ui/CssBaseline';
 import { withRouter } from 'react-router-dom';
 
 import Header from './Header';
@@ -16,29 +16,18 @@ class App extends Component {
     this.props.getDarkness();
   };
 
-  getTheme = () => {
-    if (this.props.dark === true) {
-      return createMuiTheme({
-        palette: {
-          primary: purple,
-          secondary: green,
-          type: 'dark',
-        },
-      });
-    }
-
-    return createMuiTheme({
+  getTheme = () =>
+    createMuiTheme({
       palette: {
         primary: purple,
         secondary: green,
-        type: 'light',
+        type: this.props.dark === true ? 'dark' : 'light',
       },
     });
-  };
 
   render = () => (
     <MuiThemeProvider theme={this.getTheme()}>
-      <Reboot />
+      <CssBaseline />
       <Header title={this.props.title}>
         <Routes />
       </Header>

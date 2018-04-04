@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/Menu/MenuItem';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 
+import TimePicker from '../../common/TimePicker';
 import styles from './styles';
 
 class TimeslotCreator extends Component {
@@ -15,63 +16,74 @@ class TimeslotCreator extends Component {
     super(props);
 
     this.state = {
-      from: '00:00',
-      to: '00:00',
+      fromMinute: 0,
+      fromHour: 0,
+      toHour: 0,
+      toMinute: 0,
       day: 1,
       days: ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'],
     };
   }
 
-  handleChangeFrom = (e) => {
-    this.setState({
-      from: e.target.value,
-    });
-  };
+  getTimeslot() {
+    const {
+      fromHour, fromMinute, toHour, toMinute, day,
+    } = this.state;
+    const from = `${fromHour < 10 ? `0${fromHour}` : fromHour}:${
+      fromMinute < 10 ? `0${fromMinute}` : fromMinute
+    }`;
+    const to = `${toHour < 10 ? `0${toHour}` : toHour}:${
+      toMinute < 10 ? `0${toMinute}` : toMinute
+    }`;
 
-  handleChangeTo = (e) => {
-    this.setState({
-      to: e.target.value,
-    });
-  };
-
-  handleChangeDay = (e) => {
-    this.setState({
-      day: parseInt(this.state.days.indexOf(e.target.value) + 1, 10),
-    });
-  };
-
-  getTimeslot = () => {
-    const { from, to, day } = this.state;
     return `${this.state.days[day - 1]} от ${from} до ${to}`;
-  };
+  }
 
-  render = () => {
+  handleChangeDay(value) {
+    this.setState({
+      day: parseInt(this.state.days.indexOf(value) + 1, 10),
+    });
+  }
+
+  handleChangeFrom(from) {
+    this.setState({
+      fromMinute: from.getMinutes(),
+      fromHour: from.getHours(),
+    });
+  }
+
+  handleChangeTo(to) {
+    this.setState({
+      toMinute: to.getMinutes(),
+      toHour: to.getHours(),
+    });
+  }
+
+  render() {
     const { classes, handleRemove, handleAdd } = this.props;
 
     return (
       <div className={classes.root}>
-        <form className={classes.form} noValidate autoComplete="off">
+        <div className={classes.form}>
           <div className={classes.pickers}>
-            <TextField
+            <TimePicker
               label="От"
-              type="time"
-              defaultValue={this.state.from}
-              className={classes.textField}
-              onChange={this.handleChangeFrom}
+              hour={this.state.fromHour}
+              minute={this.state.fromMinute}
+              handleChange={val => this.handleChangeFrom(val)}
             />
-            <TextField
+            <TimePicker
               label="До"
-              type="time"
-              defaultValue={this.state.to}
-              className={classes.textField}
-              onChange={this.handleChangeTo}
+              hour={this.state.toHour}
+              minute={this.state.toMinute}
+              handleChange={val => this.handleChangeTo(val)}
             />
             <TextField
               label="Ден"
               select
               value={this.state.days[this.state.day - 1]}
-              className={classes.textField}
-              onChange={this.handleChangeDay}
+              onChange={e => this.handleChangeDay(e.target.value)}
+              margin="dense"
             >
               {this.state.days.map(option => (
                 <MenuItem key={option} value={option}>
@@ -90,10 +102,10 @@ class TimeslotCreator extends Component {
           >
             Добави
           </Button>
-        </form>
+        </div>
         <List>
           {this.props.timeslots.map(timeslot => (
-            <ListItem key={timeslot} dense className={classes.listItem}>
+            <ListItem key={timeslot} dense>
               <ListItemText primary={timeslot} />
               <ListItemSecondaryAction>
                 <IconButton>
@@ -105,7 +117,7 @@ class TimeslotCreator extends Component {
         </List>
       </div>
     );
-  };
+  }
 }
 
 TimeslotCreator.propTypes = {

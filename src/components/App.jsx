@@ -12,27 +12,30 @@ import Routes from './Routes';
 import { getDarkness } from '../actions/ui.actions';
 
 class App extends Component {
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.getDarkness();
-  };
+  }
 
-  getTheme = () =>
-    createMuiTheme({
+  getTheme() {
+    return createMuiTheme({
       palette: {
         primary: purple,
         secondary: green,
         type: this.props.dark === true ? 'dark' : 'light',
       },
     });
+  }
 
-  render = () => (
-    <MuiThemeProvider theme={this.getTheme()}>
-      <CssBaseline />
-      <Header title={this.props.title}>
-        <Routes />
-      </Header>
-    </MuiThemeProvider>
-  );
+  render() {
+    return (
+      <MuiThemeProvider theme={this.getTheme()}>
+        <CssBaseline />
+        <Header title={this.props.title}>
+          <Routes />
+        </Header>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 App.propTypes = {

@@ -21,10 +21,13 @@ class Wizard extends Component {
       activeStep: 0,
       stepsCount: 4,
     };
+
+    this.handleNext = this.handleNext.bind(this);
+    this.handleBack = this.handleBack.bind(this);
   }
 
-  getStepContent = (step) => {
-    switch (step) {
+  getStepContent() {
+    switch (this.state.activeStep) {
       case 0:
         return <SchoolTypeChooser />;
       case 1:
@@ -36,28 +39,28 @@ class Wizard extends Component {
       default:
         return 'Непозната стъпка';
     }
-  };
+  }
 
-  handleNext = () => {
+  handleNext() {
     this.setState({
       activeStep: this.state.activeStep + 1,
     });
-  };
+  }
 
-  handleBack = () => {
+  handleBack() {
     this.setState({
       activeStep: this.state.activeStep - 1,
     });
-  };
+  }
 
-  render = () => {
+  render() {
     const { classes, theme, isReady } = this.props;
 
     const isLastStep = this.state.activeStep === this.state.stepsCount - 1;
     if (this.props.setupFinished === false) {
       return (
         <div className={classes.wizard}>
-          {this.getStepContent(this.state.activeStep)}
+          {this.getStepContent()}
           <MobileStepper
             className={classes.root}
             variant="dots"
@@ -67,7 +70,7 @@ class Wizard extends Component {
             nextButton={
               <Button
                 size="small"
-                onClick={isLastStep ? () => this.props.handleFinish() : this.handleNext}
+                onClick={isLastStep ? this.props.handleFinish : this.handleNext}
                 disabled={
                   this.state.activeStep === this.state.stepsCount || (!isReady && isLastStep)
                 }
@@ -86,22 +89,18 @@ class Wizard extends Component {
         </div>
       );
     }
+
     return (
       <div className={classes.wizard}>
         <div className={classes.finished}>
           <Typography variant="display3">Настройката е направена!</Typography>
-          <Button
-            variant="raised"
-            size="large"
-            color="primary"
-            onClick={() => this.props.handleReset()}
-          >
+          <Button variant="raised" size="large" color="primary" onClick={this.props.handleReset}>
             Пренастрой
           </Button>
         </div>
       </div>
     );
-  };
+  }
 }
 
 Wizard.propTypes = {

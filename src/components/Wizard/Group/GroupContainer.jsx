@@ -1,19 +1,18 @@
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import * as WizardActions from '../../../actions/wizard.actions';
+import { addSubjectToGroup, removeSubjectFromGroup } from '../../../actions/wizard.actions';
 import Group from './Group';
 
 const mapStateToProps = ({ wizard }) => ({
   subjects: wizard.subjects,
+  groupSubjects: wizard.groupSubjects,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  const actions = bindActionCreators(WizardActions, dispatch);
-  return {
-    handleAddSubject: actions.addSubjectToGroup,
-    handleRemoveSubject: actions.removeSubjectFromGroup,
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  handleChange: (subject, groupName) => e =>
+    (e.target.checked
+      ? dispatch(addSubjectToGroup(groupName, subject))
+      : dispatch(removeSubjectFromGroup(groupName, subject))),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);

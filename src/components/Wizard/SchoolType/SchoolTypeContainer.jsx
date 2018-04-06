@@ -1,16 +1,12 @@
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import Chooser from './SchoolType';
-import * as WizardActions from '../../../actions/wizard.actions';
+import { setSchoolType, setGroupsCount } from '../../../actions/wizard.actions';
 
-const mapDispatchToProps = (dispatch) => {
-  const actions = bindActionCreators(WizardActions, dispatch);
-  return {
-    handleSchoolTypeChange: actions.setSchoolType,
-    handleGroupsCountChange: actions.setGroupsCount,
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  handleSchoolTypeChange: type => () => dispatch(setSchoolType(type)),
+  handleGroupsCountChange: e => dispatch(setGroupsCount(parseInt(e.target.value, 10))),
+});
 
 const mapStateToProps = ({ wizard }) => ({
   schoolType: wizard.schoolType,

@@ -9,13 +9,13 @@ const SchoolTypeChooser = props => (
   <div>
     <RadioGroup value={props.schoolType}>
       <FormControlLabel
-        onClick={() => props.handleSchoolTypeChange('gymnasium')}
+        onClick={props.handleSchoolTypeChange('gymnasium')}
         value="gymnasium"
         control={<Radio />}
         label="Гимназия"
       />
       <FormControlLabel
-        onClick={() => props.handleSchoolTypeChange('elementary')}
+        onClick={props.handleSchoolTypeChange('elementary')}
         value="elementary"
         control={<Radio />}
         label="Основно училище"
@@ -25,7 +25,7 @@ const SchoolTypeChooser = props => (
       id="number"
       label="Брой паралелки на клас"
       value={props.groupsCount}
-      onChange={e => props.handleGroupsCountChange(parseInt(e.target.value, 10))}
+      onChange={props.handleGroupsCountChange}
       type="number"
       className={props.classes.textField}
       InputLabelProps={{

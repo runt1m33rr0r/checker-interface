@@ -2,15 +2,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Creator from './Timeslots';
-import * as WizardActions from '../../../actions/wizard.actions';
+import { addTimeslot, removeTimeslot } from '../../../actions/wizard.actions';
 
-const mapDispatchToProps = (dispatch) => {
-  const actions = bindActionCreators(WizardActions, dispatch);
-  return {
-    handleAdd: actions.addTimeslot,
-    handleRemove: actions.removeTimeslot,
-  };
-};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ addTimeslot, removeTimeslot }, dispatch);
 
 const mapStateToProps = ({ wizard }) => ({
   timeslots: wizard.timeslots,

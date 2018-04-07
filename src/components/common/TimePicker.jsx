@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
 import PropTypes from 'prop-types';
@@ -11,29 +11,43 @@ const styles = () => ({
   },
 });
 
-const Picker = ({
-  classes, label, hour, minute, handleChange,
-}) => (
-  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <TimePicker
-      className={classes.timePicker}
-      ampm={false}
-      label={label}
-      okLabel="Запиши"
-      cancelLabel="Отказ"
-      margin="dense"
-      clearable
-      clearLabel="Зачисти"
-      value={new Date(2000, 0, 0, hour, minute)}
-      onChange={(val) => {
-        if (val === null) {
-          return handleChange(new Date(2000, 0, 0, 0, 0));
-        }
-        return handleChange(val);
-      }}
-    />
-  </MuiPickersUtilsProvider>
-);
+class Picker extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(val) {
+    if (val === null) {
+      return this.props.handleChange(new Date(2000, 0, 0, 0, 0));
+    }
+    return this.props.handleChange(val);
+  }
+
+  render() {
+    const {
+      classes, label, hour, minute,
+    } = this.props;
+
+    return (
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <TimePicker
+          className={classes.timePicker}
+          ampm={false}
+          label={label}
+          okLabel="Запиши"
+          cancelLabel="Отказ"
+          margin="dense"
+          clearable
+          clearLabel="Зачисти"
+          value={new Date(2000, 0, 0, hour, minute)}
+          onChange={this.handleChange}
+        />
+      </MuiPickersUtilsProvider>
+    );
+  }
+}
 
 Picker.propTypes = {
   classes: PropTypes.object.isRequired,

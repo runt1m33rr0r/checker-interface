@@ -6,13 +6,17 @@ import { setTitle } from '../../actions/ui.actions';
 
 const titled = (WrappedComponent, title) => {
   class Wrapper extends Component {
-    componentDidMount = () => this.props.setTitle(title);
+    componentDidMount() {
+      this.props.setTitle(title);
+    }
 
-    render = () => <WrappedComponent {...this.props} />;
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
   }
 
   const mapDispatchToProps = dispatch => ({
-    setTitle: someTitle => dispatch(setTitle(someTitle)),
+    setTitle: newTitle => dispatch(setTitle(newTitle)),
   });
 
   Wrapper.propTypes = {

@@ -8,9 +8,13 @@ import { fetchProfile } from '../../../actions/auth.actions';
 import titled from '../../common/TitledComponent';
 
 class CheckerCotainer extends Component {
-  componentDidMount = () => this.props.fetchProfile();
+  componentDidMount() {
+    this.props.fetchProfile();
+  }
 
-  render = () => <Checker {...this.props} />;
+  render() {
+    return <Checker {...this.props} />;
+  }
 }
 
 CheckerCotainer.propTypes = {
@@ -18,7 +22,7 @@ CheckerCotainer.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleSend: image => dispatch(sendImage(image)),
+  handleSend: image => () => dispatch(sendImage(image)),
   fetchProfile: () => dispatch(fetchProfile()),
 });
 

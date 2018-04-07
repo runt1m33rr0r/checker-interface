@@ -5,11 +5,10 @@ import Group from './Group';
 
 const mapStateToProps = ({ wizard }) => ({
   subjects: wizard.subjects,
-  groupSubjects: wizard.groupSubjects,
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleChange: (subject, groupName) => e =>
+  handleChange: (groupName, subject) => e =>
     (e.target.checked
       ? dispatch(addSubjectToGroup(groupName, subject))
       : dispatch(removeSubjectFromGroup(groupName, subject))),

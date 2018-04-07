@@ -6,11 +6,17 @@ import { connect } from 'react-redux';
 import { checkAuth } from '../../actions/auth.actions';
 
 class PrivateRoute extends Component {
+  constructor(props) {
+    super(props);
+
+    this.inRoles = this.inRoles.bind(this);
+  }
+
   componentDidMount() {
     this.props.authCheck();
   }
 
-  inRoles = (requiredRoles, actualRoles) => {
+  inRoles(requiredRoles, actualRoles) {
     if (this.props.allRequired === true) {
       for (let i = 0; i < requiredRoles.length; i += 1) {
         if (actualRoles.includes(requiredRoles[i]) === false) {
@@ -28,9 +34,9 @@ class PrivateRoute extends Component {
       }
       return false;
     }
-  };
+  }
 
-  render = () => {
+  render() {
     const {
       component: ProtectedComponent,
       isAuthenticated,
@@ -54,7 +60,7 @@ class PrivateRoute extends Component {
         }
       />
     );
-  };
+  }
 }
 
 PrivateRoute.defaultProps = {

@@ -15,15 +15,27 @@ class LoginForm extends Component {
       username: '',
       password: '',
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = name => (event) => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
+  handleChange(name) {
+    return event =>
+      this.setState({
+        [name]: event.target.value,
+      });
+  }
 
-  render = () => {
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.handleSubmit({
+      username: this.state.username,
+      password: this.state.password,
+    });
+  }
+
+  render() {
     if (this.props.isAuthenticated) {
       return (
         <Typography className={this.props.classes.container} variant="display3" gutterBottom>
@@ -58,20 +70,14 @@ class LoginForm extends Component {
             variant="raised"
             color="primary"
             disabled={this.state.password.length < 3 || this.state.username.length < 3}
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.handleSubmit({
-                username: this.state.username,
-                password: this.state.password,
-              });
-            }}
+            onClick={this.handleSubmit}
           >
             Вход
           </Button>
         </form>
       </div>
     );
-  };
+  }
 }
 
 LoginForm.propTypes = {

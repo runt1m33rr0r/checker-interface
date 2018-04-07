@@ -6,6 +6,7 @@ import purple from 'material-ui/colors/purple';
 import green from 'material-ui/colors/green';
 import CssBaseline from 'material-ui/CssBaseline';
 import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 
 import Header from './Header';
 import Routes from './Routes';
@@ -49,8 +50,6 @@ const mapStateToProps = ({ ui }) => ({
   dark: ui.dark,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getDarkness: () => dispatch(getDarkness()),
-});
+const mapDispatchToProps = dispatch => bindActionCreators({ getDarkness }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

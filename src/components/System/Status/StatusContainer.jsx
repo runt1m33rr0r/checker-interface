@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Status from './Status';
-import {
-  checkSetup,
-  fetchFreeSubjects,
-  fetchTeachersCount,
-  fetchStudentsCount,
-  fetchGroupsCount,
-  fetchSubjectsCount,
-} from '../../../actions/system.actions';
+import * as actions from '../../../actions/system.actions';
 import titled from '../../common/TitledComponent';
 
 class StatusContainer extends Component {
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.checkSetup();
     this.props.fetchFreeSubjects();
     this.props.fetchTeachersCount();
     this.props.fetchStudentsCount();
     this.props.fetchGroupsCount();
     this.props.fetchSubjectsCount();
-  };
+  }
 
-  render = () => <Status {...this.props} />;
+  render() {
+    return <Status {...this.props} />;
+  }
 }
 
 StatusContainer.propTypes = {
@@ -44,13 +40,6 @@ const mapStateToProps = ({ system }) => ({
   subjectsCount: system.subjectsCount,
 });
 
-const mapDispatchToProps = dispatch => ({
-  checkSetup: () => dispatch(checkSetup()),
-  fetchFreeSubjects: () => dispatch(fetchFreeSubjects()),
-  fetchTeachersCount: () => dispatch(fetchTeachersCount()),
-  fetchStudentsCount: () => dispatch(fetchStudentsCount()),
-  fetchGroupsCount: () => dispatch(fetchGroupsCount()),
-  fetchSubjectsCount: () => dispatch(fetchSubjectsCount()),
-});
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(titled(StatusContainer, 'Състояние на системата'));

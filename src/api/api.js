@@ -14,10 +14,6 @@ export const makeRequest = ({
     data,
     headers,
   })
-    .catch((err) => {
-      dispatch({ type: NETWORK_FAILURE, message: err.message });
-      return Promise.reject(err);
-    })
     .then((response) => {
       if (response.data.success) {
         dispatch({ type: NETWORK_SUCCESS });
@@ -25,5 +21,8 @@ export const makeRequest = ({
       }
       dispatch({ type: NETWORK_FAILURE, message: response.data.message });
       return Promise.reject(response.data);
+    })
+    .catch((err) => {
+      dispatch({ type: NETWORK_FAILURE, message: err.message });
     });
 };

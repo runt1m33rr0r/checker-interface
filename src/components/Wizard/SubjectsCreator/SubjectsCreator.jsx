@@ -16,15 +16,17 @@ class SubjectsCreator extends Component {
     this.state = {
       subjectName: '',
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = (e) => {
+  handleChange(e) {
     this.setState({
       subjectName: e.target.value,
     });
-  };
+  }
 
-  render = () => {
+  render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -39,10 +41,7 @@ class SubjectsCreator extends Component {
             disabled={this.state.subjectName.length < 3}
             variant="raised"
             color="primary"
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.handleAdd(this.state.subjectName);
-            }}
+            onClick={this.props.handleAdd(this.state.subjectName)}
           >
             Добави
           </Button>
@@ -52,12 +51,7 @@ class SubjectsCreator extends Component {
             <ListItem key={value} dense className={classes.listItem}>
               <ListItemText primary={value} />
               <ListItemSecondaryAction>
-                <IconButton
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.props.handleRemove(value);
-                  }}
-                >
+                <IconButton onClick={this.props.handleRemove(value)}>
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -66,7 +60,7 @@ class SubjectsCreator extends Component {
         </List>
       </div>
     );
-  };
+  }
 }
 
 SubjectsCreator.propTypes = {

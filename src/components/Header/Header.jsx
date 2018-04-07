@@ -23,13 +23,15 @@ class Header extends Component {
     this.state = {
       mobileOpen: false,
     };
+
+    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
   }
 
-  handleDrawerToggle = () => {
+  handleDrawerToggle() {
     this.setState({ mobileOpen: !this.state.mobileOpen });
-  };
+  }
 
-  render = () => {
+  render() {
     const {
       classes,
       theme,
@@ -74,7 +76,7 @@ class Header extends Component {
               <div>
                 <IconButton
                   className={this.props.dark === true ? classes.lampOff : classes.lampOn}
-                  onClick={() => this.props.toggleDarkness()}
+                  onClick={this.props.toggleDarkness}
                 >
                   <Lamp />
                 </IconButton>
@@ -120,12 +122,12 @@ class Header extends Component {
             <div className={this.props.isLoading ? classes.hidden : classes.children}>
               {children}
             </div>
-            <Snackbar message={message} handleClose={() => handleSnackbarClose()} />
+            <Snackbar message={message} handleClose={handleSnackbarClose} />
           </main>
         </div>
       </div>
     );
-  };
+  }
 }
 
 Header.propTypes = {

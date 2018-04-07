@@ -12,16 +12,20 @@ class TabView extends Component {
     this.state = {
       idx: 0,
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = (event, value) => {
-    this.setState({ idx: value });
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange(value, this.props.tabNames[value]);
-    }
-  };
+  handleChange(value) {
+    return () => {
+      this.setState({ idx: value });
+      if (typeof this.props.onChange === 'function') {
+        this.props.onChange(value, this.props.tabNames[value]);
+      }
+    };
+  }
 
-  render = () => {
+  render() {
     const { classes, tabNames } = this.props;
     const { idx } = this.state;
     return (
@@ -41,7 +45,7 @@ class TabView extends Component {
         {tabNames.length > 0 && this.props.children[idx]}
       </div>
     );
-  };
+  }
 }
 
 TabView.propTypes = {

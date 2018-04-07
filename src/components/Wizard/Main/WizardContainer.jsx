@@ -9,6 +9,12 @@ import { checkSetup, resetSetup } from '../../../actions/system.actions';
 import titled from '../../common/TitledComponent';
 
 class WizardContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.finish = this.finish.bind(this);
+  }
+
   componentDidMount() {
     this.props.checkSetup();
   }

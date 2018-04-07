@@ -13,6 +13,17 @@ import Table from '../Table';
 import styles from './styles';
 
 class Creator extends Component {
+  static timeslotToString(timeslot) {
+    const days = ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'];
+    const day = days[timeslot.day - 1];
+    const fromHour = timeslot.fromHour > 9 ? timeslot.fromHour : `0${timeslot.fromHour}`;
+    const fromMinute = timeslot.fromMinute > 9 ? timeslot.fromMinute : `0${timeslot.fromMinute}`;
+    const toHour = timeslot.toHour > 9 ? timeslot.toHour : `0${timeslot.toHour}`;
+    const toMinute = timeslot.toMinute > 9 ? timeslot.toMinute : `0${timeslot.toMinute}`;
+
+    return `${day} от ${fromHour}:${fromMinute} до ${toHour}:${toMinute}`;
+  }
+
   constructor(props) {
     super(props);
 
@@ -24,23 +35,12 @@ class Creator extends Component {
     };
   }
 
-  timeslotToString = (timeslot) => {
-    const days = ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'];
-    const day = days[timeslot.day - 1];
-    const fromHour = timeslot.fromHour > 9 ? timeslot.fromHour : `0${timeslot.fromHour}`;
-    const fromMinute = timeslot.fromMinute > 9 ? timeslot.fromMinute : `0${timeslot.fromMinute}`;
-    const toHour = timeslot.toHour > 9 ? timeslot.toHour : `0${timeslot.toHour}`;
-    const toMinute = timeslot.toMinute > 9 ? timeslot.toMinute : `0${timeslot.toMinute}`;
-
-    return `${day} от ${fromHour}:${fromMinute} до ${toHour}:${toMinute}`;
-  };
-
-  handleChange = (valueName, value) => {
-    this.setState({ [valueName]: value });
-  };
+  handleChange(valueName) {
+    return e => this.setState({ [valueName]: e.target.value });
+  }
 
   /* eslint no-underscore-dangle: 0 */
-  render = () => {
+  render() {
     const { root, createForm, btn } = this.props.classes;
     const {
       groupNames, timeslots, subjectCodes, teachers, createLesson,
@@ -54,36 +54,24 @@ class Creator extends Component {
         <div>
           <TabView tabNames={groupNames}>
             {groupNames.map(name => (
-              <Table
-                deleteHandler={lesson => this.props.deleteLesson(lesson)}
-                key={name}
-                groupName={name}
-              />
+              <Table deleteHandler={this.props.deleteLesson} key={name} groupName={name} />
             ))}
           </TabView>
         </div>
         <div className={createForm}>
           <FormControl>
             <InputLabel htmlFor="time">Време</InputLabel>
-            <Select
-              value={timeslotIdx}
-              id="time"
-              onChange={e => this.handleChange('timeslotIdx', e.target.value)}
-            >
+            <Select value={timeslotIdx} id="time" onChange={this.handleChange('timeslotIdx')}>
               {timeslots.map((option, idx) => (
-                <MenuItem key={this.timeslotToString(option)} value={idx}>
-                  {this.timeslotToString(option)}
+                <MenuItem key={Creator.timeslotToString(option)} value={idx}>
+                  {Creator.timeslotToString(option)}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
           <FormControl>
             <InputLabel htmlFor="subject">Предмет</InputLabel>
-            <Select
-              value={subjectIdx}
-              id="subject"
-              onChange={e => this.handleChange('subjectIdx', e.target.value)}
-            >
+            <Select value={subjectIdx} id="subject" onChange={this.handleChange('subjectIdx')}>
               {subjectCodes.map((option, idx) => (
                 <MenuItem key={option} value={idx}>
                   {option}
@@ -93,11 +81,7 @@ class Creator extends Component {
           </FormControl>
           <FormControl>
             <InputLabel htmlFor="teacher">Учител/ка</InputLabel>
-            <Select
-              value={teacherIdx}
-              id="teacher"
-              onChange={e => this.handleChange('teacherIdx', e.target.value)}
-            >
+            <Select value={teacherIdx} id="teacher" onChange={this.handleChange('teacherIdx')}>
               {teachers.map((option, idx) => (
                 <MenuItem key={option} value={idx}>
                   {option}
@@ -107,11 +91,7 @@ class Creator extends Component {
           </FormControl>
           <FormControl>
             <InputLabel htmlFor="group">Клас</InputLabel>
-            <Select
-              value={groupIdx}
-              id="group"
-              onChange={e => this.handleChange('groupIdx', e.target.value)}
-            >
+            <Select value={groupIdx} id="group" onChange={this.handleChange('groupIdx')}>
               {groupNames.map((option, idx) => (
                 <MenuItem key={option} value={idx}>
                   {option}
@@ -123,21 +103,19 @@ class Creator extends Component {
             variant="raised"
             color="primary"
             className={btn}
-            onClick={() =>
-              createLesson(
-                groupNames[groupIdx],
-                subjectCodes[subjectIdx],
-                teachers[teacherIdx],
-                timeslots[timeslotIdx]._id,
-              )
-            }
+            onClick={createLesson(
+              groupNames[groupIdx],
+              subjectCodes[subjectIdx],
+              teachers[teacherIdx],
+              timeslots[timeslotIdx] ? timeslots[timeslotIdx]._id : '',
+            )}
           >
             Добави
           </Button>
         </div>
       </div>
     );
-  };
+  }
 }
 
 Creator.propTypes = {

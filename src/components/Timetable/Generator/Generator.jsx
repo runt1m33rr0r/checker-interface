@@ -15,36 +15,35 @@ class Generator extends Component {
     this.state = {
       nameIdx: 0,
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount = () => {
-    this.props.fetchGroups();
-  };
-
-  handleChange = (idx) => {
+  handleChange(idx) {
     this.setState({ nameIdx: idx });
-  };
+  }
 
-  render = () => (
-    <div className={this.props.classes.root}>
-      <TabView onChange={idx => this.handleChange(idx)} tabNames={this.props.groupNames}>
-        {this.props.groupNames.map(name => <Table key={name} groupName={name} />)}
-      </TabView>
-      <Button
-        className={this.props.classes.btn}
-        variant="raised"
-        color="primary"
-        onClick={() => this.props.generate(this.props.groupNames[this.state.nameIdx])}
-      >
-        Генерирай програма
-      </Button>
-    </div>
-  );
+  render() {
+    return (
+      <div className={this.props.classes.root}>
+        <TabView onChange={this.handleChange} tabNames={this.props.groupNames}>
+          {this.props.groupNames.map(name => <Table key={name} groupName={name} />)}
+        </TabView>
+        <Button
+          className={this.props.classes.btn}
+          variant="raised"
+          color="primary"
+          onClick={this.props.generate(this.props.groupNames[this.state.nameIdx])}
+        >
+          Генерирай програма
+        </Button>
+      </div>
+    );
+  }
 }
 
 Generator.propTypes = {
   generate: PropTypes.func.isRequired,
-  fetchGroups: PropTypes.func.isRequired,
   groupNames: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
 };

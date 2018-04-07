@@ -6,10 +6,16 @@ import AbsencesViewer from './Absences';
 import { fetchProfile } from '../../../actions/auth.actions';
 import titled from '../../common/TitledComponent';
 
-class AbsencesCotainer extends Component {
-  componentDidMount = () => this.props.fetchProfile();
+const empty = [];
 
-  render = () => <AbsencesViewer absences={this.profile ? this.props.profile.absences : []} />;
+class AbsencesCotainer extends Component {
+  componentDidMount() {
+    this.props.fetchProfile();
+  }
+
+  render() {
+    return <AbsencesViewer absences={this.profile ? this.props.profile.absences : empty} />;
+  }
 }
 
 AbsencesCotainer.propTypes = {

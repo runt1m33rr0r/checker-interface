@@ -31,31 +31,53 @@ class RegisterForm extends Component {
       userType: 'Student',
       isLeadTeacher: false,
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleCheckChange = this.handleCheckChange.bind(this);
+    this.handleSubjectsChange = this.handleSubjectsChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = name => (event) => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
+  handleChange(name) {
+    return event =>
+      this.setState({
+        [name]: event.target.value,
+      });
+  }
 
-  handleCheckChange = name => (event) => {
-    this.setState({ [name]: event.target.checked });
-  };
+  handleCheckChange(name) {
+    return event => this.setState({ [name]: event.target.checked });
+  }
 
-  handleSubjectsChange = subject => () => {
-    if (this.state.subjects.includes(subject)) {
+  handleSubjectsChange(subject) {
+    return () => {
+      if (this.state.subjects.includes(subject)) {
+        return this.setState(prevState => ({
+          subjects: prevState.subjects.filter(el => el !== subject),
+        }));
+      }
+
       return this.setState(prevState => ({
-        subjects: prevState.subjects.filter(el => el !== subject),
+        subjects: [...prevState.subjects, subject],
       }));
-    }
+    };
+  }
 
-    return this.setState(prevState => ({
-      subjects: [...prevState.subjects, subject],
-    }));
-  };
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.handleSubmit({
+      userType: this.state.userType,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      username: this.state.username,
+      password: this.state.password,
+      subjects: this.state.subjects,
+      group: this.state.group,
+      isLeadTeacher: this.state.isLeadTeacher,
+    });
+  }
 
-  render = () => {
+  render() {
     if (this.props.isRegistered) {
       return (
         <Typography className={this.props.classes.container} variant="display3" gutterBottom>
@@ -166,26 +188,14 @@ class RegisterForm extends Component {
               (this.state.userType === 'Teacher' && this.state.subjects.length < 1) ||
               (this.state.userType === 'Student' && this.state.group === '')
             }
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.handleSubmit({
-                userType: this.state.userType,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                username: this.state.username,
-                password: this.state.password,
-                subjects: this.state.subjects,
-                group: this.state.group,
-                isLeadTeacher: this.state.isLeadTeacher,
-              });
-            }}
+            onClick={this.handleSubmit}
           >
             Регистрирай
           </Button>
         </form>
       </div>
     );
-  };
+  }
 }
 
 RegisterForm.propTypes = {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import RegisterForm from './RegisterForm';
 import { registerUser } from '../../../actions/auth.actions';
@@ -8,12 +9,14 @@ import { fetchSubjects, fetchGroups } from '../../../actions/timetable.actions';
 import titled from '../../common/TitledComponent';
 
 class RegisterContainer extends Component {
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.fetchSubjects();
     this.props.fetchGroups();
-  };
+  }
 
-  render = () => <RegisterForm {...this.props} />;
+  render() {
+    return <RegisterForm {...this.props} />;
+  }
 }
 
 RegisterContainer.propTypes = {
@@ -21,11 +24,8 @@ RegisterContainer.propTypes = {
   fetchGroups: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  handleSubmit: creds => dispatch(registerUser(creds)),
-  fetchSubjects: () => dispatch(fetchSubjects()),
-  fetchGroups: () => dispatch(fetchGroups()),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ handleSubmit: registerUser, fetchSubjects, fetchGroups }, dispatch);
 
 const mapStateToProps = ({ auth, timetable }) => ({
   isRegistered: auth.isRegistered,

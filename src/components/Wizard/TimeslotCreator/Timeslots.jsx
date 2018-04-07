@@ -23,6 +23,10 @@ class TimeslotCreator extends Component {
       day: 1,
       days: ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'],
     };
+
+    this.handleChangeFrom = this.handleChangeFrom.bind(this);
+    this.handleChangeTo = this.handleChangeTo.bind(this);
+    this.handleChangeDay = this.handleChangeDay.bind(this);
   }
 
   getTimeslot() {
@@ -39,9 +43,9 @@ class TimeslotCreator extends Component {
     return `${this.state.days[day - 1]} от ${from} до ${to}`;
   }
 
-  handleChangeDay(value) {
+  handleChangeDay(e) {
     this.setState({
-      day: parseInt(this.state.days.indexOf(value) + 1, 10),
+      day: parseInt(this.state.days.indexOf(e.target.value) + 1, 10),
     });
   }
 
@@ -60,7 +64,7 @@ class TimeslotCreator extends Component {
   }
 
   render() {
-    const { classes, handleRemove, handleAdd } = this.props;
+    const { classes, handleRemove } = this.props;
 
     return (
       <div className={classes.root}>
@@ -70,19 +74,19 @@ class TimeslotCreator extends Component {
               label="От"
               hour={this.state.fromHour}
               minute={this.state.fromMinute}
-              handleChange={val => this.handleChangeFrom(val)}
+              handleChange={this.handleChangeFrom}
             />
             <TimePicker
               label="До"
               hour={this.state.toHour}
               minute={this.state.toMinute}
-              handleChange={val => this.handleChangeTo(val)}
+              handleChange={this.handleChangeTo}
             />
             <TextField
               label="Ден"
               select
               value={this.state.days[this.state.day - 1]}
-              onChange={e => this.handleChangeDay(e.target.value)}
+              onChange={this.handleChangeDay}
               margin="dense"
             >
               {this.state.days.map(option => (
@@ -95,10 +99,7 @@ class TimeslotCreator extends Component {
           <Button
             variant="raised"
             color="primary"
-            onClick={(e) => {
-              e.preventDefault();
-              handleAdd(this.getTimeslot());
-            }}
+            onClick={this.props.handleAdd(this.getTimeslot())}
           >
             Добави
           </Button>
@@ -109,7 +110,7 @@ class TimeslotCreator extends Component {
               <ListItemText primary={timeslot} />
               <ListItemSecondaryAction>
                 <IconButton>
-                  <DeleteIcon onClick={() => handleRemove(timeslot)} />
+                  <DeleteIcon onClick={handleRemove(timeslot)} />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

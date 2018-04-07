@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Snackbar from 'material-ui/Snackbar';
@@ -12,39 +12,44 @@ const styles = theme => ({
   },
 });
 
-const SnackbarComponent = ({ classes, handleClose, message }) => {
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+class SnackbarComponent extends Component {
+  constructor(props) {
+    super(props);
 
-    handleClose();
-  };
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
+  }
 
-  return (
-    <div>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={message !== undefined && message !== ''}
-        onClose={handleSnackbarClose}
-        message={<span>{message}</span>}
-        action={[
-          <IconButton
-            key="close"
-            color="inherit"
-            className={classes.close}
-            onClick={handleSnackbarClose}
-          >
-            <CloseIcon />
-          </IconButton>,
-        ]}
-      />
-    </div>
-  );
-};
+  handleSnackbarClose(reason) {
+    return () => (reason === 'clickaway' ? null : this.props.handleClose());
+  }
+
+  render() {
+    const { message, classes } = this.props;
+    return (
+      <div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          open={message !== undefined && message !== ''}
+          onClose={this.handleSnackbarClose}
+          message={<span>{message}</span>}
+          action={[
+            <IconButton
+              key="close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleSnackbarClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
+      </div>
+    );
+  }
+}
 
 SnackbarComponent.propTypes = {
   classes: PropTypes.object.isRequired,

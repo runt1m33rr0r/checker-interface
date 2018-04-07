@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 import Header from './Header';
 import { resetMessage, toggleDarkness } from '../../actions/ui.actions';
@@ -14,7 +15,7 @@ class HeaderContainer extends Component {
     };
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.isLoading === true) {
       const timeout = setTimeout(() => {
         if (this.props.isLoading === true) {
@@ -27,9 +28,11 @@ class HeaderContainer extends Component {
     } else {
       this.setState({ shouldBeLoading: false });
     }
-  };
+  }
 
-  render = () => <Header {...this.props} isLoading={this.state.shouldBeLoading} />;
+  render() {
+    return <Header {...this.props} isLoading={this.state.shouldBeLoading} />;
+  }
 }
 
 HeaderContainer.propTypes = {
@@ -46,9 +49,7 @@ const mapStateToProps = ({
   dark: ui.dark,
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleSnackbarClose: () => dispatch(resetMessage()),
-  toggleDarkness: () => dispatch(toggleDarkness()),
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ handleSnackbarClose: resetMessage, toggleDarkness }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

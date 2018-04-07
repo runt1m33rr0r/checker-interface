@@ -20,40 +20,50 @@ class Checker extends Component {
       // latitude: 0,
       // accuracy: 0
     };
+
+    this.handleCaptureButton = this.handleCaptureButton.bind(this);
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.init();
     // this.calcLocation();
     // console.log(this.calcDistance(42.6123581, 23.0636016, 42.6122532, 23.0636185));
-  };
+  }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     this.unload();
-  };
+  }
 
-  init = () => {
+  init() {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(stream => (this.video.srcObject = stream));
-  };
+  }
 
-  unload = () => {
+  unload() {
     this.video.srcObject.getVideoTracks().forEach(track => track.stop());
-  };
+  }
 
-  capture = () => {
+  capture() {
     const context = this.canvas.getContext('2d');
     context.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
 
     this.video.pause();
     this.setState({ paused: true, image: this.canvas.toDataURL() });
-  };
+  }
 
-  reset = () => {
+  reset() {
     this.video.play();
     this.setState({ paused: false });
-  };
+  }
+
+  handleCaptureButton() {
+    if (this.state.paused) {
+      this.reset();
+    } else {
+      this.capture();
+    }
+  }
 
   // calcLocation = () => {
   //   const options = {
@@ -91,7 +101,7 @@ class Checker extends Component {
   //   return earthRadius * c * 1000;
   // };
 
-  render = () => {
+  render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -111,7 +121,7 @@ class Checker extends Component {
             className={classes.button}
             variant="raised"
             color="primary"
-            onClick={() => (this.state.paused ? this.reset() : this.capture())}
+            onClick={this.handleCaptureButton}
           >
             {this.state.paused ? 'Наново' : 'Снимай'}
           </Button>
@@ -120,14 +130,14 @@ class Checker extends Component {
             className={classes.button}
             variant="raised"
             color="primary"
-            onClick={() => this.props.handleSend(this.state.image.split(',')[1])}
+            onClick={this.props.handleSend(this.state.image.split(',')[1])}
           >
             {'Изпрати'}
           </Button>
         </div>
       </div>
     );
-  };
+  }
 }
 
 Checker.propTypes = {

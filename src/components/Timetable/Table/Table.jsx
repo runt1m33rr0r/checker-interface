@@ -8,37 +8,40 @@ import Chip from 'material-ui/Chip';
 import styles from './styles';
 
 class TableComponent extends Component {
-  getRows = () =>
-    ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'].map((day, idx) => (
+  static getHeadCells() {
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => <TableCell key={num}>{num}</TableCell>);
+  }
+
+  getRows() {
+    return ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'].map((day, idx) => (
       <TableRow key={day}>
         <TableCell>{day}</TableCell>
         {this.lessonsByDay(idx + 1)}
       </TableRow>
     ));
+  }
 
-  getHeadCells = () =>
-    [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => <TableCell key={num}>{num}</TableCell>);
-
-  lessonsByDay = day =>
-    this.props.lessons.map(lesson =>
-      lesson.timeslot.day === day && (
-      <TableCell
-        key={`${lesson.timeslot.fromHour}${lesson.timeslot.fromMinute}${
+  lessonsByDay(day) {
+    return this.props.lessons.map((lesson) => {
+      if (lesson.timeslot.day === day) {
+        return (
+          <TableCell
+            key={`${lesson.timeslot.fromHour}${lesson.timeslot.fromMinute}${
               lesson.timeslot.toHour
             }${lesson.timeslot.toMinute}${lesson.groupName}${lesson.subjectCode}${
               lesson.teacherUsername
             }`}
-      >
-        {typeof this.props.deleteHandler === 'function' ? (
-          <Chip
-            label={
-              <div>
-                <div>{lesson.subjectCode}</div>
-                <div>{lesson.teacherUsername}</div>
-              </div>
+          >
+            {typeof this.props.deleteHandler === 'function' ? (
+              <Chip
+                label={
+                  <div>
+                    <div>{lesson.subjectCode}</div>
+                    <div>{lesson.teacherUsername}</div>
+                  </div>
                 }
-            onDelete={() => this.props.deleteHandler(lesson)}
-          />
+                onDelete={this.props.deleteHandler(lesson)}
+              />
             ) : (
               <div>
                 <div>{lesson.subjectCode}</div>
@@ -46,10 +49,14 @@ class TableComponent extends Component {
                 {this.props.showGroups && <div>{lesson.groupName}</div>}
               </div>
             )}
-      </TableCell>
-      ));
+          </TableCell>
+        );
+      }
+      return undefined;
+    });
+  }
 
-  render = () => {
+  render() {
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
@@ -57,14 +64,14 @@ class TableComponent extends Component {
           <TableHead>
             <TableRow className={classes.overflowing}>
               <TableCell>Ден</TableCell>
-              {this.getHeadCells()}
+              {TableComponent.getHeadCells()}
             </TableRow>
           </TableHead>
           <TableBody>{this.getRows()}</TableBody>
         </Table>
       </Paper>
     );
-  };
+  }
 }
 
 TableComponent.propTypes = {

@@ -14,7 +14,7 @@ const Controls = ({
     {isAuthenticated ? (
       <div>
         <List>
-          <ListItem button onClick={() => handleLogout()}>
+          <ListItem button onClick={handleLogout}>
             <ListItemText primary="Изход" />
           </ListItem>
         </List>

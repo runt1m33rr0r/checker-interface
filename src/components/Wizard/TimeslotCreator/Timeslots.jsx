@@ -16,23 +16,22 @@ class TimeslotCreator extends Component {
     super(props);
 
     this.state = {
-      fromMinute: 0,
-      fromHour: 0,
-      toHour: 0,
-      toMinute: 0,
+      fromTime: new Date(2000, 0, 0, 0, 0),
+      toTime: new Date(2000, 0, 0, 0, 0),
       day: 1,
       days: ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'],
     };
 
-    this.handleChangeFrom = this.handleChangeFrom.bind(this);
-    this.handleChangeTo = this.handleChangeTo.bind(this);
+    this.handleChangeTime = this.handleChangeTime.bind(this);
     this.handleChangeDay = this.handleChangeDay.bind(this);
   }
 
   getTimeslot() {
-    const {
-      fromHour, fromMinute, toHour, toMinute, day,
-    } = this.state;
+    const fromHour = this.state.fromTime.getHours();
+    const fromMinute = this.state.fromTime.getMinutes();
+    const toHour = this.state.toTime.getHours();
+    const toMinute = this.state.toTime.getMinutes();
+
     const from = `${fromHour < 10 ? `0${fromHour}` : fromHour}:${
       fromMinute < 10 ? `0${fromMinute}` : fromMinute
     }`;
@@ -40,7 +39,7 @@ class TimeslotCreator extends Component {
       toMinute < 10 ? `0${toMinute}` : toMinute
     }`;
 
-    return `${this.state.days[day - 1]} от ${from} до ${to}`;
+    return `${this.state.days[this.state.day - 1]} от ${from} до ${to}`;
   }
 
   handleChangeDay(e) {
@@ -49,22 +48,12 @@ class TimeslotCreator extends Component {
     });
   }
 
-  handleChangeFrom(from) {
-    this.setState({
-      fromMinute: from.getMinutes(),
-      fromHour: from.getHours(),
-    });
-  }
-
-  handleChangeTo(to) {
-    this.setState({
-      toMinute: to.getMinutes(),
-      toHour: to.getHours(),
-    });
+  handleChangeTime(timeName) {
+    return time => this.setState({ [timeName]: time });
   }
 
   render() {
-    const { classes, handleRemove } = this.props;
+    const { classes, handleRemove, handleAdd } = this.props;
 
     return (
       <div className={classes.root}>
@@ -72,15 +61,13 @@ class TimeslotCreator extends Component {
           <div className={classes.pickers}>
             <TimePicker
               label="От"
-              hour={this.state.fromHour}
-              minute={this.state.fromMinute}
-              handleChange={this.handleChangeFrom}
+              defaultTime={this.state.fromTime}
+              handleChange={this.handleChangeTime('fromTime')}
             />
             <TimePicker
               label="До"
-              hour={this.state.toHour}
-              minute={this.state.toMinute}
-              handleChange={this.handleChangeTo}
+              defaultTime={this.state.toTime}
+              handleChange={this.handleChangeTime('toTime')}
             />
             <TextField
               label="Ден"
@@ -96,11 +83,7 @@ class TimeslotCreator extends Component {
               ))}
             </TextField>
           </div>
-          <Button
-            variant="raised"
-            color="primary"
-            onClick={this.props.handleAdd(this.getTimeslot())}
-          >
+          <Button variant="raised" color="primary" onClick={handleAdd(this.getTimeslot())}>
             Добави
           </Button>
         </div>

@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
-import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { TimePicker } from 'material-ui-pickers';
+import { Button, Dialog, DialogActions, TextField } from 'material-ui';
+import { TimePicker } from 'material-ui-time-picker';
 import { withStyles } from 'material-ui/styles';
 
 const styles = () => ({
-  timePicker: {
+  textField: {
     maxWidth: '5em',
   },
 });
@@ -15,46 +14,82 @@ class Picker extends Component {
   constructor(props) {
     super(props);
 
-    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      open: false,
+      time: new Date(2000, 0, 0, 0, 0),
+    };
+
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleOkButton = this.handleOkButton.bind(this);
+    this.handleCancelButton = this.handleCancelButton.bind(this);
+    this.handleField = this.handleField.bind(this);
   }
 
-  handleChange(val) {
+  parseTime() {
+    const hours = this.state.time.getHours();
+    const minutes = this.state.time.getMinutes();
+    const parsedHours = hours < 10 ? `0${hours}` : hours;
+    const parsedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return `${parsedHours}:${parsedMinutes}`;
+  }
+
+  handleDateChange(val) {
     if (val === null) {
-      return this.props.handleChange(new Date(2000, 0, 0, 0, 0));
+      this.setState({ time: new Date(2000, 0, 0, 0, 0) });
+    } else {
+      this.setState({ time: val });
     }
-    return this.props.handleChange(val);
+  }
+
+  handleOkButton() {
+    this.setState({ open: false });
+    this.props.handleChange(this.state.time);
+  }
+
+  handleCancelButton() {
+    this.setState({ open: false, time: new Date(2000, 0, 0, 0, 0) });
+  }
+
+  handleField() {
+    this.setState({ open: true });
   }
 
   render() {
-    const {
-      classes, label, hour, minute,
-    } = this.props;
-
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <TimePicker
-          className={classes.timePicker}
-          ampm={false}
-          label={label}
-          okLabel="Запиши"
-          cancelLabel="Отказ"
+      <Fragment>
+        <TextField
+          className={this.props.classes.textField}
+          label={this.props.label}
+          onClick={this.handleField}
+          value={this.parseTime()}
           margin="dense"
-          clearable
-          clearLabel="Зачисти"
-          value={new Date(2000, 0, 0, hour, minute)}
-          onChange={this.handleChange}
         />
-      </MuiPickersUtilsProvider>
+        <Dialog maxWidth="xs" open={this.state.open}>
+          <TimePicker
+            mode="24h"
+            defaultValue={this.props.defaultTime}
+            value={this.state.time}
+            onChange={this.handleDateChange}
+          />
+          <DialogActions>
+            <Button onClick={this.handleCancelButton} color="primary">
+              Отказ
+            </Button>
+            <Button onClick={this.handleOkButton} color="primary">
+              Запиши
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
     );
   }
 }
 
 Picker.propTypes = {
-  classes: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired,
-  hour: PropTypes.number.isRequired,
-  minute: PropTypes.number.isRequired,
   handleChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  defaultTime: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Picker);

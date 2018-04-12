@@ -16,7 +16,7 @@ class Picker extends Component {
 
     this.state = {
       open: false,
-      time: new Date(2000, 0, 0, 0, 0),
+      time: this.props.defaultTime,
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -35,7 +35,7 @@ class Picker extends Component {
 
   handleDateChange(val) {
     if (val === null) {
-      this.setState({ time: new Date(2000, 0, 0, 0, 0) });
+      this.setState({ time: this.props.defaultTime });
     } else {
       this.setState({ time: val });
     }
@@ -47,7 +47,7 @@ class Picker extends Component {
   }
 
   handleCancelButton() {
-    this.setState({ open: false, time: new Date(2000, 0, 0, 0, 0) });
+    this.setState({ open: false, time: this.props.defaultTime });
   }
 
   handleField() {
@@ -85,10 +85,14 @@ class Picker extends Component {
   }
 }
 
+Picker.defaultProps = {
+  defaultTime: new Date(2000, 0, 0, 0, 0),
+};
+
 Picker.propTypes = {
   handleChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
-  defaultTime: PropTypes.object.isRequired,
+  defaultTime: PropTypes.object,
   classes: PropTypes.object.isRequired,
 };
 

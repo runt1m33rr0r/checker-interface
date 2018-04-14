@@ -19,8 +19,8 @@ class SnackbarComponent extends Component {
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
   }
 
-  handleSnackbarClose(reason) {
-    return () => (reason === 'clickaway' ? null : this.props.handleClose());
+  handleSnackbarClose(event, reason) {
+    return reason === 'clickaway' ? null : this.props.handleClose();
   }
 
   render() {

@@ -16,13 +16,11 @@ class TabView extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(value) {
-    return () => {
-      this.setState({ idx: value });
-      if (typeof this.props.onChange === 'function') {
-        this.props.onChange(value, this.props.tabNames[value]);
-      }
-    };
+  handleChange(event, idx) {
+    this.setState({ idx });
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(idx, this.props.tabNames[idx]);
+    }
   }
 
   render() {

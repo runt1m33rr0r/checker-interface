@@ -8,8 +8,8 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
-import MenuIcon from 'material-ui-icons/Menu';
-import Lamp from 'material-ui-icons/LightbulbOutline';
+import MenuIcon from '@material-ui/icons/Menu';
+import Lamp from '@material-ui/icons/LightbulbOutline';
 
 import ControlsList from '../ControlsList';
 import Loading from '../common/Loading';

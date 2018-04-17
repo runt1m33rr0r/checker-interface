@@ -4,8 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import MobileStepper from 'material-ui/MobileStepper';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import SchoolTypeChooser from '../SchoolType';
 import SubjectsCreator from '../SubjectsCreator';

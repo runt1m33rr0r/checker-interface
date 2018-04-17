@@ -37,13 +37,13 @@ const Controls = ({
               </ListItem>
             </Link>
           )}
-          {roles.includes('Teacher') && (
+          {/* {roles.includes('Teacher') && (
             <Link className={classes.link} to="/generator">
               <ListItem button>
                 <ListItemText primary="Генератор на програма" />
               </ListItem>
             </Link>
-          )}
+          )} */}
           {roles.includes('Teacher') && (
             <Link className={classes.link} to="/creator">
               <ListItem button>

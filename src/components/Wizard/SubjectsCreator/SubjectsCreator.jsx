@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui-icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 

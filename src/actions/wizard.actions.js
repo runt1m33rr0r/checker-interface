@@ -152,6 +152,11 @@ const processSubjects = (groups) => {
   return doneSubjects;
 };
 
+export const addGroup = groupName => ({
+  type: actions.ADD_GROUP,
+  groupName,
+});
+
 export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
   const doneTimeslots = processTimeslots(timeslots);
   const doneGroups = processGroups(groups);

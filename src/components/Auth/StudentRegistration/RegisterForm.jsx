@@ -4,7 +4,6 @@ import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-
 import List, {
   ListItem,
   ListItemText,
@@ -13,7 +12,9 @@ import List, {
 } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import { MenuItem } from 'material-ui/Menu';
-import { FormControlLabel } from 'material-ui/Form';
+import { FormControlLabel, FormControl } from 'material-ui/Form';
+import Select from 'material-ui/Select';
+import Input, { InputLabel } from 'material-ui/Input';
 
 import styles from '../styles';
 
@@ -24,17 +25,19 @@ class RegisterForm extends Component {
     this.state = {
       username: '',
       password: '',
+      passwordRepeat: '',
       firstName: '',
       lastName: '',
       subjects: [],
-      group: '',
-      userType: 'Student',
-      isLeadTeacher: false,
+      // group: '',
+      groups: [],
+      // userType: 'Student',
+      // isLeadTeacher: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleCheckChange = this.handleCheckChange.bind(this);
-    this.handleSubjectsChange = this.handleSubjectsChange.bind(this);
+    // this.handleSubjectsChange = this.handleSubjectsChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -49,19 +52,19 @@ class RegisterForm extends Component {
     return event => this.setState({ [name]: event.target.checked });
   }
 
-  handleSubjectsChange(subject) {
-    return () => {
-      if (this.state.subjects.includes(subject)) {
-        return this.setState(prevState => ({
-          subjects: prevState.subjects.filter(el => el !== subject),
-        }));
-      }
+  // handleSubjectsChange(subject) {
+  //   return () => {
+  //     if (this.state.subjects.includes(subject)) {
+  //       return this.setState(prevState => ({
+  //         subjects: prevState.subjects.filter(el => el !== subject),
+  //       }));
+  //     }
 
-      return this.setState(prevState => ({
-        subjects: [...prevState.subjects, subject],
-      }));
-    };
-  }
+  //     return this.setState(prevState => ({
+  //       subjects: [...prevState.subjects, subject],
+  //     }));
+  //   };
+  // }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -71,9 +74,10 @@ class RegisterForm extends Component {
       lastName: this.state.lastName,
       username: this.state.username,
       password: this.state.password,
-      subjects: this.state.subjects,
-      group: this.state.group,
-      isLeadTeacher: this.state.isLeadTeacher,
+      groups: this.state.groups,
+      // subjects: this.state.subjects,
+      // group: this.state.group,
+      // isLeadTeacher: this.state.isLeadTeacher,
     });
   }
 
@@ -120,6 +124,15 @@ class RegisterForm extends Component {
           />
           <TextField
             required
+            label="Потвърди парола"
+            className={this.props.classes.textField}
+            type="password"
+            error={this.state.password !== this.state.passwordRepeat}
+            value={this.state.passwordRepeat}
+            onChange={this.handleChange('passwordRepeat')}
+          />
+          {/* <TextField
+            required
             label="Вид потребител"
             select
             value={this.state.userType}
@@ -128,8 +141,8 @@ class RegisterForm extends Component {
           >
             <MenuItem value="Student">Ученик</MenuItem>
             <MenuItem value="Teacher">Учител</MenuItem>
-          </TextField>
-          {(this.state.userType === 'Student' ||
+          </TextField> */}
+          {/* {(this.state.userType === 'Student' ||
             (this.state.userType === 'Teacher' && this.state.isLeadTeacher)) && (
             <TextField
               required
@@ -145,8 +158,8 @@ class RegisterForm extends Component {
                 </MenuItem>
               ))}
             </TextField>
-          )}
-          {this.state.userType === 'Teacher' && (
+          )} */}
+          {/* {this.state.userType === 'Teacher' && (
             <div>
               <FormControlLabel
                 control={
@@ -175,7 +188,26 @@ class RegisterForm extends Component {
                 ))}
               </List>
             </div>
-          )}
+          )} */}
+
+          <FormControl className={this.props.classes.textField}>
+            <InputLabel htmlFor="groups-select">Групи</InputLabel>
+            <Select
+              multiple
+              value={this.state.groups}
+              onChange={this.handleChange('groups')}
+              input={<Input id="groups-select" />}
+              renderValue={selected => selected.join(', ')}
+            >
+              {this.props.groups.map(groupName => (
+                <MenuItem key={groupName} value={groupName}>
+                  <Checkbox checked={this.state.groups.includes(groupName)} />
+                  <ListItemText primary={groupName} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <Button
             variant="raised"
             color="primary"
@@ -202,7 +234,7 @@ RegisterForm.propTypes = {
   classes: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isRegistered: PropTypes.bool.isRequired,
-  subjects: PropTypes.array.isRequired,
+  // subjects: PropTypes.array.isRequired,
   groups: PropTypes.array.isRequired,
 };
 

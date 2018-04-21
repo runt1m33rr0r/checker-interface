@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Login from './Auth/Login';
 import Home from './Home';
 import Wizard from './Wizard';
-import Register from './Auth/Register';
+import Register from './Auth/StudentRegistration';
 import PrivateRoute from './common/PrivateRoute';
 import Generator from './Timetable/Generator';
 import Checker from './User/Checker';

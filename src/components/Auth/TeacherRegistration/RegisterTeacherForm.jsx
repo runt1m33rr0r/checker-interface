@@ -113,22 +113,6 @@ class RegisterForm extends Component {
             value={this.state.passwordRepeat}
             onChange={this.handleChange('passwordRepeat')}
           />
-          {this.state.isLeadTeacher && (
-            <TextField
-              required
-              label="Група"
-              select
-              value={this.state.group}
-              className={this.props.classes.textField}
-              onChange={this.handleChange('group')}
-            >
-              {this.props.groups.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
           <FormControl className={this.props.classes.textField}>
             <InputLabel htmlFor="subjects-select">Преподавани предмети</InputLabel>
             <Select
@@ -146,6 +130,22 @@ class RegisterForm extends Component {
               ))}
             </Select>
           </FormControl>
+          {this.state.isLeadTeacher && (
+            <TextField
+              required
+              label="Група"
+              select
+              value={this.state.group}
+              className={this.props.classes.textField}
+              onChange={this.handleChange('group')}
+            >
+              {this.props.groups.map(option => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
           <FormControlLabel
             control={
               <Checkbox
@@ -165,7 +165,7 @@ class RegisterForm extends Component {
               this.state.lastName.length < 3 ||
               (this.state.isLeadTeacher && this.state.group === '') ||
               this.state.subjects.length < 1 ||
-              this.state.passowrd !== this.state.passwordRepeat
+              this.state.password !== this.state.passwordRepeat
             }
             onClick={this.handleSubmit}
           >

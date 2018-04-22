@@ -2,46 +2,49 @@ import { makeRequest } from '../api';
 import * as types from '../constants/system.types';
 import ENDPOINT from '../constants/api.constants';
 
-export const checkSetup = () => (dispatch) => {
+export const checkSetup = () => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/settings/setup`,
     method: 'get',
     token,
     dispatch,
-  }).then(data => dispatch({ type: types.CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished }));
+  });
+  dispatch({ type: types.CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished });
 };
 
-export const resetSetup = () => (dispatch) => {
+export const resetSetup = () => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  await makeRequest({
     url: `${ENDPOINT}/api/settings/setup`,
     method: 'post',
     data: { setupFinished: false },
     token,
     dispatch,
-  }).then(() => dispatch({ type: types.RESET_SETUP_SUCCESS }));
+  });
+  dispatch({ type: types.RESET_SETUP_SUCCESS });
 };
 
-export const fetchFreeSubjects = () => (dispatch) => {
+export const fetchFreeSubjects = () => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/subjects?free=true`,
     method: 'get',
     token,
     dispatch,
-  }).then(data =>
-    dispatch({ type: types.FETCH_FREE_SUBJECTS_SUCCESS, freeSubjects: data.subjectCodes }));
+  });
+  dispatch({ type: types.FETCH_FREE_SUBJECTS_SUCCESS, freeSubjects: data.subjectCodes });
 };
 
-const fetchCount = (successAction, collectionName) => (dispatch) => {
+const fetchCount = (successAction, collectionName) => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/${collectionName}?count=true`,
     method: 'get',
     token,
     dispatch,
-  }).then(data => dispatch({ type: successAction, count: data.count }));
+  });
+  dispatch({ type: successAction, count: data.count });
 };
 
 export const fetchTeachersCount = () => (dispatch) => {

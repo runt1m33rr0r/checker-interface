@@ -10,21 +10,25 @@ const receiveLogin = user => ({
   roles: user.roles,
 });
 
-export const loginUser = ({ username, password }) => (dispatch) => {
+export const loginUser = ({ username, password }) => async (dispatch) => {
   dispatch({ type: types.LOGIN_REQUEST });
-  makeRequest({
-    url: `${ENDPOINT}/users/login`,
-    method: 'post',
-    data: { username, password },
-    dispatch,
-  })
-    .then((data) => {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', data.username);
-      localStorage.setItem('roles', JSON.stringify(data.roles));
-      dispatch(receiveLogin(data));
-    })
-    .catch(err => dispatch({ type: types.LOGIN_FAILURE, message: err.message }));
+
+  try {
+    const data = await makeRequest({
+      url: `${ENDPOINT}/users/login`,
+      method: 'post',
+      data: { username, password },
+      dispatch,
+    });
+
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('username', data.username);
+    localStorage.setItem('roles', JSON.stringify(data.roles));
+
+    dispatch(receiveLogin(data));
+  } catch (error) {
+    dispatch({ type: types.LOGIN_FAILURE, message: error.message });
+  }
 };
 
 export const registerStudent = ({
@@ -33,26 +37,28 @@ export const registerStudent = ({
   firstName,
   lastName,
   groups,
-}) => (dispatch) => {
+}) => async (dispatch) => {
   dispatch({ type: types.REGISTER_STUDENT_REQUEST });
-  makeRequest({
-    url: `${ENDPOINT}/users/register`,
-    method: 'post',
-    data: {
-      username,
-      password,
-      firstName,
-      lastName,
-      groups,
-      userType: 'Student',
-    },
-    dispatch,
-  })
-    .then(() => {
-      localStorage.setItem('registered', true);
-      dispatch({ type: types.REGISTER_STUDENT_SUCCESS });
-    })
-    .catch(() => dispatch({ type: types.REGISTER_STUDENT_FAILURE }));
+  try {
+    await makeRequest({
+      url: `${ENDPOINT}/users/register`,
+      method: 'post',
+      data: {
+        username,
+        password,
+        firstName,
+        lastName,
+        groups,
+        userType: 'Student',
+      },
+      dispatch,
+    });
+
+    localStorage.setItem('registered', true);
+    dispatch({ type: types.REGISTER_STUDENT_SUCCESS });
+  } catch (error) {
+    dispatch({ type: types.REGISTER_STUDENT_FAILURE });
+  }
 };
 
 export const registerTeacher = ({
@@ -63,28 +69,30 @@ export const registerTeacher = ({
   group,
   subjects,
   isLeadTeacher,
-}) => (dispatch) => {
+}) => async (dispatch) => {
   dispatch({ type: types.REGISTER_TEACHER_REQUEST });
-  makeRequest({
-    url: `${ENDPOINT}/users/register`,
-    method: 'post',
-    data: {
-      username,
-      password,
-      firstName,
-      lastName,
-      group,
-      subjects,
-      leadTeacher: isLeadTeacher,
-      userType: 'Teacher',
-    },
-    dispatch,
-  })
-    .then(() => {
-      localStorage.setItem('registered', true);
-      dispatch({ type: types.REGISTER_TEACHER_SUCCESS });
-    })
-    .catch(() => dispatch({ type: types.REGISTER_TEACHER_FAILURE }));
+  try {
+    await makeRequest({
+      url: `${ENDPOINT}/users/register`,
+      method: 'post',
+      data: {
+        username,
+        password,
+        firstName,
+        lastName,
+        group,
+        subjects,
+        leadTeacher: isLeadTeacher,
+        userType: 'Teacher',
+      },
+      dispatch,
+    });
+
+    localStorage.setItem('registered', true);
+    dispatch({ type: types.REGISTER_TEACHER_SUCCESS });
+  } catch (error) {
+    dispatch({ type: types.REGISTER_TEACHER_FAILURE });
+  }
 };
 
 export const logoutUser = () => (dispatch) => {
@@ -106,12 +114,13 @@ export const checkAuth = () => (dispatch) => {
   }
 };
 
-export const fetchProfile = () => (dispatch) => {
+export const fetchProfile = () => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/profile`,
     method: 'get',
     dispatch,
     token,
-  }).then(data => dispatch({ type: types.FETCH_PROFILE_SUCCESS, profile: data.profile }));
+  });
+  dispatch({ type: types.FETCH_PROFILE_SUCCESS, profile: data.profile });
 };

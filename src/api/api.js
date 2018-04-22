@@ -3,27 +3,30 @@ import axios from 'axios';
 import { NETWORK_START, NETWORK_SUCCESS, NETWORK_FAILURE } from '../constants/network.types';
 
 /* eslint import/prefer-default-export: 0 */
-export const makeRequest = ({
+export const makeRequest = async ({
   url, method, dispatch, token, data,
 }) => {
   const headers = { Authorization: `Bearer ${token}` };
   dispatch({ type: NETWORK_START });
-  return axios({
-    method,
-    url,
-    data,
-    headers,
-  })
-    .catch((err) => {
-      dispatch({ type: NETWORK_FAILURE, message: err.message });
-    })
-    .then((response) => {
-      if (response.data.success === true) {
-        dispatch({ type: NETWORK_SUCCESS });
-        return Promise.resolve(response.data);
-      } else {
-        dispatch({ type: NETWORK_FAILURE, message: response.data.message });
-        return Promise.reject(response.data);
-      }
+
+  let res = {};
+  try {
+    res = await axios({
+      method,
+      url,
+      data,
+      headers,
     });
+  } catch (error) {
+    dispatch({ type: NETWORK_FAILURE, message: error.message });
+    return;
+  }
+
+  if (res.data.success === true) {
+    dispatch({ type: NETWORK_SUCCESS });
+    return res.data;
+  } else {
+    dispatch({ type: NETWORK_FAILURE, message: res.data.message });
+    return res.data;
+  }
 };

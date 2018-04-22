@@ -23,77 +23,84 @@ const sortLessons = (lessons) => {
   return lessons;
 };
 
-export const fetchSubjects = () => (dispatch) => {
-  makeRequest({
+export const fetchSubjects = () => async (dispatch) => {
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/subjects`,
     method: 'get',
     dispatch,
-  }).then(data =>
-    dispatch({ type: types.FETCH_SUBJECTS_SUCCESS, subjectCodes: data.subjectCodes }));
+  });
+  dispatch({ type: types.FETCH_SUBJECTS_SUCCESS, subjectCodes: data.subjectCodes });
 };
 
-export const fetchGroups = () => (dispatch) => {
-  makeRequest({
+export const fetchGroups = () => async (dispatch) => {
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/groups`,
     method: 'get',
     dispatch,
-  }).then(data => dispatch({ type: types.FETCH_GROUPS_SUCCESS, groupNames: data.groupNames }));
+  });
+  dispatch({ type: types.FETCH_GROUPS_SUCCESS, groupNames: data.groupNames });
 };
 
-const fetchLessons = (groupName = null) => (dispatch) => {
+const fetchLessons = (groupName = null) => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  const data = await makeRequest({
     url: groupName
       ? `${ENDPOINT}/api/lessons?group=${groupName}`
       : `${ENDPOINT}/api/lessons?mine=true`,
     method: 'get',
     token,
     dispatch,
-  }).then(data =>
-    dispatch({ type: types.FETCH_LESSONS_SUCCESS, lessons: sortLessons(data.lessons) }));
+  });
+  dispatch({ type: types.FETCH_LESSONS_SUCCESS, lessons: sortLessons(data.lessons) });
 };
 
 export const fetchGroupLessons = groupName => dispatch => dispatch(fetchLessons(groupName));
 
 export const fetchUserLessons = () => dispatch => dispatch(fetchLessons());
 
-export const fetchTimeslots = () => (dispatch) => {
+export const fetchTimeslots = () => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/timeslots`,
     method: 'get',
     dispatch,
     token,
-  }).then(data => dispatch({ type: types.FETCH_TIMESLOTS_SUCCESS, timeslots: data.timeslots }));
+  });
+  dispatch({ type: types.FETCH_TIMESLOTS_SUCCESS, timeslots: data.timeslots });
 };
 
-export const fetchTeachers = () => (dispatch) => {
+export const fetchTeachers = () => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  const data = await makeRequest({
     url: `${ENDPOINT}/api/teachers`,
     method: 'get',
     dispatch,
     token,
-  }).then(data => dispatch({ type: types.FETCH_TEACHERS_SUCCESS, teachers: data.usernames }));
+  });
+  dispatch({ type: types.FETCH_TEACHERS_SUCCESS, teachers: data.usernames });
 };
 
-export const generateTimetable = groupLessonsToRefresh => (dispatch) => {
+export const generateTimetable = groupLessonsToRefresh => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  await makeRequest({
     url: `${ENDPOINT}/api/school/settings/timetable/generate`,
     method: 'post',
     token,
     data: {},
     dispatch,
-  }).then(() => {
-    dispatch({ type: types.GENERATE_TIMETABLE_SUCCESS });
-    dispatch(fetchLessons(groupLessonsToRefresh));
   });
+  dispatch({ type: types.GENERATE_TIMETABLE_SUCCESS });
+  dispatch(fetchLessons(groupLessonsToRefresh));
 };
 
-export const createLesson = (groupName, subjectCode, teacherUsername, timeslotID) => (dispatch) => {
+export const createLesson = (
+  groupName,
+  subjectCode,
+  teacherUsername,
+  timeslotID,
+) => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  await makeRequest({
     url: `${ENDPOINT}/api/lessons`,
     method: 'post',
     dispatch,
@@ -104,22 +111,20 @@ export const createLesson = (groupName, subjectCode, teacherUsername, timeslotID
       teacherUsername,
       timeslotID,
     },
-  }).then(() => {
-    dispatch({ type: types.CREATE_LESSON_SUCCESS });
-    dispatch(fetchLessons(groupName));
   });
+  dispatch({ type: types.CREATE_LESSON_SUCCESS });
+  dispatch(fetchLessons(groupName));
 };
 
-export const deleteLesson = lesson => (dispatch) => {
+export const deleteLesson = lesson => async (dispatch) => {
   const token = localStorage.getItem('token');
-  makeRequest({
+  await makeRequest({
     url: `${ENDPOINT}/api/lessons`,
     method: 'delete',
     dispatch,
     token,
     data: { lesson },
-  }).then(() => {
-    dispatch({ type: types.DELETE_LESSON_SUCCESS });
-    dispatch(fetchLessons(lesson.groupName));
   });
+  dispatch({ type: types.DELETE_LESSON_SUCCESS });
+  dispatch(fetchLessons(lesson.groupName));
 };

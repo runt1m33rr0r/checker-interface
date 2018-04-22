@@ -1,13 +1,4 @@
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT_SUCCESS,
-  REGISTER_REQUEST,
-  REGISTER_FAILURE,
-  REGISTER_SUCCESS,
-  FETCH_PROFILE_SUCCESS,
-} from '../constants/action.types';
+import * as types from '../constants/auth.types';
 
 const auth = (
   state = {
@@ -20,31 +11,31 @@ const auth = (
   action,
 ) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case types.LOGIN_REQUEST:
       return { ...state, isAuthenticated: false };
-    case LOGIN_SUCCESS:
+    case types.LOGIN_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
         username: action.username,
         roles: action.roles,
       };
-    case LOGIN_FAILURE:
+    case types.LOGIN_FAILURE:
       return { ...state, isAuthenticated: false };
-    case LOGOUT_SUCCESS:
+    case types.LOGOUT_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
         username: action.username,
         roles: action.roles,
       };
-    case REGISTER_REQUEST:
+    case types.REGISTER_STUDENT_REQUEST:
       return { ...state, isRegistered: false };
-    case REGISTER_SUCCESS:
+    case types.REGISTER_STUDENT_SUCCESS:
       return { ...state, isRegistered: true };
-    case REGISTER_FAILURE:
+    case types.REGISTER_STUDENT_FAILURE:
       return { ...state, isRegistered: false };
-    case FETCH_PROFILE_SUCCESS:
+    case types.FETCH_PROFILE_SUCCESS:
       return { ...state, profile: action.profile };
     default:
       return state;

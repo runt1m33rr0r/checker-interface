@@ -1,5 +1,5 @@
 import { makeRequest } from '../api';
-import * as actions from '../constants/action.types';
+import * as types from '../constants/system.types';
 import ENDPOINT from '../constants/api.constants';
 
 export const checkSetup = () => (dispatch) => {
@@ -9,8 +9,7 @@ export const checkSetup = () => (dispatch) => {
     method: 'get',
     token,
     dispatch,
-  }).then(data =>
-    dispatch({ type: actions.CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished }));
+  }).then(data => dispatch({ type: types.CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished }));
 };
 
 export const resetSetup = () => (dispatch) => {
@@ -21,7 +20,7 @@ export const resetSetup = () => (dispatch) => {
     data: { setupFinished: false },
     token,
     dispatch,
-  }).then(() => dispatch({ type: actions.RESET_SETUP_SUCCESS }));
+  }).then(() => dispatch({ type: types.RESET_SETUP_SUCCESS }));
 };
 
 export const fetchFreeSubjects = () => (dispatch) => {
@@ -32,7 +31,7 @@ export const fetchFreeSubjects = () => (dispatch) => {
     token,
     dispatch,
   }).then(data =>
-    dispatch({ type: actions.FETCH_FREE_SUBJECTS_SUCCESS, freeSubjects: data.subjectCodes }));
+    dispatch({ type: types.FETCH_FREE_SUBJECTS_SUCCESS, freeSubjects: data.subjectCodes }));
 };
 
 const fetchCount = (successAction, collectionName) => (dispatch) => {
@@ -46,17 +45,17 @@ const fetchCount = (successAction, collectionName) => (dispatch) => {
 };
 
 export const fetchTeachersCount = () => (dispatch) => {
-  dispatch(fetchCount(actions.FETCH_TEACHERS_COUNT_SUCCESS, 'teachers'));
+  dispatch(fetchCount(types.FETCH_TEACHERS_COUNT_SUCCESS, 'teachers'));
 };
 
 export const fetchStudentsCount = () => (dispatch) => {
-  dispatch(fetchCount(actions.FETCH_STUDENTS_COUNT_SUCCESS, 'students'));
+  dispatch(fetchCount(types.FETCH_STUDENTS_COUNT_SUCCESS, 'students'));
 };
 
 export const fetchGroupsCount = () => (dispatch) => {
-  dispatch(fetchCount(actions.FETCH_GROUPS_COUNT_SUCCESS, 'groups'));
+  dispatch(fetchCount(types.FETCH_GROUPS_COUNT_SUCCESS, 'groups'));
 };
 
 export const fetchSubjectsCount = () => (dispatch) => {
-  dispatch(fetchCount(actions.FETCH_SUBJECTS_COUNT_SUCCESS, 'subjects'));
+  dispatch(fetchCount(types.FETCH_SUBJECTS_COUNT_SUCCESS, 'subjects'));
 };

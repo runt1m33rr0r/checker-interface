@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import RegisterForm from './RegisterForm';
-import { registerUser } from '../../../actions/auth.actions';
+import RegisterForm from './RegisterStudentForm';
+import { registerStudent } from '../../../actions/auth.actions';
 import { fetchSubjects, fetchGroups } from '../../../actions/timetable.actions';
 import titled from '../../common/TitledComponent';
 
@@ -25,7 +25,7 @@ RegisterContainer.propTypes = {
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ handleSubmit: registerUser, fetchSubjects, fetchGroups }, dispatch);
+  bindActionCreators({ handleSubmit: registerStudent, fetchSubjects, fetchGroups }, dispatch);
 
 const mapStateToProps = ({ auth, timetable }) => ({
   isRegistered: auth.isRegistered,

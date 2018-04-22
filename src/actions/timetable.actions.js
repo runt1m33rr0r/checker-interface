@@ -1,5 +1,5 @@
 import { makeRequest } from '../api';
-import * as actions from '../constants/action.types';
+import * as types from '../constants/timetable.types';
 import ENDPOINT from '../constants/api.constants';
 
 const sortLessons = (lessons) => {
@@ -29,7 +29,7 @@ export const fetchSubjects = () => (dispatch) => {
     method: 'get',
     dispatch,
   }).then(data =>
-    dispatch({ type: actions.FETCH_SUBJECTS_SUCCESS, subjectCodes: data.subjectCodes }));
+    dispatch({ type: types.FETCH_SUBJECTS_SUCCESS, subjectCodes: data.subjectCodes }));
 };
 
 export const fetchGroups = () => (dispatch) => {
@@ -37,7 +37,7 @@ export const fetchGroups = () => (dispatch) => {
     url: `${ENDPOINT}/api/groups`,
     method: 'get',
     dispatch,
-  }).then(data => dispatch({ type: actions.FETCH_GROUPS_SUCCESS, groupNames: data.groupNames }));
+  }).then(data => dispatch({ type: types.FETCH_GROUPS_SUCCESS, groupNames: data.groupNames }));
 };
 
 const fetchLessons = (groupName = null) => (dispatch) => {
@@ -50,7 +50,7 @@ const fetchLessons = (groupName = null) => (dispatch) => {
     token,
     dispatch,
   }).then(data =>
-    dispatch({ type: actions.FETCH_LESSONS_SUCCESS, lessons: sortLessons(data.lessons) }));
+    dispatch({ type: types.FETCH_LESSONS_SUCCESS, lessons: sortLessons(data.lessons) }));
 };
 
 export const fetchGroupLessons = groupName => dispatch => dispatch(fetchLessons(groupName));
@@ -64,7 +64,7 @@ export const fetchTimeslots = () => (dispatch) => {
     method: 'get',
     dispatch,
     token,
-  }).then(data => dispatch({ type: actions.FETCH_TIMESLOTS_SUCCESS, timeslots: data.timeslots }));
+  }).then(data => dispatch({ type: types.FETCH_TIMESLOTS_SUCCESS, timeslots: data.timeslots }));
 };
 
 export const fetchTeachers = () => (dispatch) => {
@@ -74,7 +74,7 @@ export const fetchTeachers = () => (dispatch) => {
     method: 'get',
     dispatch,
     token,
-  }).then(data => dispatch({ type: actions.FETCH_TEACHERS_SUCCESS, teachers: data.usernames }));
+  }).then(data => dispatch({ type: types.FETCH_TEACHERS_SUCCESS, teachers: data.usernames }));
 };
 
 export const generateTimetable = groupLessonsToRefresh => (dispatch) => {
@@ -86,7 +86,7 @@ export const generateTimetable = groupLessonsToRefresh => (dispatch) => {
     data: {},
     dispatch,
   }).then(() => {
-    dispatch({ type: actions.GENERATE_TIMETABLE_SUCCESS });
+    dispatch({ type: types.GENERATE_TIMETABLE_SUCCESS });
     dispatch(fetchLessons(groupLessonsToRefresh));
   });
 };
@@ -105,7 +105,7 @@ export const createLesson = (groupName, subjectCode, teacherUsername, timeslotID
       timeslotID,
     },
   }).then(() => {
-    dispatch({ type: actions.CREATE_LESSON_SUCCESS });
+    dispatch({ type: types.CREATE_LESSON_SUCCESS });
     dispatch(fetchLessons(groupName));
   });
 };
@@ -119,7 +119,7 @@ export const deleteLesson = lesson => (dispatch) => {
     token,
     data: { lesson },
   }).then(() => {
-    dispatch({ type: actions.DELETE_LESSON_SUCCESS });
+    dispatch({ type: types.DELETE_LESSON_SUCCESS });
     dispatch(fetchLessons(lesson.groupName));
   });
 };

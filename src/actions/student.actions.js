@@ -1,4 +1,4 @@
-import { SEND_IMAGE_SUCCESS } from '../constants/action.types';
+import { SEND_IMAGE_SUCCESS } from '../constants/student.types';
 import ENDPOINT from '../constants/api.constants';
 import { makeRequest } from '../api';
 

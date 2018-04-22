@@ -1,3 +1,3 @@
-import Register from './RegisterContainer';
+import Register from './RegisterStudentContainer';
 
 export default Register;

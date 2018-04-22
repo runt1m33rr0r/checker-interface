@@ -1,39 +1,40 @@
 import { makeRequest } from '../api';
-import * as actions from '../constants/action.types';
+import * as types from '../constants/wizard.types';
+import { CHECK_SETUP_SUCCESS } from '../constants/system.types';
 import ENDPOINT from '../constants/api.constants';
 
 export const setSchoolType = type => ({
-  type: actions.SET_SCHOOL_TYPE,
+  type: types.SET_SCHOOL_TYPE,
   schoolType: type,
 });
 
 export const setGroupsCount = count => ({
-  type: actions.SET_GROUPS_COUNT,
+  type: types.SET_GROUPS_COUNT,
   count,
 });
 
 export const addSubject = subjectName => ({
-  type: actions.ADD_SUBJECT,
+  type: types.ADD_SUBJECT,
   subjectName,
 });
 
 export const removeSubject = subjectName => ({
-  type: actions.REMOVE_SUBJECT,
+  type: types.REMOVE_SUBJECT,
   subjectName,
 });
 
 export const addTimeslot = timeslot => ({
-  type: actions.ADD_TIMESLOT,
+  type: types.ADD_TIMESLOT,
   timeslot,
 });
 
 export const removeTimeslot = timeslot => ({
-  type: actions.REMOVE_TIMESLOT,
+  type: types.REMOVE_TIMESLOT,
   timeslot,
 });
 
 export const generateGroups = (schoolType, groupsCount) => (dispatch) => {
-  dispatch({ type: actions.GENERATE_GROUPS_STARTED });
+  dispatch({ type: types.GENERATE_GROUPS_STARTED });
 
   const groups = {};
   const groupNames = [];
@@ -50,20 +51,20 @@ export const generateGroups = (schoolType, groupsCount) => (dispatch) => {
   }
 
   dispatch({
-    type: actions.GENERATE_GROUPS_FINISHED,
+    type: types.GENERATE_GROUPS_FINISHED,
     groups,
     groupNames,
   });
 };
 
 export const addSubjectToGroup = (groupName, subjectName) => ({
-  type: actions.ADD_SUBJECT_TO_GROUP,
+  type: types.ADD_SUBJECT_TO_GROUP,
   groupName,
   subjectName,
 });
 
 export const removeSubjectFromGroup = (groupName, subjectName) => ({
-  type: actions.REMOVE_SUBJECT_FROM_GROUP,
+  type: types.REMOVE_SUBJECT_FROM_GROUP,
   groupName,
   subjectName,
 });
@@ -153,7 +154,7 @@ const processSubjects = (groups) => {
 };
 
 export const addGroup = groupName => ({
-  type: actions.ADD_GROUP,
+  type: types.ADD_GROUP,
   groupName,
 });
 
@@ -174,8 +175,5 @@ export const finishWizard = (timeslots, subjects, groups) => (dispatch) => {
       subjects: doneSubjects,
     },
     dispatch,
-  }).then(() => {
-    dispatch({ type: actions.FINISH_WIZARD_SUCCESS });
-    dispatch({ type: actions.CHECK_SETUP_SUCCESS, setupFinished: true });
-  });
+  }).then(() => dispatch({ type: CHECK_SETUP_SUCCESS, setupFinished: true }));
 };

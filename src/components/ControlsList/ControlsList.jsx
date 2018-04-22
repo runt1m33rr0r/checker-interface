@@ -37,6 +37,13 @@ const Controls = ({
               </ListItem>
             </Link>
           )}
+          {roles.includes('Admin') && (
+            <Link className={classes.link} to="/register-teacher">
+              <ListItem button>
+                <ListItemText primary="Регистрация на учител/ка" />
+              </ListItem>
+            </Link>
+          )}
           {/* {roles.includes('Teacher') && (
             <Link className={classes.link} to="/generator">
               <ListItem button>

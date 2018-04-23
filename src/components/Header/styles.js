@@ -32,9 +32,8 @@ const styles = theme => ({
     ...theme.mixins.toolbar,
   },
   drawerPaper: {
-    width: 250,
+    width: drawerWidth,
     [theme.breakpoints.up('md')]: {
-      width: drawerWidth,
       position: 'absolute',
       height: '100%',
     },
@@ -43,11 +42,10 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     width: '100%',
     padding: theme.spacing.unit * 3,
-    height: 'calc(100% - 56px)',
-    marginTop: '56px',
-    [theme.breakpoints.up('sm')]: {
+    marginTop: theme.spacing.unit * 7,
+    [theme.breakpoints.up('md')]: {
       paddingLeft: theme.spacing.unit * 33,
-      marginTop: '64px',
+      marginTop: theme.spacing.unit * 8,
     },
   },
   children: {

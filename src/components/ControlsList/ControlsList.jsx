@@ -35,6 +35,11 @@ const Controls = ({
               <ListItemText primary="Седмична програма" />
             </ListItem>
           </Link>
+          <Link className={classes.link} to="/absences">
+            <ListItem button>
+              <ListItemText primary="Отсъствия" />
+            </ListItem>
+          </Link>
           {roles.includes('Student') && (
             <Link className={classes.link} to="/check">
               <ListItem button>

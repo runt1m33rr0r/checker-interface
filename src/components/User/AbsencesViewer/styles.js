@@ -6,6 +6,8 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+    overflow: 'auto',
+    textAlign: 'center',
   },
   list: {
     maxWidth: '400px',

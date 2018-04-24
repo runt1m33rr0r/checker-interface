@@ -5,6 +5,7 @@ import ui from './ui.reducer';
 import network from './network.reducer';
 import timetable from './timetable.reducer';
 import system from './system.reducer';
+import user from './user.reducer';
 
 const rootReducer = combineReducers({
   auth,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   network,
   timetable,
   system,
+  user,
 });
 
 export default rootReducer;

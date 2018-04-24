@@ -47,6 +47,7 @@ class Checker extends Component {
     };
 
     this.handleCaptureButton = this.handleCaptureButton.bind(this);
+    this.handleSend = this.handleSend.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +92,10 @@ class Checker extends Component {
     }
   }
 
+  handleSend() {
+    this.props.handleSend(this.state.image.split(',')[1]);
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -121,7 +126,7 @@ class Checker extends Component {
               className={classes.button}
               variant="raised"
               color="primary"
-              onClick={this.props.handleSend(this.state.image.split(',')[1])}
+              onClick={this.handleSend}
             >
               {'Изпрати'}
             </Button>

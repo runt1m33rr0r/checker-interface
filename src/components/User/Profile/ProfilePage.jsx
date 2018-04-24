@@ -10,7 +10,7 @@ import Dialog, {
   withMobileDialog,
 } from 'material-ui/Dialog';
 
-// import titled from '../../common/TitledComponent';
+import titled from '../../common/TitledComponent';
 import Camera from '../../common/Camera';
 import { encodeStudent } from '../../../actions/student.actions';
 import { fetchProfile } from '../../../actions/auth.actions';
@@ -60,10 +60,8 @@ class ProfilePage extends Component {
   }
 
   handleSend(image) {
-    return () => {
-      this.handleClose();
-      this.props.handleSend(image);
-    };
+    this.handleClose();
+    this.props.handleSend(image);
   }
 
   render() {
@@ -112,5 +110,7 @@ const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(fetchProfile()),
 });
 
-/* eslint max-len: 0 */
-export default connect(mapStateToProps, mapDispatchToProps)(withMobileDialog()(withStyles(styles)(ProfilePage)));
+const styled = withStyles(styles)(ProfilePage);
+const titledComponent = titled(styled, 'Профил');
+const withDialog = withMobileDialog()(titledComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(withDialog);

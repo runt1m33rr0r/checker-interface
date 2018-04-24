@@ -17,7 +17,7 @@ export const encodeStudent = image => async (dispatch) => {
   }
 };
 
-export const checkStudent = (image, username) => async (dispatch) => {
+export const checkStudent = (username, image) => async (dispatch) => {
   const token = localStorage.getItem('token');
   const data = await makeRequest({
     url: `${ENDPOINT}/students/encode`,

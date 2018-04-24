@@ -10,6 +10,8 @@ const network = (state = { isFetching: false, message: '' }, action) => {
       return { ...state, message: action.message, isFetching: false };
     case types.RESET_MESSAGE:
       return { ...state, message: '' };
+    case types.SET_MESSAGE:
+      return { ...state, message: action.message };
     default:
       return state;
   }

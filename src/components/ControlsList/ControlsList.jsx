@@ -20,6 +20,11 @@ const Controls = ({
         </List>
         <Divider />
         <List>
+          <Link className={classes.link} to="/profile">
+            <ListItem button>
+              <ListItemText primary="Профил" />
+            </ListItem>
+          </Link>
           <Link className={classes.link} to="/wizard">
             <ListItem button>
               <ListItemText primary="Начална настройка" />

@@ -3,3 +3,4 @@ export const NETWORK_SUCCESS = 'NETWORK_SUCCESS';
 export const NETWORK_FAILURE = 'NETWORK_FAILURE';
 
 export const RESET_MESSAGE = 'RESET_MESSAGE';
+export const SET_MESSAGE = 'SET_MESSAGE';

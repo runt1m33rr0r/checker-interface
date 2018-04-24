@@ -19,7 +19,8 @@ export const makeRequest = async ({
     });
   } catch (error) {
     dispatch({ type: NETWORK_FAILURE, message: error.message });
-    return;
+    // there is no useful data from the response, so we return empty data
+    return {};
   }
 
   if (res.data.success === true) {

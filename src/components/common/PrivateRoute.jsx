@@ -17,6 +17,10 @@ class PrivateRoute extends Component {
   }
 
   inRoles(requiredRoles, actualRoles) {
+    if (requiredRoles.length < 1) {
+      return true;
+    }
+
     if (this.props.allRequired === true) {
       for (let i = 0; i < requiredRoles.length; i += 1) {
         if (actualRoles.includes(requiredRoles[i]) === false) {
@@ -24,9 +28,7 @@ class PrivateRoute extends Component {
         }
       }
       return true;
-    }
-
-    if (!this.props.allRequired) {
+    } else {
       for (let i = 0; i < requiredRoles.length; i += 1) {
         if (actualRoles.includes(requiredRoles[i]) === true) {
           return true;
@@ -65,6 +67,8 @@ class PrivateRoute extends Component {
 
 PrivateRoute.defaultProps = {
   allRequired: false,
+  requiredRoles: [],
+  actualRoles: [],
 };
 
 PrivateRoute.propTypes = {
@@ -72,9 +76,9 @@ PrivateRoute.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   authCheck: PropTypes.func.isRequired,
-  requiredRoles: PropTypes.array.isRequired,
+  requiredRoles: PropTypes.array,
   allRequired: PropTypes.bool,
-  actualRoles: PropTypes.array.isRequired,
+  actualRoles: PropTypes.array,
 };
 
 const mapStateToProps = ({ auth }) => ({

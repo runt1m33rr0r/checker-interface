@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Checker from './Checker';
-import { sendImage } from '../../../actions/student.actions';
+import { encodeStudent } from '../../../actions/student.actions';
 import { fetchProfile } from '../../../actions/auth.actions';
 import titled from '../../common/TitledComponent';
 
@@ -22,7 +22,7 @@ CheckerCotainer.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleSend: image => () => dispatch(sendImage(image)),
+  handleSend: image => () => dispatch(encodeStudent(image)),
   fetchProfile: () => dispatch(fetchProfile()),
 });
 

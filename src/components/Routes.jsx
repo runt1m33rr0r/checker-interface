@@ -13,6 +13,7 @@ import Creator from './Timetable/Creator';
 import Status from './System/Status';
 import UserTable from './Timetable/UserTable';
 import AbsencesViewer from './User/AbsencesViewer';
+import Profile from './User/Profile';
 
 const Routes = () => (
   <Switch>
@@ -24,6 +25,7 @@ const Routes = () => (
       component={TeacherRegistration}
       requiredRoles={['Admin']}
     />
+    <PrivateRoute path="/profile" component={Profile} />
     <PrivateRoute path="/wizard" component={Wizard} requiredRoles={['Teacher']} />
     <PrivateRoute path="/generator" component={Generator} requiredRoles={['Teacher']} />
     <PrivateRoute path="/check" component={Checker} requiredRoles={['Normal']} />

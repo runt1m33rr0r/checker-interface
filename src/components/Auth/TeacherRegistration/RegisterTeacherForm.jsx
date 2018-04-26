@@ -9,6 +9,7 @@ import { MenuItem } from 'material-ui/Menu';
 import { FormControl, FormControlLabel } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import Input, { InputLabel } from 'material-ui/Input';
+import { Link } from 'react-router-dom';
 
 import styles from '../styles';
 
@@ -58,8 +59,7 @@ class RegisterForm extends Component {
     };
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
     this.props.handleSubmit({
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -158,6 +158,8 @@ class RegisterForm extends Component {
           <Button
             variant="raised"
             color="primary"
+            component={Link}
+            to="/"
             disabled={
               this.state.password.length < 3 ||
               this.state.username.length < 3 ||

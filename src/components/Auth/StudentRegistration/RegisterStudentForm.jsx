@@ -10,6 +10,7 @@ import { MenuItem } from 'material-ui/Menu';
 import { FormControl } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import Input, { InputLabel } from 'material-ui/Input';
+import { Link } from 'react-router-dom';
 
 import styles from '../styles';
 
@@ -42,8 +43,7 @@ class RegisterForm extends Component {
     return event => this.setState({ [name]: event.target.checked });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
     this.props.handleSubmit({
       userType: this.state.userType,
       firstName: this.state.firstName,
@@ -65,7 +65,7 @@ class RegisterForm extends Component {
 
     return (
       <div className={this.props.classes.root}>
-        <form className={this.props.classes.form}>
+        <div className={this.props.classes.form}>
           <TextField
             required
             label="Име"
@@ -124,6 +124,8 @@ class RegisterForm extends Component {
           <Button
             variant="raised"
             color="primary"
+            component={Link}
+            to="/"
             disabled={
               this.state.password.length < 3 ||
               this.state.username.length < 3 ||
@@ -136,7 +138,7 @@ class RegisterForm extends Component {
           >
             Регистрирай
           </Button>
-        </form>
+        </div>
       </div>
     );
   }

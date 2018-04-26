@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import { Link } from 'react-router-dom';
 
 import styles from '../styles';
 
@@ -27,8 +28,7 @@ class LoginForm extends Component {
       });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
     this.props.handleSubmit({
       username: this.state.username,
       password: this.state.password,
@@ -46,7 +46,7 @@ class LoginForm extends Component {
 
     return (
       <div className={this.props.classes.root}>
-        <form className={this.props.classes.form}>
+        <div className={this.props.classes.form}>
           <TextField
             required
             id="name"
@@ -67,6 +67,8 @@ class LoginForm extends Component {
             onChange={this.handleChange('password')}
           />
           <Button
+            component={Link}
+            to="/"
             variant="raised"
             color="primary"
             disabled={this.state.password.length < 3 || this.state.username.length < 3}
@@ -74,7 +76,7 @@ class LoginForm extends Component {
           >
             Вход
           </Button>
-        </form>
+        </div>
       </div>
     );
   }

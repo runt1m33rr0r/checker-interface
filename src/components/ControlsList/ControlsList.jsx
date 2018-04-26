@@ -77,6 +77,11 @@ const Controls = ({
             <ListItemText primary="Вход" />
           </ListItem>
         </Link>
+        <Link className={classes.link} to="/info">
+          <ListItem button>
+            <ListItemText primary="Информация" />
+          </ListItem>
+        </Link>
         {!isRegistered ? (
           <Link className={classes.link} to="/register">
             <ListItem button>

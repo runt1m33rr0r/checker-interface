@@ -14,10 +14,12 @@ import Status from './System/Status';
 import UserTable from './Timetable/UserTable';
 import AbsencesViewer from './User/AbsencesViewer';
 import Profile from './User/Profile';
+import InfoPage from './InfoPage';
 
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={Home} />
+    <Route path="/info" component={InfoPage} />
     <Route path="/login" component={Login} />
     <Route path="/register" component={StudentRegistration} />
     <PrivateRoute

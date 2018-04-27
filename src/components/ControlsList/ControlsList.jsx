@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
@@ -20,16 +20,39 @@ const Controls = ({
         </List>
         <Divider />
         <List>
-          <Link className={classes.link} to="/profile">
-            <ListItem button>
-              <ListItemText primary="Профил" />
-            </ListItem>
-          </Link>
-          <Link className={classes.link} to="/wizard">
-            <ListItem button>
-              <ListItemText primary="Начална настройка" />
-            </ListItem>
-          </Link>
+          {roles.includes('Student') && (
+            <Fragment>
+              <Link className={classes.link} to="/profile">
+                <ListItem button>
+                  <ListItemText primary="Профил" />
+                </ListItem>
+              </Link>
+              <Link className={classes.link} to="/check">
+                <ListItem button>
+                  <ListItemText primary="Отбелязване на присъствие" />
+                </ListItem>
+              </Link>
+            </Fragment>
+          )}
+          {roles.includes('Admin') && (
+            <Fragment>
+              <Link className={classes.link} to="/wizard">
+                <ListItem button>
+                  <ListItemText primary="Начална настройка" />
+                </ListItem>
+              </Link>
+              <Link className={classes.link} to="/register-teacher">
+                <ListItem button>
+                  <ListItemText primary="Регистрация на учител/ка" />
+                </ListItem>
+              </Link>
+              <Link className={classes.link} to="/creator">
+                <ListItem button>
+                  <ListItemText primary="Създаване на програма" />
+                </ListItem>
+              </Link>
+            </Fragment>
+          )}
           <Link className={classes.link} to="/timetable">
             <ListItem button>
               <ListItemText primary="Седмична програма" />
@@ -40,20 +63,6 @@ const Controls = ({
               <ListItemText primary="Отсъствия" />
             </ListItem>
           </Link>
-          {roles.includes('Student') && (
-            <Link className={classes.link} to="/check">
-              <ListItem button>
-                <ListItemText primary="Отбелязване на присъствие" />
-              </ListItem>
-            </Link>
-          )}
-          {roles.includes('Admin') && (
-            <Link className={classes.link} to="/register-teacher">
-              <ListItem button>
-                <ListItemText primary="Регистрация на учител/ка" />
-              </ListItem>
-            </Link>
-          )}
           {/* {roles.includes('Teacher') && (
             <Link className={classes.link} to="/generator">
               <ListItem button>
@@ -61,13 +70,6 @@ const Controls = ({
               </ListItem>
             </Link>
           )} */}
-          {roles.includes('Teacher') && (
-            <Link className={classes.link} to="/creator">
-              <ListItem button>
-                <ListItemText primary="Създаване на програма" />
-              </ListItem>
-            </Link>
-          )}
         </List>
       </div>
     ) : (

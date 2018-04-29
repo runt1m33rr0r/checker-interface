@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 import * as types from '../constants/wizard.types';
 import { addToArray, removeFromArray, addToArrayInObj, removeFromArrayInObj } from './utils';
 
@@ -19,10 +21,11 @@ const wizard = (
     case types.SET_GROUPS_COUNT:
       return { ...state, groupsCount: action.count };
     case types.ADD_SUBJECT:
-      return {
-        ...state,
-        subjects: addToArray(state.subjects, action.subjectName),
-      };
+      return produce(state, (draft) => {
+        if (!state.subjects.includes(action.subjectName)) {
+          draft.subje.push(action.subjectName);
+        }
+      });
     case types.REMOVE_SUBJECT:
       return {
         ...state,

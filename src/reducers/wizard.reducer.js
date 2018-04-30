@@ -1,7 +1,6 @@
 import produce from 'immer';
 
 import * as types from '../constants/wizard.types';
-import { addToArray, removeFromArray, addToArrayInObj, removeFromArrayInObj } from './utils';
 
 const wizard = (
   state = {
@@ -23,29 +22,28 @@ const wizard = (
     case types.ADD_SUBJECT:
       return produce(state, (draft) => {
         if (!state.subjects.includes(action.subjectName)) {
-          draft.subje.push(action.subjectName);
+          draft.subjects.push(action.subjectName);
         }
       });
     case types.REMOVE_SUBJECT:
-      return {
-        ...state,
-        subjects: removeFromArray(state.subjects, action.subjectName),
-      };
+      return { ...state, subjects: state.subjects.filter(el => el !== action.subjectName) };
     case types.ADD_GROUP:
-      return {
-        ...state,
-        groupNames: addToArray(state.groupNames, action.groupName),
-        groups: { ...state.groups, [action.groupName]: [] },
-      };
+      return produce(state, (draft) => {
+        if (!state.groupNames.includes(action.groupName)) {
+          draft.groupNames.push(action.groupName);
+          draft.groups[action.groupName] = [];
+        }
+      });
     case types.ADD_TIMESLOT:
-      return {
-        ...state,
-        timeslots: addToArray(state.timeslots, action.timeslot),
-      };
+      return produce(state, (draft) => {
+        if (!state.timeslots.includes(action.timeslot)) {
+          draft.timeslots.push(action.timeslot);
+        }
+      });
     case types.REMOVE_TIMESLOT:
       return {
         ...state,
-        timeslots: removeFromArray(state.timeslots, action.timeslot),
+        timeslots: state.timeslots.filter(el => el !== action.timeslot),
       };
     case types.GENERATE_GROUPS_STARTED:
       return { ...state, isGenerating: true };
@@ -57,15 +55,16 @@ const wizard = (
         groupNames: action.groupNames,
       };
     case types.ADD_SUBJECT_TO_GROUP:
-      return {
-        ...state,
-        groups: addToArrayInObj(state.groups, action.groupName, action.subjectName),
-      };
+      return produce(state, (draft) => {
+        if (!state.groups[action.groupName].includes(action.subjectName)) {
+          draft.groups[action.groupName].push(action.subjectName);
+        }
+      });
     case types.REMOVE_SUBJECT_FROM_GROUP:
-      return {
-        ...state,
-        groups: removeFromArrayInObj(state.groups, action.groupName, action.subjectName),
-      };
+      return produce(state, (draft) => {
+        const filtered = state.groups[action.groupName].filter(el => el !== action.subjectName);
+        draft.groups[action.groupName] = filtered;
+      });
     default:
       return state;
   }

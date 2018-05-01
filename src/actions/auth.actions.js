@@ -1,7 +1,9 @@
 import jwtDecode from 'jwt-decode';
+
 import * as types from '../constants/auth.types';
 import { makeRequest } from '../api';
 import ENDPOINT from '../constants/api.constants';
+import { setItem, getItem, removeItem } from '../utils/storage.utils';
 
 const receiveLogin = user => ({
   type: types.LOGIN_SUCCESS,
@@ -13,21 +15,21 @@ const receiveLogin = user => ({
 export const loginUser = ({ username, password }) => async (dispatch) => {
   dispatch({ type: types.LOGIN_REQUEST });
 
-  try {
-    const data = await makeRequest({
-      url: `${ENDPOINT}/users/login`,
-      method: 'post',
-      data: { username, password },
-      dispatch,
-    });
+  const res = await makeRequest({
+    url: `${ENDPOINT}/users/login`,
+    method: 'post',
+    data: { username, password },
+    dispatch,
+  });
 
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('username', data.username);
-    localStorage.setItem('roles', JSON.stringify(data.roles));
+  if (res.success === true) {
+    setItem('token', res.token);
+    setItem('username', res.username);
+    setItem('roles', res.roles);
 
-    dispatch(receiveLogin(data));
-  } catch (error) {
-    dispatch({ type: types.LOGIN_FAILURE, message: error.message });
+    dispatch(receiveLogin(res));
+  } else {
+    dispatch({ type: types.LOGIN_FAILURE });
   }
 };
 
@@ -39,24 +41,25 @@ export const registerStudent = ({
   groups,
 }) => async (dispatch) => {
   dispatch({ type: types.REGISTER_STUDENT_REQUEST });
-  try {
-    await makeRequest({
-      url: `${ENDPOINT}/users/register`,
-      method: 'post',
-      data: {
-        username,
-        password,
-        firstName,
-        lastName,
-        groups,
-        userType: 'Student',
-      },
-      dispatch,
-    });
 
-    localStorage.setItem('registered', true);
+  const res = await makeRequest({
+    url: `${ENDPOINT}/users/register`,
+    method: 'post',
+    data: {
+      username,
+      password,
+      firstName,
+      lastName,
+      groups,
+      userType: 'Student',
+    },
+    dispatch,
+  });
+
+  if (res.success === true) {
+    setItem('registered', true);
     dispatch({ type: types.REGISTER_STUDENT_SUCCESS });
-  } catch (error) {
+  } else {
     dispatch({ type: types.REGISTER_STUDENT_FAILURE });
   }
 };
@@ -71,34 +74,35 @@ export const registerTeacher = ({
   isLeadTeacher,
 }) => async (dispatch) => {
   dispatch({ type: types.REGISTER_TEACHER_REQUEST });
-  try {
-    await makeRequest({
-      url: `${ENDPOINT}/users/register`,
-      method: 'post',
-      data: {
-        username,
-        password,
-        firstName,
-        lastName,
-        group,
-        subjects,
-        leadTeacher: isLeadTeacher,
-        userType: 'Teacher',
-      },
-      dispatch,
-    });
 
-    localStorage.setItem('registered', true);
+  const res = await makeRequest({
+    url: `${ENDPOINT}/users/register`,
+    method: 'post',
+    data: {
+      username,
+      password,
+      firstName,
+      lastName,
+      group,
+      subjects,
+      leadTeacher: isLeadTeacher,
+      userType: 'Teacher',
+    },
+    dispatch,
+  });
+
+  if (res.success === true) {
+    setItem('registered', true);
     dispatch({ type: types.REGISTER_TEACHER_SUCCESS });
-  } catch (error) {
+  } else {
     dispatch({ type: types.REGISTER_TEACHER_FAILURE });
   }
 };
 
 export const logoutUser = () => (dispatch) => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('username');
-  localStorage.removeItem('roles');
+  removeItem('token');
+  removeItem('username');
+  removeItem('roles');
   dispatch({
     type: types.LOGOUT_SUCCESS,
     username: '',
@@ -107,20 +111,25 @@ export const logoutUser = () => (dispatch) => {
 };
 
 export const checkAuth = () => (dispatch) => {
-  const token = localStorage.getItem('token');
-  if (!token || jwtDecode(token).exp < Date.now() / 1000) {
-    localStorage.clear();
-    dispatch({ type: types.LOGIN_FAILURE, message: 'Нямате право за тази страница!' });
+  try {
+    const token = getItem('token');
+    if (!token || jwtDecode(token).exp < Date.now() / 1000) {
+      localStorage.clear();
+      throw new Error('Нямате право за тази страница!');
+    }
+  } catch (error) {
+    dispatch({ type: types.LOGIN_FAILURE, message: error.message });
   }
 };
 
 export const fetchProfile = () => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  const data = await makeRequest({
+  const res = await makeRequest({
     url: `${ENDPOINT}/api/profile`,
     method: 'get',
     dispatch,
-    token,
   });
-  dispatch({ type: types.FETCH_PROFILE_SUCCESS, profile: data.profile });
+
+  if (res.success === true) {
+    dispatch({ type: types.FETCH_PROFILE_SUCCESS, profile: res.profile });
+  }
 };

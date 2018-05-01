@@ -14,8 +14,7 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import reducer from './reducers';
 
-/* eslint no-underscore-dangle: 0 */
-const middleware = process.env.NODE_ENV !== 'production' ? [invariant(), thunk] : [thunk];
+const middleware = process.env.NODE_ENV === 'production' ? [thunk] : [invariant(), thunk];
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(...middleware)));
 
 ReactDOM.render(

@@ -1,11 +1,12 @@
 import * as types from '../constants/auth.types';
+import { getItem } from '../utils/storage.utils';
 
 const auth = (
   state = {
-    isAuthenticated: !!localStorage.getItem('token'),
-    isRegistered: !!localStorage.getItem('registered'),
-    username: localStorage.getItem('username') ? localStorage.getItem('username') : '',
-    roles: localStorage.getItem('roles') ? JSON.parse(localStorage.getItem('roles')) : [],
+    isAuthenticated: !!getItem('token'),
+    isRegistered: !!getItem('registered'),
+    username: getItem('username') ? getItem('username') : '',
+    roles: getItem('roles') ? getItem('roles') : [],
     profile: {},
   },
   action,

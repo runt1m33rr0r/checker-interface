@@ -164,11 +164,9 @@ export const finishWizard = (timeslots, subjects, groups) => async (dispatch) =>
   // we need the subjects inside the groups, because the subject code includes the group name
   const doneSubjects = processSubjects(groups);
 
-  const token = localStorage.getItem('token');
-  await makeRequest({
+  const res = await makeRequest({
     url: `${ENDPOINT}/api/school/settings/base`,
     method: 'post',
-    token,
     data: {
       timeslots: doneTimeslots,
       groups: doneGroups,
@@ -176,5 +174,8 @@ export const finishWizard = (timeslots, subjects, groups) => async (dispatch) =>
     },
     dispatch,
   });
-  dispatch({ type: CHECK_SETUP_SUCCESS, setupFinished: true });
+
+  if (res.success === true) {
+    dispatch({ type: CHECK_SETUP_SUCCESS, setupFinished: true });
+  }
 };

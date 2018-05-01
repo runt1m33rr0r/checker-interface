@@ -3,16 +3,16 @@ import ENDPOINT from '../constants/api.constants';
 import { GET_ABSENCES_SUCCESS } from '../constants/user.types';
 
 const fetchAbsences = userType => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  const data = await makeRequest({
+  const res = await makeRequest({
     url: `${ENDPOINT}/absences/${userType}`,
     method: 'get',
-    token,
     dispatch,
   });
 
-  if (Array.isArray(data.absences)) {
-    dispatch({ type: GET_ABSENCES_SUCCESS, absences: data.absences });
+  if (res.success === true) {
+    if (Array.isArray(res.absences)) {
+      dispatch({ type: GET_ABSENCES_SUCCESS, absences: res.absences });
+    }
   }
 };
 

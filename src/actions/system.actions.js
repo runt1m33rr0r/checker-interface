@@ -3,48 +3,52 @@ import * as types from '../constants/system.types';
 import ENDPOINT from '../constants/api.constants';
 
 export const checkSetup = () => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  const data = await makeRequest({
+  const res = await makeRequest({
     url: `${ENDPOINT}/api/settings/setup`,
     method: 'get',
-    token,
     dispatch,
   });
-  dispatch({ type: types.CHECK_SETUP_SUCCESS, setupFinished: data.setupFinished });
+
+  if (res.success === true) {
+    dispatch({ type: types.CHECK_SETUP_SUCCESS, setupFinished: res.setupFinished });
+  }
 };
 
 export const resetSetup = () => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  await makeRequest({
+  const res = await makeRequest({
     url: `${ENDPOINT}/api/settings/setup`,
     method: 'post',
     data: { setupFinished: false },
-    token,
     dispatch,
   });
-  dispatch({ type: types.RESET_SETUP_SUCCESS });
+
+  if (res.success === true) {
+    dispatch({ type: types.RESET_SETUP_SUCCESS });
+  }
 };
 
 export const fetchFreeSubjects = () => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  const data = await makeRequest({
+  const res = await makeRequest({
     url: `${ENDPOINT}/api/subjects?free=true`,
     method: 'get',
-    token,
     dispatch,
   });
-  dispatch({ type: types.FETCH_FREE_SUBJECTS_SUCCESS, freeSubjects: data.subjectCodes });
+
+  if (res.success === true) {
+    dispatch({ type: types.FETCH_FREE_SUBJECTS_SUCCESS, freeSubjects: res.subjectCodes });
+  }
 };
 
 const fetchCount = (successAction, collectionName) => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  const data = await makeRequest({
+  const res = await makeRequest({
     url: `${ENDPOINT}/api/${collectionName}?count=true`,
     method: 'get',
-    token,
     dispatch,
   });
-  dispatch({ type: successAction, count: data.count });
+
+  if (res.success === true) {
+    dispatch({ type: successAction, count: res.count });
+  }
 };
 
 export const fetchTeachersCount = () => (dispatch) => {

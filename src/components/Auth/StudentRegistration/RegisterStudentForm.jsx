@@ -55,93 +55,89 @@ class RegisterForm extends Component {
   }
 
   render() {
-    if (this.props.isRegistered) {
-      return (
-        <Typography className={this.props.classes.container} variant="display3" gutterBottom>
-          Вече сте се регистрирали!
-        </Typography>
-      );
-    }
-
+    const { classes, isRegistered } = this.props;
     return (
-      <div className={this.props.classes.root}>
-        <div className={this.props.classes.form}>
-          <TextField
-            required
-            label="Име"
-            className={this.props.classes.textField}
-            value={this.state.firstName}
-            onChange={this.handleChange('firstName')}
-          />
-          <TextField
-            required
-            label="Фамилия"
-            className={this.props.classes.textField}
-            value={this.state.lastName}
-            onChange={this.handleChange('lastName')}
-          />
-          <TextField
-            required
-            label="Потребителско име"
-            className={this.props.classes.textField}
-            value={this.state.username}
-            onChange={this.handleChange('username')}
-          />
-          <TextField
-            required
-            label="Парола"
-            className={this.props.classes.textField}
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange('password')}
-          />
-          <TextField
-            required
-            label="Потвърди парола"
-            className={this.props.classes.textField}
-            type="password"
-            error={this.state.password !== this.state.passwordRepeat}
-            value={this.state.passwordRepeat}
-            onChange={this.handleChange('passwordRepeat')}
-          />
-          <FormControl className={this.props.classes.textField}>
-            <InputLabel htmlFor="groups-select">Групи</InputLabel>
-            <Select
-              multiple
-              value={this.state.groups}
-              onChange={this.handleChange('groups')}
-              input={<Input id="groups-select" />}
-              renderValue={selected => selected.join(', ')}
+      <div className={classes.root}>
+        {isRegistered && <Typography variant="display3">Успешно сте се регистрирали!</Typography>}
+        {!isRegistered && (
+          <div className={classes.form}>
+            <TextField
+              required
+              label="Име"
+              className={classes.textField}
+              value={this.state.firstName}
+              onChange={this.handleChange('firstName')}
+            />
+            <TextField
+              required
+              label="Фамилия"
+              className={classes.textField}
+              value={this.state.lastName}
+              onChange={this.handleChange('lastName')}
+            />
+            <TextField
+              required
+              label="Потребителско име"
+              className={classes.textField}
+              value={this.state.username}
+              onChange={this.handleChange('username')}
+            />
+            <TextField
+              required
+              label="Парола"
+              className={classes.textField}
+              type="password"
+              value={this.state.password}
+              onChange={this.handleChange('password')}
+            />
+            <TextField
+              required
+              label="Потвърди парола"
+              className={classes.textField}
+              type="password"
+              error={this.state.password !== this.state.passwordRepeat}
+              value={this.state.passwordRepeat}
+              onChange={this.handleChange('passwordRepeat')}
+            />
+            <FormControl className={classes.textField}>
+              <InputLabel htmlFor="groups-select">Групи</InputLabel>
+              <Select
+                multiple
+                value={this.state.groups}
+                onChange={this.handleChange('groups')}
+                input={<Input id="groups-select" />}
+                renderValue={selected => selected.join(', ')}
+              >
+                {this.props.groups.map(groupName => (
+                  <MenuItem key={groupName} value={groupName}>
+                    <Checkbox checked={this.state.groups.includes(groupName)} />
+                    <ListItemText primary={groupName} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button
+              variant="raised"
+              color="primary"
+              component={Link}
+              to="/"
+              disabled={
+                this.state.password.length < 3 ||
+                this.state.username.length < 3 ||
+                this.state.firstName.length < 3 ||
+                this.state.lastName.length < 3 ||
+                this.state.groups.length < 1 ||
+                !/^[a-z0-9]+$/.test(this.state.username) ||
+                !/^[A-Z][a-z]+$/.test(this.state.firstName) ||
+                !/^[A-Z][a-z]+$/.test(this.state.lastName) ||
+                this.state.password !== this.state.passwordRepeat
+              }
+              onClick={this.handleSubmit}
             >
-              {this.props.groups.map(groupName => (
-                <MenuItem key={groupName} value={groupName}>
-                  <Checkbox checked={this.state.groups.includes(groupName)} />
-                  <ListItemText primary={groupName} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Button
-            variant="raised"
-            color="primary"
-            component={Link}
-            to="/"
-            disabled={
-              this.state.password.length < 3 ||
-              this.state.username.length < 3 ||
-              this.state.firstName.length < 3 ||
-              this.state.lastName.length < 3 ||
-              this.state.groups.length < 1 ||
-              !/^[a-z0-9]+$/.test(this.state.username) ||
-              !/^[A-Z][a-z]+$/.test(this.state.firstName) ||
-              !/^[A-Z][a-z]+$/.test(this.state.lastName) ||
-              this.state.password !== this.state.passwordRepeat
-            }
-            onClick={this.handleSubmit}
-          >
-            Регистрирай
-          </Button>
-        </div>
+              Регистрирай
+            </Button>
+          </div>
+        )}
       </div>
     );
   }

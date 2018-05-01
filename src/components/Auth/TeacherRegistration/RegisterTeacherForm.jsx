@@ -71,34 +71,35 @@ class RegisterForm extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className={this.props.classes.root}>
-        <form className={this.props.classes.form}>
+      <div className={classes.root}>
+        <form className={classes.form}>
           <TextField
             required
             label="Име"
-            className={this.props.classes.textField}
+            className={classes.textField}
             value={this.state.firstName}
             onChange={this.handleChange('firstName')}
           />
           <TextField
             required
             label="Фамилия"
-            className={this.props.classes.textField}
+            className={classes.textField}
             value={this.state.lastName}
             onChange={this.handleChange('lastName')}
           />
           <TextField
             required
             label="Потребителско име"
-            className={this.props.classes.textField}
+            className={classes.textField}
             value={this.state.username}
             onChange={this.handleChange('username')}
           />
           <TextField
             required
             label="Парола"
-            className={this.props.classes.textField}
+            className={classes.textField}
             type="password"
             value={this.state.password}
             onChange={this.handleChange('password')}
@@ -106,13 +107,13 @@ class RegisterForm extends Component {
           <TextField
             required
             label="Потвърди парола"
-            className={this.props.classes.textField}
+            className={classes.textField}
             type="password"
             error={this.state.password !== this.state.passwordRepeat}
             value={this.state.passwordRepeat}
             onChange={this.handleChange('passwordRepeat')}
           />
-          <FormControl className={this.props.classes.textField}>
+          <FormControl className={classes.textField}>
             <InputLabel htmlFor="subjects-select">Преподавани предмети</InputLabel>
             <Select
               multiple
@@ -135,7 +136,7 @@ class RegisterForm extends Component {
               label="Група"
               select
               value={this.state.group}
-              className={this.props.classes.textField}
+              className={classes.textField}
               onChange={this.handleChange('group')}
             >
               {this.props.groups.map(option => (

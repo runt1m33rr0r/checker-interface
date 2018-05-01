@@ -4,8 +4,10 @@ const styles = theme => ({
     height: '100%',
     display: 'flex',
     flexShrink: 0,
-    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     alignContent: 'center',
+    textAlign: 'center',
     overflow: 'auto',
   },
   form: {

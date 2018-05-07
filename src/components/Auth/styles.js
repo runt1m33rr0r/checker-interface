@@ -7,7 +7,6 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    textAlign: 'center',
     overflow: 'auto',
   },
   form: {
@@ -16,7 +15,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    overflow: 'auto',
   },
   textField: {
     margin: theme.spacing.unit,

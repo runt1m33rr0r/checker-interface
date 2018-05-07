@@ -92,8 +92,8 @@ class TimeslotCreator extends Component {
             <ListItem key={timeslot} dense>
               <ListItemText primary={timeslot} />
               <ListItemSecondaryAction>
-                <IconButton>
-                  <DeleteIcon onClick={handleRemove(timeslot)} />
+                <IconButton onClick={handleRemove(timeslot)}>
+                  <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

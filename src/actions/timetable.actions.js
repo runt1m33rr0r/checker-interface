@@ -49,9 +49,10 @@ export const fetchGroups = () => async (dispatch) => {
 
 const fetchLessons = (groupName = null) => async (dispatch) => {
   const res = await makeRequest({
-    url: groupName
-      ? `${ENDPOINT}/api/lessons?group=${groupName}`
-      : `${ENDPOINT}/api/lessons?mine=true`,
+    url:
+      groupName && groupName !== ''
+        ? `${ENDPOINT}/api/lessons?group=${groupName}`
+        : `${ENDPOINT}/api/lessons?mine=true`,
     method: 'get',
     dispatch,
   });

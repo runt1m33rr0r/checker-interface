@@ -12,26 +12,31 @@ class TableComponent extends Component {
     return [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => <TableCell key={num}>{num}</TableCell>);
   }
 
-  getRows() {
+  _getRows() {
     return ['Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък'].map((day, idx) => (
       <TableRow key={day}>
         <TableCell>{day}</TableCell>
-        {this.lessonsByDay(idx + 1)}
+        {this._getLessonsByDay(idx + 1)}
       </TableRow>
     ));
   }
 
-  lessonsByDay(day) {
-    return this.props.lessons.map((lesson) => {
-      if (lesson.timeslot.day === day) {
+  _getLessonByTimeslot(timeslot) {
+    return this.props.lessons.find(el =>
+      el.timeslot.fromHour === timeslot.fromHour &&
+        el.timeslot.fromMinute === timeslot.fromMinute &&
+        el.timeslot.toHour === timeslot.toHour &&
+        el.timeslot.toMinute === timeslot.toMinute &&
+        el.timeslot.day === timeslot.day);
+  }
+
+  _getLessonsByDay(day) {
+    const timeslots = this.props.timeslots.filter(timeslot => timeslot.day === day);
+    return timeslots.map((timeslot) => {
+      const lesson = this._getLessonByTimeslot(timeslot);
+      if (lesson) {
         return (
-          <TableCell
-            key={`${lesson.timeslot.fromHour}${lesson.timeslot.fromMinute}${
-              lesson.timeslot.toHour
-            }${lesson.timeslot.toMinute}${lesson.groupName}${lesson.subjectCode}${
-              lesson.teacherUsername
-            }`}
-          >
+          <TableCell key={timeslot._id}>
             {typeof this.props.deleteHandler === 'function' ? (
               <Chip
                 label={
@@ -51,8 +56,9 @@ class TableComponent extends Component {
             )}
           </TableCell>
         );
+      } else {
+        return <TableCell key={timeslot._id} />;
       }
-      return undefined;
     });
   }
 
@@ -67,7 +73,7 @@ class TableComponent extends Component {
               {TableComponent.getHeadCells()}
             </TableRow>
           </TableHead>
-          <TableBody>{this.getRows()}</TableBody>
+          <TableBody>{this._getRows()}</TableBody>
         </Table>
       </Paper>
     );
@@ -76,6 +82,7 @@ class TableComponent extends Component {
 
 TableComponent.propTypes = {
   lessons: PropTypes.array.isRequired,
+  timeslots: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   showGroups: PropTypes.bool,
   deleteHandler: PropTypes.func,

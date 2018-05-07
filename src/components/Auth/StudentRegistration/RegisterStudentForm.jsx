@@ -58,7 +58,11 @@ class RegisterForm extends Component {
     const { classes, isRegistered } = this.props;
     return (
       <div className={classes.root}>
-        {isRegistered && <Typography variant="display3">Успешно сте се регистрирали!</Typography>}
+        {isRegistered && (
+          <Typography className={classes.text} variant="display3">
+            Успешно сте се регистрирали!
+          </Typography>
+        )}
         {!isRegistered && (
           <div className={classes.form}>
             <TextField

@@ -39,7 +39,9 @@ class LoginForm extends Component {
     return (
       <div className={classes.root}>
         {isAuthenticated && (
-          <Typography variant="display3">Успешно сте влезли в профила си!</Typography>
+          <Typography className={classes.text} variant="display3">
+            Успешно сте влезли в профила си!
+          </Typography>
         )}
         {!isAuthenticated && (
           <div className={classes.form}>

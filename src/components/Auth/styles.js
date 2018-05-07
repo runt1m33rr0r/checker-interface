@@ -24,6 +24,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     marginBottom: '10px',
   },
+  text: {
+    textAlign: 'center',
+  },
 });
 
 export default styles;

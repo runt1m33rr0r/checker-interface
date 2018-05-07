@@ -12,7 +12,7 @@ const days = ['Понеделник', 'Вторник', 'Сряда', 'Четв�
 /* eslint no-underscore-dangle: 0 */
 const AbsencesViewer = ({ absences, classes }) => (
   <div className={classes.root}>
-    {absences.length === 0 && <Typography variant="display3">Няма Отсъствия</Typography>}
+    {absences.length === 0 && <Typography variant="display3">Няма отсъствия!</Typography>}
     {absences.length > 0 && (
       <List
         className={classes.list}

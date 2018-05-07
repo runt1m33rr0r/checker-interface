@@ -20,9 +20,7 @@ const styles = {
 
 const HomePage = ({ classes }) => (
   <div className={classes.root}>
-    <Typography variant="title" noWrap>
-      Засега няма нищо интересно тук!
-    </Typography>
+    <Typography variant="title">Засега няма нищо интересно тук!</Typography>
   </div>
 );
 

@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
 import * as types from '../constants/auth.types';
+import { SET_MESSAGE } from '../constants/network.types';
 import { makeRequest } from '../api';
 import ENDPOINT from '../constants/api.constants';
 import { setItem, getItem, removeItem } from '../utils/storage.utils';
@@ -59,6 +60,7 @@ export const registerStudent = ({
   if (res.success === true) {
     setItem('registered', true);
     dispatch({ type: types.REGISTER_STUDENT_SUCCESS });
+    dispatch({ type: SET_MESSAGE, message: 'Успешна регистрация!' });
   } else {
     dispatch({ type: types.REGISTER_STUDENT_FAILURE });
   }
@@ -94,6 +96,7 @@ export const registerTeacher = ({
   if (res.success === true) {
     setItem('registered', true);
     dispatch({ type: types.REGISTER_TEACHER_SUCCESS });
+    dispatch({ type: SET_MESSAGE, message: 'Успешна регистрация!' });
   } else {
     dispatch({ type: types.REGISTER_TEACHER_FAILURE });
   }

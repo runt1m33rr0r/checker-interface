@@ -2,7 +2,6 @@ import React from 'react';
 import Typography from 'material-ui/Typography';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
 
 import titled from './common/TitledComponent';
 
@@ -17,18 +16,21 @@ const styles = {
     alignContent: 'center',
     textAlign: 'center',
   },
+  a: {
+    color: 'green',
+  },
 };
 
 const InfoPage = ({ classes }) => (
   <div className={classes.root}>
-    <Typography variant="title" noWrap>
-      При проблеми може да ми пишете по
+    <Typography variant="title">
+      Ако имате проблеми или въпроси може да ми пишете по{' '}
+      {
+        <a className={classes.a} href="https://www.facebook.com/alexander.yankov1173">
+          facebook messenger.
+        </a>
+      }
     </Typography>
-    {<Button href="http://www.google.com">facebook messenger</Button>}
-    <Typography variant="title" noWrap>
-      или
-    </Typography>
-    {<Button href="http://www.google.com">twitter</Button>}
   </div>
 );
 

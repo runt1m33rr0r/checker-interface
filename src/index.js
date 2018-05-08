@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
-import 'typeface-roboto';
+// import 'typeface-roboto';
 import invariant from 'redux-immutable-state-invariant';
 import { composeWithDevTools } from 'redux-devtools-extension';
 

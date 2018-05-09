@@ -10,6 +10,7 @@ import Dialog, {
   withMobileDialog,
 } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
+import Typography from 'material-ui/Typography';
 
 import titled from '../../common/TitledComponent';
 import Camera from '../../common/Camera';
@@ -71,10 +72,14 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { classes, roles, fullScreen } = this.props;
+    const { classes, roles, fullScreen, profile } = this.props;
 
     return (
       <div className={classes.root}>
+        <Typography variant="headline" className={classes.headline}>
+          {`${profile.firstName} ${profile.lastName}`}
+        </Typography>
+
         {roles.includes('Student') && (
           <Fragment>
             <Button variant="raised" color="primary" onClick={this.handleOpen}>
@@ -135,10 +140,12 @@ ProfilePage.propTypes = {
   fetchProfile: PropTypes.func.isRequired,
   handleSend: PropTypes.func.isRequired,
   changePassword: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = ({ auth }) => ({
   roles: auth.roles,
+  profile: auth.profile,
 });
 
 const mapDispatchToProps = dispatch => ({

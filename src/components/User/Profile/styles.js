@@ -9,6 +9,9 @@ const styles = {
     alignContent: 'center',
     overflow: 'auto',
   },
+  headline: {
+    marginBottom: '3em',
+  },
   title: {
     textAlign: 'center',
   },

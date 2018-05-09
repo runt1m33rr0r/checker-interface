@@ -126,7 +126,7 @@ class Checker extends Component {
             {this.state.paused ? 'Наново' : 'Снимай'}
           </Button>
           <Button
-            disabled={this.state.image === '' || this.state.accuracy > 16}
+            disabled={this.state.image === ''}
             className={classes.button}
             variant="raised"
             color="primary"

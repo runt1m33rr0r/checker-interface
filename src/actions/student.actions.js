@@ -17,7 +17,7 @@ export const encodeStudent = image => async (dispatch) => {
 
 export const checkStudent = image => async (dispatch) => {
   const res = await makeRequest({
-    url: `${ENDPOINT}/students/encode`,
+    url: `${ENDPOINT}/students/check`,
     method: 'post',
     data: { image },
     dispatch,

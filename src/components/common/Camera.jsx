@@ -44,6 +44,8 @@ class Checker extends Component {
       paused: false,
       image: '',
       hasCamera: false,
+      width: 0,
+      height: 0,
     };
 
     this.handleCaptureButton = this.handleCaptureButton.bind(this);
@@ -59,9 +61,16 @@ class Checker extends Component {
   }
 
   init() {
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then((stream) => {
       this.video.srcObject = stream;
-      this.setState({ hasCamera: true });
+
+      const settings = stream.getVideoTracks()[0].getSettings();
+      this.video.setAttribute('width', settings.width);
+      this.video.setAttribute('height', settings.height);
+      this.canvas.setAttribute('width', settings.width);
+      this.canvas.setAttribute('height', settings.height);
+
+      this.setState({ hasCamera: true, width: settings.width, height: settings.height });
     });
   }
 
@@ -72,11 +81,12 @@ class Checker extends Component {
   }
 
   capture() {
-    const context = this.canvas.getContext('2d');
-    context.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-
     this.video.pause();
-    this.setState({ paused: true, image: this.canvas.toDataURL() });
+
+    const context = this.canvas.getContext('2d');
+    context.drawImage(this.video, 0, 0, this.state.width, this.state.height);
+
+    this.setState({ paused: true, image: this.canvas.toDataURL('image/jpeg') });
   }
 
   reset() {
@@ -122,7 +132,7 @@ class Checker extends Component {
               {this.state.paused ? 'Наново' : 'Снимай'}
             </Button>
             <Button
-              disabled={this.state.image === '' || this.state.accuracy > 16}
+              disabled={this.state.image === ''}
               className={classes.button}
               variant="raised"
               color="primary"

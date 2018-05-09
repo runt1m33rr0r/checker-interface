@@ -18,6 +18,7 @@ const styles = {
   },
   controls: {
     marginTop: '1em',
+    paddingBottom: '1em',
   },
   button: {
     marginRight: '5px',
@@ -91,7 +92,7 @@ class Checker extends Component {
 
   reset() {
     this.video.play();
-    this.setState({ paused: false });
+    this.setState({ paused: false, image: '' });
   }
 
   handleCaptureButton() {
@@ -110,16 +111,17 @@ class Checker extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <video
-          className={!this.state.hasCamera ? classes.hidden : null}
-          width="100%"
-          ref={vid => (this.video = vid)}
-          autoPlay
-        />
-        <canvas
-          className={!this.state.hasCamera ? classes.hidden : classes.canvas}
-          ref={canv => (this.canvas = canv)}
-        />
+        <div>
+          <video
+            className={!this.state.hasCamera ? classes.hidden : null}
+            ref={vid => (this.video = vid)}
+            autoPlay
+          />
+          <canvas
+            className={!this.state.hasCamera ? classes.hidden : classes.canvas}
+            ref={canv => (this.canvas = canv)}
+          />
+        </div>
 
         {this.state.hasCamera === true && (
           <div className={classes.controls}>
@@ -144,7 +146,7 @@ class Checker extends Component {
         )}
 
         {this.state.hasCamera === false && (
-          <Typography variant="display3">Няма достъп камера!</Typography>
+          <Typography variant="display3">Няма достъп до камера!</Typography>
         )}
       </div>
     );

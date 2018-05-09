@@ -24,7 +24,7 @@ const styles = {
 const InfoPage = ({ classes }) => (
   <div className={classes.root}>
     <Typography variant="title">
-      Ако имате проблеми или въпроси може да ми пишете по{' '}
+      Ако имате проблеми или въпроси относно приложението може да ми пишете по{' '}
       {
         <a className={classes.a} href="https://www.facebook.com/alexander.yankov1173">
           facebook messenger.

@@ -1,4 +1,4 @@
-let api = 'http://192.168.1.100:8080';
+let api = 'http://localhost:8080';
 
 if (process.env.REACT_APP_API_HOST) {
   api = process.env.REACT_APP_API_HOST;

@@ -9,30 +9,13 @@ import Dialog, {
   DialogActions,
   withMobileDialog,
 } from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
 
 import titled from '../../common/TitledComponent';
 import Camera from '../../common/Camera';
 import { encodeStudent } from '../../../actions/student.actions';
-import { fetchProfile } from '../../../actions/auth.actions';
-
-const styles = {
-  root: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-  },
-  title: {
-    textAlign: 'center',
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-};
+import { fetchProfile, changePassword } from '../../../actions/auth.actions';
+import styles from './styles';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -40,11 +23,14 @@ class ProfilePage extends Component {
 
     this.state = {
       cameraOpen: false,
+      password: '',
+      passwordRepeat: '',
     };
 
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleSend = this.handleSend.bind(this);
+    this.handlePasswordSubmit = this.handlePasswordSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +48,26 @@ class ProfilePage extends Component {
   handleSend(image) {
     this.handleClose();
     this.props.handleSend(image);
+  }
+
+  handleChange(name) {
+    return event =>
+      this.setState({
+        [name]: event.target.value,
+      });
+  }
+
+  handlePasswordSubmit(e) {
+    e.preventDefault();
+
+    if (this.isPasswordValid()) {
+      this.props.changePassword(this.state.password);
+      this.setState({ password: '', passwordRepeat: '' });
+    }
+  }
+
+  isPasswordValid() {
+    return this.state.password === this.state.passwordRepeat;
   }
 
   render() {
@@ -88,6 +94,35 @@ class ProfilePage extends Component {
             </Dialog>
           </Fragment>
         )}
+
+        <form className={classes.form} onSubmit={this.handlePasswordSubmit}>
+          <TextField
+            required
+            label="Нова парола"
+            className={classes.textField}
+            type="password"
+            value={this.state.password}
+            onChange={this.handleChange('password')}
+          />
+          <TextField
+            required
+            label="Потвърди паролата"
+            className={classes.textField}
+            type="password"
+            error={this.isPasswordValid() === false}
+            value={this.state.passwordRepeat}
+            onChange={this.handleChange('passwordRepeat')}
+          />
+          <Button
+            variant="raised"
+            color="primary"
+            type="submit"
+            disabled={this.isPasswordValid() === false}
+            className={classes.button}
+          >
+            Смени парола
+          </Button>
+        </form>
       </div>
     );
   }
@@ -99,6 +134,7 @@ ProfilePage.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   fetchProfile: PropTypes.func.isRequired,
   handleSend: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ auth }) => ({
@@ -108,6 +144,7 @@ const mapStateToProps = ({ auth }) => ({
 const mapDispatchToProps = dispatch => ({
   handleSend: image => dispatch(encodeStudent(image)),
   fetchProfile: () => dispatch(fetchProfile()),
+  changePassword: password => dispatch(changePassword(password)),
 });
 
 const styled = withStyles(styles)(ProfilePage);

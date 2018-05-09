@@ -26,13 +26,13 @@ const Controls = ({
     <Divider />
     {isAuthenticated ? (
       <List>
+        <Link className={classes.link} to="/profile">
+          <ListItem button>
+            <ListItemText primary="Профил" />
+          </ListItem>
+        </Link>
         {roles.includes('Student') && (
           <Fragment>
-            <Link className={classes.link} to="/profile">
-              <ListItem button>
-                <ListItemText primary="Профил" />
-              </ListItem>
-            </Link>
             <Link className={classes.link} to="/check">
               <ListItem button>
                 <ListItemText primary="Отбелязване на присъствие" />

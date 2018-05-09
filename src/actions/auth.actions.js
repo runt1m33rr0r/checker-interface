@@ -136,3 +136,17 @@ export const fetchProfile = () => async (dispatch) => {
     dispatch({ type: types.FETCH_PROFILE_SUCCESS, profile: res.profile });
   }
 };
+
+export const changePassword = password => async (dispatch) => {
+  const res = await makeRequest({
+    url: `${ENDPOINT}/users/password`,
+    method: 'put',
+    data: { password },
+    dispatch,
+  });
+
+  if (res.success === true) {
+    setItem('token', res.token);
+    dispatch({ type: SET_MESSAGE, message: 'Успешно променена парола!' });
+  }
+};

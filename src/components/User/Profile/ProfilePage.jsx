@@ -72,7 +72,9 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { classes, roles, fullScreen, profile } = this.props;
+    const {
+      classes, roles, fullScreen, profile,
+    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -100,34 +102,36 @@ class ProfilePage extends Component {
           </Fragment>
         )}
 
-        <form className={classes.form} onSubmit={this.handlePasswordSubmit}>
-          <TextField
-            required
-            label="Нова парола"
-            className={classes.textField}
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange('password')}
-          />
-          <TextField
-            required
-            label="Потвърди паролата"
-            className={classes.textField}
-            type="password"
-            error={this.isPasswordValid() === false}
-            value={this.state.passwordRepeat}
-            onChange={this.handleChange('passwordRepeat')}
-          />
-          <Button
-            variant="raised"
-            color="primary"
-            type="submit"
-            disabled={this.isPasswordValid() === false}
-            className={classes.button}
-          >
-            Смени парола
-          </Button>
-        </form>
+        <div>
+          <form className={classes.form} onSubmit={this.handlePasswordSubmit}>
+            <TextField
+              required
+              label="Нова парола"
+              className={classes.textField}
+              type="password"
+              value={this.state.password}
+              onChange={this.handleChange('password')}
+            />
+            <TextField
+              required
+              label="Потвърди паролата"
+              className={classes.textField}
+              type="password"
+              error={this.isPasswordValid() === false}
+              value={this.state.passwordRepeat}
+              onChange={this.handleChange('passwordRepeat')}
+            />
+            <Button
+              variant="raised"
+              color="primary"
+              type="submit"
+              disabled={this.isPasswordValid() === false}
+              className={classes.button}
+            >
+              Смени парола
+            </Button>
+          </form>
+        </div>
       </div>
     );
   }

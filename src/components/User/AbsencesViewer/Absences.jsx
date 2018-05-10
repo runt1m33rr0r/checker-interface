@@ -21,7 +21,7 @@ const AbsencesViewer = ({ absences, classes }) => (
         {absences.map(absence => (
           <ListItem key={absence._id} button>
             <ListItemText
-              primary={`${days[absence.day]} ${absence.subjectCode} при ${
+              primary={`${days[absence.day - 1]} ${absence.subjectCode} при ${
                 absence.teacherUsername
               } в ${absence.groupName}`}
             />

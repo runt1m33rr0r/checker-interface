@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import { SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG } from 'constants';
 
 const styles = {
   root: {
@@ -61,19 +62,28 @@ class Checker extends Component {
     this.unload();
   }
 
+  calculateCameraSize(stream) {
+    const settings = stream.getVideoTracks()[0].getSettings();
+    const width = window.innerWidth - Math.floor(window.innerWidth * 5 / 100);
+    const height = settings.height / (settings.width / width);
+    this.video.setAttribute('width', width);
+    this.video.setAttribute('height', height);
+    this.canvas.setAttribute('width', width);
+    this.canvas.setAttribute('height', height);
+
+    this.setState({ width, height });
+  }
+
   init() {
     navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then((stream) => {
       this.video.srcObject = stream;
 
-      const settings = stream.getVideoTracks()[0].getSettings();
-      const width = window.innerWidth - Math.floor(window.innerWidth * 15 / 100);
-      const height = settings.height / (settings.width / width);
-      this.video.setAttribute('width', width);
-      this.video.setAttribute('height', height);
-      this.canvas.setAttribute('width', width);
-      this.canvas.setAttribute('height', height);
+      window.onresize = () => {
+        this.calculateCameraSize(stream);
+      };
+      this.calculateCameraSize(stream);
 
-      this.setState({ hasCamera: true, width, height });
+      this.setState({ hasCamera: true });
     });
   }
 

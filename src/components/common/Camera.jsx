@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import { SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG } from 'constants';
 
 const styles = {
   root: {
@@ -27,8 +26,9 @@ const styles = {
   input: {
     display: 'none',
   },
-  canvas: {
-    display: 'none',
+  video: {
+    height: '100%',
+    width: '100%',
   },
   hidden: {
     display: 'none',
@@ -64,7 +64,7 @@ class Checker extends Component {
 
   calculateCameraSize(stream) {
     const settings = stream.getVideoTracks()[0].getSettings();
-    const width = window.innerWidth - Math.floor(window.innerWidth * 5 / 100);
+    const width = window.innerWidth;
     const height = settings.height / (settings.width / width);
     this.video.setAttribute('width', width);
     this.video.setAttribute('height', height);
@@ -125,14 +125,11 @@ class Checker extends Component {
       <div className={classes.root}>
         <div>
           <video
-            className={!this.state.hasCamera ? classes.hidden : null}
+            className={!this.state.hasCamera ? classes.hidden : classes.video}
             ref={vid => (this.video = vid)}
             autoPlay
           />
-          <canvas
-            className={!this.state.hasCamera ? classes.hidden : classes.canvas}
-            ref={canv => (this.canvas = canv)}
-          />
+          <canvas className={classes.hidden} ref={canv => (this.canvas = canv)} />
         </div>
 
         {this.state.hasCamera === true && (

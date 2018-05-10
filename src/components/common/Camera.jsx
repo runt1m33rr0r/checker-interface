@@ -66,12 +66,18 @@ class Checker extends Component {
       this.video.srcObject = stream;
 
       const settings = stream.getVideoTracks()[0].getSettings();
-      this.video.setAttribute('width', settings.width);
-      this.video.setAttribute('height', settings.height);
-      this.canvas.setAttribute('width', settings.width);
-      this.canvas.setAttribute('height', settings.height);
+      let width = window.innerWidth - Math.floor(window.innerWidth * 15 / 100);
+      if (window.innerWidth > window.innerHeight) {
+        width = window.innerWidth - Math.floor(window.innerWidth * 55 / 100);
+      }
 
-      this.setState({ hasCamera: true, width: settings.width, height: settings.height });
+      const height = settings.height / (settings.width / width);
+      this.video.setAttribute('width', width);
+      this.video.setAttribute('height', height);
+      this.canvas.setAttribute('width', width);
+      this.canvas.setAttribute('height', height);
+
+      this.setState({ hasCamera: true, width, height });
     });
   }
 

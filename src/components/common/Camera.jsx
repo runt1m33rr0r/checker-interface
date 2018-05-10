@@ -131,6 +131,8 @@ class Checker extends Component {
 
         {this.state.hasCamera === true && (
           <div className={classes.controls}>
+            <Typography variant="display3">height {window.innerHeight}</Typography>
+            <Typography variant="display3">width {window.innerWidth}</Typography>
             <Button
               className={classes.button}
               variant="raised"

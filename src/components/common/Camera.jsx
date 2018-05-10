@@ -66,11 +66,7 @@ class Checker extends Component {
       this.video.srcObject = stream;
 
       const settings = stream.getVideoTracks()[0].getSettings();
-      let width = window.innerWidth - Math.floor(window.innerWidth * 15 / 100);
-      if (window.innerWidth > window.innerHeight) {
-        width = window.innerWidth - Math.floor(window.innerWidth * 55 / 100);
-      }
-
+      const width = window.innerWidth - Math.floor(window.innerWidth * 15 / 100);
       const height = settings.height / (settings.width / width);
       this.video.setAttribute('width', width);
       this.video.setAttribute('height', height);
@@ -131,8 +127,6 @@ class Checker extends Component {
 
         {this.state.hasCamera === true && (
           <div className={classes.controls}>
-            <Typography variant="display3">height {window.innerHeight}</Typography>
-            <Typography variant="display3">width {window.innerWidth}</Typography>
             <Button
               className={classes.button}
               variant="raised"

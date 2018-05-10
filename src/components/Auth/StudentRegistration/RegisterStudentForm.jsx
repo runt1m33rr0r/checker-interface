@@ -132,8 +132,8 @@ class RegisterForm extends Component {
                 this.state.lastName.length < 3 ||
                 this.state.groups.length < 1 ||
                 !/^[a-z0-9]+$/.test(this.state.username) ||
-                !/^[A-Z][a-z]+$/.test(this.state.firstName) ||
-                !/^[A-Z][a-z]+$/.test(this.state.lastName) ||
+                !/^[A-ZА-Я][a-zа-я]+$/.test(this.state.firstName) ||
+                !/^[A-ZА-Я][a-zа-я]+$/.test(this.state.lastName) ||
                 this.state.password !== this.state.passwordRepeat
               }
               onClick={this.handleSubmit}

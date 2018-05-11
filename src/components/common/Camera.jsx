@@ -126,6 +126,8 @@ class Checker extends Component {
             className={!this.state.hasCamera ? classes.hidden : classes.video}
             ref={vid => (this.video = vid)}
             autoPlay
+            webkit-playsinline="true"
+            playsInline="true"
           />
           <canvas className={classes.hidden} ref={canv => (this.canvas = canv)} />
         </div>

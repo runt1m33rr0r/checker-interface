@@ -64,10 +64,8 @@ class Checker extends Component {
 
   calculateCameraSize(stream) {
     const settings = stream.getVideoTracks()[0].getSettings();
-    const width = window.innerWidth;
-    const height = settings.height / (settings.width / width);
-    this.video.setAttribute('width', width);
-    this.video.setAttribute('height', height);
+    const { width, height } = settings;
+
     this.canvas.setAttribute('width', width);
     this.canvas.setAttribute('height', height);
 

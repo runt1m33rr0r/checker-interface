@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
-import TextField from 'material-ui/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import { ListItemText } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormControlLabel } from 'material-ui/Form';
-import Select from 'material-ui/Select';
-import Input, { InputLabel } from 'material-ui/Input';
+import Button from '@material-ui/core/Button';
+import { ListItemText } from '@material-ui/core/List';
+import Checkbox from '@material-ui/core/Checkbox';
+import { MenuItem } from '@material-ui/core/Menu';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Select from '@material-ui/core/Select';
+import Input, { InputLabel } from '@material-ui/core/Input';
 
 import styles from '../styles';
 

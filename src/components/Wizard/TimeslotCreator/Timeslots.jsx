@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
-import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
+import List, { ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core/List';
+import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MenuItem from 'material-ui/Menu/MenuItem';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import TimePicker from '../../common/TimePicker';
 import styles from './styles';

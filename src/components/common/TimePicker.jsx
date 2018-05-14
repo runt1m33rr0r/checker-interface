@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Dialog, DialogActions, TextField } from 'material-ui';
-import { TimePicker } from 'material-ui-time-picker';
-import { withStyles } from 'material-ui/styles';
+import { Button, Dialog, DialogActions, TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = () => ({
   textField: {
@@ -65,12 +64,12 @@ class Picker extends Component {
           margin="dense"
         />
         <Dialog maxWidth="xs" open={this.state.open}>
-          <TimePicker
+          {/* <TimePicker
             mode="24h"
             defaultValue={this.props.defaultTime}
             value={this.state.time}
             onChange={this.handleDateChange}
-          />
+          /> */}
           <DialogActions>
             <Button onClick={this.handleCancelButton} color="primary">
               Отказ

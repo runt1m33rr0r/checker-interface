@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
-import Chip from 'material-ui/Chip';
+import Table, { TableBody, TableCell, TableHead, TableRow } from '@material-ui/core/Table';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
 
 import styles from './styles';
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Radio, { RadioGroup } from '@material-ui/core/Radio';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import TextField from '@material-ui/core/TextField';
+import { Radio, RadioGroup, FormControlLabel, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const SchoolTypeChooser = props => (

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List, { ListItem, ListItemText } from '@material-ui/core/List';
-import Checkbox from '@material-ui/core/Checkbox';
+import { List, ListItem, ListItemText, Checkbox } from '@material-ui/core';
 
 import styles from './styles';
 

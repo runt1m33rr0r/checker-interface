@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import { ListItemText } from '@material-ui/core/List';
-import Checkbox from '@material-ui/core/Checkbox';
-import { MenuItem } from '@material-ui/core/Menu';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Input, { InputLabel } from '@material-ui/core/Input';
 import { Link } from 'react-router-dom';
+import {
+  TextField,
+  Typography,
+  Button,
+  ListItemText,
+  Checkbox,
+  MenuItem,
+  FormControl,
+  Select,
+  Input,
+  InputLabel,
+} from '@material-ui/core';
 
 import styles from '../styles';
 

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import { Snackbar, IconButton } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 
 const styles = theme => ({
   close: {
@@ -42,7 +41,7 @@ class SnackbarComponent extends Component {
               className={classes.close}
               onClick={this.handleSnackbarClose}
             >
-              <CloseIcon />
+              <Close />
             </IconButton>,
           ]}
         />

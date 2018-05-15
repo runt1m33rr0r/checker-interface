@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
+import {
+  TextField,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  IconButton,
+  MenuItem,
+  Button,
+} from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import List, { ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core/List';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 
-import TimePicker from '../../common/TimePicker';
+// import TimePicker from '../../common/TimePicker';
 import styles from './styles';
 
 class TimeslotCreator extends Component {
@@ -59,7 +64,7 @@ class TimeslotCreator extends Component {
       <div className={classes.root}>
         <div className={classes.form}>
           <div className={classes.pickers}>
-            <TimePicker
+            {/* <TimePicker
               label="От"
               defaultTime={this.state.fromTime}
               handleChange={this.handleChangeTime('fromTime')}
@@ -68,7 +73,7 @@ class TimeslotCreator extends Component {
               label="До"
               defaultTime={this.state.toTime}
               handleChange={this.handleChangeTime('toTime')}
-            />
+            /> */}
             <TextField
               label="Ден"
               select
@@ -93,7 +98,7 @@ class TimeslotCreator extends Component {
               <ListItemText primary={timeslot} />
               <ListItemSecondaryAction>
                 <IconButton onClick={handleRemove(timeslot)}>
-                  <DeleteIcon />
+                  <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import { InputLabel } from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
+import { MenuItem, Select, FormControl, InputLabel, Button } from '@material-ui/core';
 
 import TabView from '../../common/TabView';
 import Table from '../Table';

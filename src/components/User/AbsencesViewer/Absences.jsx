@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List, { ListItem, ListItemText } from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Typography from '@material-ui/core/Typography';
+import { List, ListItem, ListItemText, ListSubheader, Typography } from '@material-ui/core';
 
 import styles from './styles';
 

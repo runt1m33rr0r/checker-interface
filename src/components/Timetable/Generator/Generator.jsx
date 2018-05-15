@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import TabView from '../../common/TabView';
 import Table from '../Table';
-
 import styles from './styles';
 
 class Generator extends Component {

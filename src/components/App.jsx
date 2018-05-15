@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { purple, green } from '@material-ui/core/colors';
+import { CssBaseline } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 

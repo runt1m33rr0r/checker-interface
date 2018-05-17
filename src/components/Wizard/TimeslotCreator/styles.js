@@ -15,6 +15,9 @@ const styles = () => ({
     alignItems: 'center',
     paddingBottom: '0.5em',
   },
+  timePicker: {
+    maxWidth: '3em',
+  },
 });
 
 export default styles;

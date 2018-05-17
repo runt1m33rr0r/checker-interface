@@ -12,8 +12,10 @@ import {
 import { Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { TimePicker } from 'material-ui-pickers';
+import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 
-// import TimePicker from '../../common/TimePicker';
 import styles from './styles';
 
 class TimeslotCreator extends Component {
@@ -61,50 +63,62 @@ class TimeslotCreator extends Component {
     const { classes, handleRemove, handleAdd } = this.props;
 
     return (
-      <div className={classes.root}>
-        <div className={classes.form}>
-          <div className={classes.pickers}>
-            {/* <TimePicker
-              label="От"
-              defaultTime={this.state.fromTime}
-              handleChange={this.handleChangeTime('fromTime')}
-            />
-            <TimePicker
-              label="До"
-              defaultTime={this.state.toTime}
-              handleChange={this.handleChangeTime('toTime')}
-            /> */}
-            <TextField
-              label="Ден"
-              select
-              value={this.state.days[this.state.day - 1]}
-              onChange={this.handleChangeDay}
-              margin="dense"
-            >
-              {this.state.days.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <div className={classes.root}>
+          <div className={classes.form}>
+            <div className={classes.pickers}>
+              <TimePicker
+                ampm={false}
+                label="От"
+                value={this.state.fromTime}
+                onChange={this.handleChangeTime('fromTime')}
+                margin="dense"
+                className={classes.timePicker}
+                cancelLabel="Отказ"
+                okLabel="Запиши"
+              />
+              <TimePicker
+                ampm={false}
+                label="До"
+                value={this.state.toTime}
+                onChange={this.handleChangeTime('toTime')}
+                margin="dense"
+                className={classes.timePicker}
+                cancelLabel="Отказ"
+                okLabel="Запиши"
+              />
+              <TextField
+                label="Ден"
+                select
+                value={this.state.days[this.state.day - 1]}
+                onChange={this.handleChangeDay}
+                margin="dense"
+              >
+                {this.state.days.map(option => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+            <Button variant="raised" color="primary" onClick={handleAdd(this.getTimeslot())}>
+              Добави
+            </Button>
           </div>
-          <Button variant="raised" color="primary" onClick={handleAdd(this.getTimeslot())}>
-            Добави
-          </Button>
+          <List>
+            {this.props.timeslots.map(timeslot => (
+              <ListItem key={timeslot} dense>
+                <ListItemText primary={timeslot} />
+                <ListItemSecondaryAction>
+                  <IconButton onClick={handleRemove(timeslot)}>
+                    <Delete />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
         </div>
-        <List>
-          {this.props.timeslots.map(timeslot => (
-            <ListItem key={timeslot} dense>
-              <ListItemText primary={timeslot} />
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleRemove(timeslot)}>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
-      </div>
+      </MuiPickersUtilsProvider>
     );
   }
 }
